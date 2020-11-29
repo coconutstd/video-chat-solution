@@ -1,23 +1,24 @@
 <template>
-  <div>
-    <div v-if="authState !== 'signedin'">You are signed out.</div>
-    <amplify-authenticator>
-      <div v-if="authState === 'signedin' && user">
-        <div>Hello, {{user.username}}</div>
-      </div>
+  <amplify-authenticator>
+      <Home></Home>
       <amplify-sign-out></amplify-sign-out>
-    </amplify-authenticator>
-  </div>
+  </amplify-authenticator>
+
 </template>
 <script>
 import { onAuthUIStateChange } from '@aws-amplify/ui-components'
+import Home from "./Home";
 
 export default {
   name: 'AuthStateApp',
+  components: {
+    Home
+  },
   created() {
     onAuthUIStateChange((authState, authData) => {
       this.authState = authState;
       this.user = authData;
+      this.$router.push('/home')
     })
   },
   data() {
