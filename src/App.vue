@@ -1,18 +1,19 @@
 <template>
   <amplify-authenticator>
-      <Home></Home>
-      <amplify-sign-out></amplify-sign-out>
+      <ToolBar></ToolBar>
+      <router-view v-bind:user="user"></router-view>
+    <amplify-sign-out></amplify-sign-out>
   </amplify-authenticator>
 
 </template>
 <script>
 import { onAuthUIStateChange } from '@aws-amplify/ui-components'
-import Home from "./Home";
+import ToolBar from "./ToolBar.vue"
 
 export default {
   name: 'AuthStateApp',
   components: {
-    Home
+    ToolBar
   },
   created() {
     onAuthUIStateChange((authState, authData) => {

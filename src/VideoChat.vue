@@ -1,11 +1,10 @@
 <template>
-<div>Home, Hello {{user.username}}</div>
+  <div>VideoChat</div>
 </template>
 
 <script>
 export default {
-  props:['user'],
-  name: "Home"
+name: "VideoChat"
 }
 </script>
 
