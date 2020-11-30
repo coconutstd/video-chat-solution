@@ -14,7 +14,7 @@ const router = new VueRouter({
         },
         {
             path: '/videochat',
-            component: VideoChat
+            component: VideoChat,
         }
     ]
 })
