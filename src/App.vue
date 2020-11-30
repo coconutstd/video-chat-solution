@@ -18,7 +18,6 @@ export default {
     onAuthUIStateChange((authState, authData) => {
       this.authState = authState;
       this.user = authData;
-      this.$router.push('/home')
     })
   },
   data() {
