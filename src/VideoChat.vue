@@ -458,13 +458,44 @@
     </div></div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import {
+  ConsoleLogger,
+  DefaultDeviceController,
+  DefaultMeetingSession,
+  LogLevel,
+  MeetingSessionConfiguration
+} from 'amazon-chime-sdk-js';
+import {AudioVideoObserver, ContentShareObserver, DeviceChangeObserver} from "../video_demo/src";
+
+export class DemoMeetingApp implements
+    AudioVideoObserver,
+    DeviceChangeObserver,
+    ContentShareObserver{
+
+}
+
+export default Vue.extend({
 name: "VideoChat",
   created() {
     // window.location.href = "https://jmw5ia4nd9.execute-api.ap-northeast-2.amazonaws.com/Prod/"
+    const logger = new ConsoleLogger('MyLogger', LogLevel.INFO);
+    const deviceController = new DefaultDeviceController(logger);
+
+// You need responses from server-side Chime API. See below for details.
+    const meetingResponse = 'afdg'
+    const attendeeResponse = 'asdf'
+    const configuration = new MeetingSessionConfiguration(meetingResponse, attendeeResponse);
+
+// In the usage examples below, you will use this meetingSession object.
+    const meetingSession = new DefaultMeetingSession(
+        configuration,
+        logger,
+        deviceController
+    );
   }
-}
+})
 </script>
 
 <style lang="scss">
