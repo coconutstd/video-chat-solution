@@ -1,5 +1,6 @@
 <template>
-  <div><div id="flow-authenticate" class="flow text-center p-2">
+  <div>
+    <div id="flow-authenticate" class="flow text-center p-2">
     <div class="text-muted" style="position:fixed;right:3px;bottom:3px" id="sdk-version"></div>
     <div class="container">
       <form id="form-authenticate">
@@ -466,6 +467,849 @@ name: "VideoChat",
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #ecf0f1;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #b4bcc2;
+$gray-600: #95a5a6;
+$gray-700: #7b8a8b;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000;
+$blue: #2c3e50;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #e74c3c;
+$orange: #fd7e14;
+$yellow: #f39c12;
+$green: #18bc9c;
+$teal: #20c997;
+$cyan: #3498db;
+$primary: $blue;
+$secondary: $gray-600;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-200;
+$dark: $gray-700;
+$yiq-contrasted-threshold: 175;
+$link-color: $success;
+$font-family-sans-serif: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+$font-size-base: 0.9375rem;
+$h1-font-size: 3rem;
+$h2-font-size: 2.5rem;
+$h3-font-size: 2rem;
+$table-accent-bg: $gray-200;
+$dropdown-link-color: $gray-700;
+$dropdown-link-hover-color: $white;
+$dropdown-link-hover-bg: $primary;
+$nav-link-padding-y: 0.5rem !default;
+$nav-link-padding-x: 2rem;
+$nav-link-disabled-color: $gray-600 !default;
+$nav-tabs-border-color: $gray-200;
+$navbar-padding-y: 1rem;
+$navbar-dark-color: $white;
+$navbar-dark-hover-color: $success;
+$pagination-color: $white;
+$pagination-bg: $success;
+$pagination-border-width: 0;
+$pagination-border-color: transparent;
+$pagination-hover-color: $white;
+$pagination-hover-bg: darken($success, 15%);
+$pagination-hover-border-color: transparent;
+$pagination-active-bg: $pagination-hover-bg;
+$pagination-active-border-color: transparent;
+$pagination-disabled-color: $gray-200;
+$pagination-disabled-bg: lighten($success, 15%);
+$pagination-disabled-border-color: transparent;
+$progress-height: 0.625rem;
+$progress-font-size: 0.625rem;
+$list-group-hover-bg: $gray-200;
+$list-group-disabled-bg: $gray-200;
+$close-color: $white;
+$close-text-shadow: none;
+$overlay-z-index: 10;
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+// Flatly 4.3.1
+// Bootswatch
+
+// Variables ===================================================================
+
+// Navbar =======================================================================
+
+.bg-primary {
+  .navbar-nav .active > .nav-link {
+    color: $success !important;
+  }
+}
+
+.bg-dark {
+  background-color: $success !important;
+  &.navbar-dark .navbar-nav {
+    .nav-link:focus,
+    .nav-link:hover,
+    .active > .nav-link {
+      color: $primary !important;
+    }
+  }
+}
+
+// Buttons =====================================================================
+
+.btn {
+  &-secondary,
+  &-secondary:hover,
+  &-warning,
+  &-warning:hover {
+    color: #fff;
+  }
+}
+
+// Typography ==================================================================
+
+// Tables ======================================================================
+
+.table {
+  &-primary,
+  &-secondary,
+  &-success,
+  &-info,
+  &-warning,
+  &-danger {
+    color: #fff;
+  }
+
+  &-primary {
+    &,
+    > th,
+    > td {
+      background-color: $primary;
+    }
+  }
+
+  &-secondary {
+    &,
+    > th,
+    > td {
+      background-color: $secondary;
+    }
+  }
+
+  &-light {
+    &,
+    > th,
+    > td {
+      background-color: $light;
+    }
+  }
+
+  &-dark {
+    &,
+    > th,
+    > td {
+      background-color: $dark;
+    }
+  }
+
+  &-success {
+    &,
+    > th,
+    > td {
+      background-color: $success;
+    }
+  }
+
+  &-info {
+    &,
+    > th,
+    > td {
+      background-color: $info;
+    }
+  }
+
+  &-danger {
+    &,
+    > th,
+    > td {
+      background-color: $danger;
+    }
+  }
+
+  &-warning {
+    &,
+    > th,
+    > td {
+      background-color: $warning;
+    }
+  }
+
+  &-active {
+    &,
+    > th,
+    > td {
+      background-color: $table-active-bg;
+    }
+  }
+
+  &-hover {
+    .table-primary:hover {
+      &,
+      > th,
+      > td {
+        background-color: darken($primary, 5%);
+      }
+    }
+
+    .table-secondary:hover {
+      &,
+      > th,
+      > td {
+        background-color: darken($secondary, 5%);
+      }
+    }
+
+    .table-light:hover {
+      &,
+      > th,
+      > td {
+        background-color: darken($light, 5%);
+      }
+    }
+
+    .table-dark:hover {
+      &,
+      > th,
+      > td {
+        background-color: darken($dark, 5%);
+      }
+    }
+
+    .table-success:hover {
+      &,
+      > th,
+      > td {
+        background-color: darken($success, 5%);
+      }
+    }
+
+    .table-info:hover {
+      &,
+      > th,
+      > td {
+        background-color: darken($info, 5%);
+      }
+    }
+
+    .table-danger:hover {
+      &,
+      > th,
+      > td {
+        background-color: darken($danger, 5%);
+      }
+    }
+
+    .table-warning:hover {
+      &,
+      > th,
+      > td {
+        background-color: darken($warning, 5%);
+      }
+    }
+
+    .table-active:hover {
+      &,
+      > th,
+      > td {
+        background-color: $table-active-bg;
+      }
+    }
+  }
+}
+
+// Forms =======================================================================
+
+// Navs ========================================================================
+
+.nav-tabs {
+  .nav-link.active,
+  .nav-link.active:focus,
+  .nav-link.active:hover,
+  .nav-item.open .nav-link,
+  .nav-item.open .nav-link:focus,
+  .nav-item.open .nav-link:hover {
+    color: $primary;
+  }
+}
+
+.pagination {
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+// Indicators ==================================================================
+
+.close {
+  text-decoration: none;
+  opacity: 0.4;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
+}
+
+.badge {
+  &-secondary,
+  &-warning {
+    color: #fff;
+  }
+}
+
+.alert {
+  border: none;
+  color: $white;
+
+  a,
+  .alert-link {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  @each $color, $value in $theme-colors {
+    &-#{$color} {
+      @if $enable-gradients {
+        background: $value linear-gradient(180deg, mix($body-bg, $value, 15%), $value) repeat-x;
+      } @else {
+        background-color: $value;
+      }
+    }
+  }
+
+  &-light {
+    &,
+    & a,
+    & .alert-link {
+      color: $body-color;
+    }
+  }
+}
+
+// Progress bars ===============================================================
+
+// Containers ==================================================================
+.modal .close {
+  color: $black;
+
+  &:not(:disabled):not(.disabled):hover,
+  &:not(:disabled):not(.disabled):focus {
+    color: $black;
+  }
+}
+
+// Custom
+
+html {
+  height: 100%;
+}
+
+body {
+  min-width: 320px;
+  height: 100%;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+}
+
+svg {
+  width: 20px;
+  height: 20px;
+  fill: lighten($secondary, 15%);
+}
+
+.svg-active {
+  fill: $white;
+}
+
+.svg-inactive {
+  fill: lighten($secondary, 15%);
+}
+
+.flow {
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.progress-hidden {
+  visibility: hidden;
+}
+
+#flow-meeting {
+  min-width: 320px;
+}
+
+@media (max-width: 575px) {
+  #tile-area {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  #tile-area > div {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    height: auto !important;
+  }
+
+  #tile-area > div.video-tile {
+    width: 50% !important;
+    padding-bottom: 33% !important;
+  }
+
+  #tile-area > div.content-share-tile {
+    order: -1;
+    width: 100% !important;
+    padding-bottom: 66% !important;
+    margin-bottom: 2rem;
+  }
+
+  #tile-area > div > video {
+    object-fit: cover;
+  }
+
+  #tile-area > div > div,
+  #tile-area > div > button {
+    display: none !important;
+  }
+
+  #content-share-video {
+    display: none !important;
+  }
+
+  #meeting-container {
+    height: auto !important;
+  }
+
+  #roster-tile-container {
+    height: auto !important;
+  }
+
+  #roster-message-container {
+    height: auto !important;
+  }
+
+  #tile-container {
+    height: auto !important;
+  }
+
+  .bs-component {
+    max-height: 210px;
+    height: auto !important;
+  }
+
+  .message {
+    max-height: 210px;
+    height: 210px !important;
+  }
+
+  .video-preview {
+    width: auto;
+    height: 82px;
+    margin-left: 35%;
+    margin-top: 7px;
+  }
+}
+
+.video-preview {
+  width: 100%;
+  height: 82px;
+  margin-left: 0;
+  margin-top: 0;
+}
+
+.markdown {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+a.markdown:link {
+  color: rgb(39, 137, 144);
+}
+
+a.markdown:visited {
+  color: rgb(39, 137, 144);
+}
+
+a.markdown:hover {
+  color: rgb(39, 137, 144);
+}
+
+a.markdown:active {
+  color: rgb(39, 137, 144);
+}
+
+.message-bubble-self {
+  border-radius: 5px;
+  background-color: rgb(238, 248, 248);
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(134, 209, 215);
+  padding: 0.3rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 0rem;
+  margin-bottom: 0.5rem;
+}
+
+.message-bubble-other {
+  border-radius: 5px;
+  background-color: rgb(241, 241, 241);
+  border-style: none;
+  padding: 0.3rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 0rem;
+  margin-bottom: 0.5rem;
+}
+
+.message-bubble-sender {
+  font-weight: bold;
+  margin-left: 1.3rem;
+  margin-right: 1rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.v-grid {
+  display: grid;
+  height: 100%;
+  width: 100%;
+}
+
+.v-grid.size-1 {
+  grid-template: 1fr / 1fr;
+
+  .video-tile {
+    height: 0;
+    padding-bottom: calc(100% / (16 / 9));
+  }
+}
+
+.v-grid.size-2 {
+  grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+}
+
+.v-grid.size-3,
+.v-grid.size-4 {
+  grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+}
+
+.v-grid.size-5,
+.v-grid.size-6 {
+  grid-template: repeat(3, 1fr) / repeat(2, 1fr);
+}
+
+.v-grid.size-7,
+.v-grid.size-8 {
+  grid-template: repeat(4, 1fr) / repeat(2, 1fr);
+}
+
+.v-grid.size-9,
+.v-grid.size-10 {
+  grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+}
+
+.v-grid.size-11,
+.v-grid.size-12 {
+  grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+}
+
+.v-grid.size-13,
+.v-grid.size-14,
+.v-grid.size-15,
+.v-grid.size-16 {
+  grid-template: repeat(4, 1fr) / repeat(4, 1fr);
+}
+
+.v-grid.featured {
+  grid-template: 1fr / 1fr;
+  grid-template-areas: 'ft';
+}
+
+.v-grid.featured.size-2,
+.v-grid.featured.size-3 {
+  grid-template: repeat(4, 1fr) / repeat(2, 1fr);
+  grid-template-areas: 'ft ft' 'ft ft' 'ft ft';
+}
+
+.v-grid.featured.size-4 {
+  grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+  grid-template-areas:
+    'ft ft ft'
+    'ft ft ft'
+    'ft ft ft';
+}
+
+.v-grid.featured.size-5,
+.v-grid.featured.size-6,
+.v-grid.featured.size-7 {
+  grid-template: repeat(6, 1fr) / repeat(3, 1fr);
+  grid-template-areas:
+    'ft ft ft'
+    'ft ft ft'
+    'ft ft ft'
+    'ft ft ft';
+}
+
+.v-grid.featured.size-8,
+.v-grid.featured.size-9 {
+  grid-template: repeat(6, 1fr) / repeat(4, 1fr);
+  grid-template-areas:
+    'ft ft ft ft'
+    'ft ft ft ft'
+    'ft ft ft ft'
+    'ft ft ft ft';
+}
+
+.v-grid.featured.size-10,
+.v-grid.featured.size-11,
+.v-grid.featured.size-12,
+.v-grid.featured.size-13 {
+  grid-template: repeat(7, 1fr) / repeat(6, 1fr);
+  grid-template-areas:
+    'ft ft ft ft ft ft'
+    'ft ft ft ft ft ft'
+    'ft ft ft ft ft ft'
+    'ft ft ft ft ft ft'
+    'ft ft ft ft ft ft';
+}
+
+.v-grid.featured.size-14,
+.v-grid.featured.size-15,
+.v-grid.featured.size-16,
+.v-grid.featured.size-17 {
+  grid-template: repeat(7, 1fr) / repeat(8, 1fr);
+  grid-template-areas:
+    'ft ft ft ft ft ft ft ft'
+    'ft ft ft ft ft ft ft ft'
+    'ft ft ft ft ft ft ft ft'
+    'ft ft ft ft ft ft ft ft'
+    'ft ft ft ft ft ft ft ft';
+}
+
+@media screen and (max-width: 1200px) {
+  .v-grid.size-2 {
+    grid-template: repeat(2, 1fr) / 1fr;
+  }
+
+  .v-grid.size-3 {
+    grid-template: repeat(3, 1fr) / 1fr;
+  }
+
+  .v-grid.size-4 {
+    grid-template: repeat(4, 1fr) / 1fr;
+  }
+
+  .v-grid.size-5,
+  .v-grid.size-6,
+  .v-grid.size-7,
+  .v-grid.size-8 {
+    grid-template: repeat(4, 1fr) / repeat(2, 1fr);
+  }
+
+  .v-grid.size-9,
+  .v-grid.size-10,
+  .v-grid.size-11,
+  .v-grid.size-12 {
+    grid-template: repeat(6, 1fr) / repeat(2, 1fr);
+  }
+
+  .v-grid.size-13,
+  .v-grid.size-14,
+  .v-grid.size-15,
+  .v-grid.size-16 {
+    grid-template: repeat(8, 1fr) / repeat(2, 1fr);
+  }
+
+  .v-grid.featured.size-1 {
+    grid-template: 1fr / 1fr;
+    grid-template-areas: 'ft';
+  }
+
+  .v-grid.featured.size-2,
+  .v-grid.featured.size-3,
+  .v-grid.featured.size-4,
+  .v-grid.featured.size-5 {
+    grid-template: repeat(4, 1fr) / repeat(2, 1fr);
+    grid-template-areas:
+      'ft ft'
+      'ft ft';
+  }
+
+  .v-grid.featured.size-6,
+  .v-grid.featured.size-7 {
+    grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+    grid-template-areas:
+      'ft ft ft'
+      'ft ft ft';
+  }
+
+  .v-grid.featured.size-8,
+  .v-grid.featured.size-9 {
+    grid-template: repeat(6, 1fr) / repeat(4, 1fr);
+    grid-template-areas:
+      'ft ft ft ft ft'
+      'ft ft ft ft ft'
+      'ft ft ft ft ft'
+      'ft ft ft ft ft';
+  }
+
+  .v-grid.featured.size-10,
+  .v-grid.featured.size-11,
+  .v-grid.featured.size-12,
+  .v-grid.featured.size-13 {
+    grid-template: repeat(8, 1fr) / repeat(4, 1fr);
+    grid-template-areas:
+      'ft ft ft ft ft'
+      'ft ft ft ft ft'
+      'ft ft ft ft ft'
+      'ft ft ft ft ft'
+      'ft ft ft ft ft';
+  }
+
+  .v-grid.featured.size-12,
+  .v-grid.featured.size-13,
+  .v-grid.featured.size-14,
+  .v-grid.featured.size-15,
+  .v-grid.featured.size-16,
+  .v-grid.featured.size-17 {
+    grid-template: repeat(8, 1fr) / repeat(4, 1fr);
+    grid-template-areas:
+      'ft ft ft ft'
+      'ft ft ft ft'
+      'ft ft ft ft'
+      'ft ft ft ft';
+  }
+}
+
+.video-tile {
+  position: relative;
+  display: none;
+  font-size: 18px;
+  overflow: hidden;
+}
+
+.video-tile.active {
+  display: block;
+}
+
+.video-tile.featured {
+  grid-area: ft;
+}
+
+.video-tile.content {
+  grid-area: ft;
+
+  .video-tile-video {
+    object-fit: contain !important;
+    background-color: #313030;
+  }
+}
+
+.video-tile.primary {
+  border: 5px solid pink;
+}
+
+.video-tile-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.video-tile-nameplate {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: #fff;
+  text-shadow: 0px 0px 5px black;
+  letter-spacing: 0.1em;
+}
+
+.video-tile-pause {
+  position: absolute;
+  display: inline-block;
+  bottom: 10px;
+  right: 10px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: #fff;
+  text-shadow: 0px 0px 5px black;
+  letter-spacing: 0.1em;
+  outline: none;
+  background: none;
+}
+
+.stats-info {
+  position: absolute;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+  color: white;
+  font-size: 10px;
+  bottom: 3rem;
+  left: 0;
+  z-index: $overlay-z-index;
+  padding: 0.5rem;
+  transition: display 0.5s;
+  display: none;
+
+  .stats-table {
+    width: 15rem;
+    & tr:first-child {
+      border-bottom: 1px dotted $white;
+    }
+  }
+}
+
+#tile-area video[id^='video-']:hover + .stats-info {
+  display: block;
+}
+
+.video-tile-attendeeid {
+  display: none;
+  position: absolute;
+  color: $white;
+  padding: 1rem;
+}
+
+.video-tile.active:hover .video-tile-attendeeid {
+  display: block;
+}
+
+.vf-active::before {
+  content: "✓ "
+}
 
 </style>
