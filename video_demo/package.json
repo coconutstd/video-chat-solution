@@ -1,0 +1,126 @@
+{
+  "name": "amazon-chime-sdk-js",
+  "version": "2.1.0",
+  "description": "Amazon Chime SDK for JavaScript",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "libs",
+    "build"
+  ],
+  "scripts": {
+    "clean": "rm -rf .nyc_output build node_modules",
+    "copy": "node script/copy-protocol.js",
+    "check": "node script/check-code-style.js",
+    "login": "node script/login.js",
+    "logout": "node script/logout.js",
+    "prepublishOnly": "script/publish",
+    "postpublish": "script/postpublish",
+    "lint": "eslint src test --ext .ts,.tsx,.js --fix",
+    "tsc:guides": "tsc --build guides/tsconfig.json",
+    "tsc:src": "tsc --build tsconfig.json",
+    "build": "npm install && node script/barrelize.js && node script/generate-version.js && npm run tsc:src && npm run tsc:guides && npm run copy",
+    "prebuild:release": "script/prebuild",
+    "build:release": "npm run build && npm run lint && npm run check && npm run doc && npm run test:retry",
+    "postbuild:release": "script/postbuild",
+    "prebuild:publish": "script/prebuild --publish",
+    "build:publish": "npm run build && npm run lint && npm run check && npm run doc && npm run test:retry",
+    "postbuild:publish": "script/postbuild",
+    "predoc": "rm -rf docs && node script/build-guides.js",
+    "doc": "script/generate-docs",
+    "postdoc": "node script/update-typedoc-link.js",
+    "test": "npm run test:fast",
+    "test:glob": "cross-env TS_NODE_CACHE=false nyc mocha -r esm -rv ts-node/register -- ",
+    "test:fast": "npm run test:glob \"test/**/*.test.ts\"",
+    "test:slow": "cross-env MOCHA_TEST_DELAY_MS=100 npm run test:fast",
+    "test:retry": "(npm run test:fast || npm run test:fast || npm run test:fast || npm run test:fast || npm run test:fast)",
+    "test:integration": "cd ./integration/js && npm run test ",
+    "test:integration-audio": "cd ./integration/js && npm run test -- audio ",
+    "test:integration-video": "cd ./integration/js && npm run test -- video ",
+    "test:integration-meeting-end": "cd ./integration/js && npm run test -- meeting_end ",
+    "test:integration-screen-share": "cd ./integration/js && npm run test -- screen_share ",
+    "test:integration-content-share": "cd ./integration/js && npm run test -- content_share ",
+    "test:integration-data-message": "cd ./integration/js && npm run test -- data_message ",
+    "test:integration-meeting-readiness-checker": "cd ./integration/js && npm run test -- meeting_readiness_checker "
+  },
+  "devDependencies": {
+    "@fluffy-spoon/substitute": "^1.89.0",
+    "@types/chai": "^4.1.7",
+    "@types/chai-as-promised": "^7.1.0",
+    "@types/mocha": "^5.2.6",
+    "@types/sinon": "^7.0.12",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-fetch-mock": "^3.0.0",
+    "cross-env": "^6.0.3",
+    "eslint": "^7.12.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "esm": "^3.2.25",
+    "fetch-mock": "^9.10.7",
+    "fs-extra": "^8.1.0",
+    "git-describe": "^4.0.4",
+    "mocha": "^8.1.3",
+    "node-fetch": "^2.6.1",
+    "nyc": "^15.1.0",
+    "prettier": "^2.1.2",
+    "sinon": "^7.3.2",
+    "spawn-wrap": "^2.0.0",
+    "ts-loader": "^8.0.4",
+    "ts-node": "^9.0.0",
+    "typedoc": "^0.19.2",
+    "typescript": "^4.0.0"
+  },
+  "dependencies": {
+    "@types/dom-mediacapture-record": "^1.0.4",
+    "@types/ua-parser-js": "^0.7.33",
+    "detect-browser": "^5.1.0",
+    "protobufjs": "~6.8.8",
+    "resize-observer": "^1.0.0",
+    "ua-parser-js": "^0.7.22"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aws/amazon-chime-sdk-js"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "src/**/*.d.ts",
+      "src/videodownlinkbandwidthpolicy/VideoAdaptiveProbePolicy.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html",
+      "lcov",
+      "cobertura"
+    ],
+    "sourceMap": true,
+    "instrument": true,
+    "report-dir": "./coverage",
+    "all": true,
+    "check-coverage": true,
+    "branches": 100,
+    "lines": 100,
+    "functions": 100,
+    "statements": 100
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "printWidth": 100
+  }
+}
