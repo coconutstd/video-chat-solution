@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+Dir.chdir(File.expand_path(File.join(File.dirname(__FILE__), '..')))
+uncommitted_files = `git status -s`.strip
+
+if uncommitted_files.length == 0
+  puts "OK: no uncommitted files"
+else
+  STDERR.puts "Error: there are uncommitted changes:\n #{uncommitted_files}"
+  delta = `git diff | head -n 100`
+  STDERR.puts "Diff (100 lines):\n#{delta}\n…\n"
+  exit 1
+end
