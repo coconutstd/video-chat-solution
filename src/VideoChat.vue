@@ -879,9 +879,9 @@ name: "VideoChat",
         }));
         document.getElementById('form-devices').addEventListener('submit', e => {
           e.preventDefault();
-          console.log('submitteddd');
           new index_1.AsyncScheduler().start(() => __awaiter(this, void 0, void 0, function* () {
             try {
+              console.log('show-progress-bar');
               this.showProgress('progress-join');
               yield this.stopAudioPreview();
               this.audioVideo.stopVideoPreviewForVideoInput(document.getElementById('video-preview'));
