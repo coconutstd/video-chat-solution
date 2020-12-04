@@ -1104,6 +1104,8 @@ name: "VideoChat",
       displayButtonStates() {
         console.log('button state');
         console.log(this);
+        console.log(this.buttonStates);
+        console.log(this.name);
         for (const button in this.buttonStates) {
           console.log('button : ' + button)
           const element = document.getElementById(button);
