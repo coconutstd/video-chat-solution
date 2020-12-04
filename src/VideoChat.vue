@@ -2288,7 +2288,7 @@ name: "VideoChat",
     }
     exports.DemoMeetingApp = DemoMeetingApp;
     DemoMeetingApp.DID = '+17035550122';
-    DemoMeetingApp.BASE_URL = "https://jmw5ia4nd9.execute-api.ap-northeast-2.amazonaws.com/Prod/";
+    DemoMeetingApp.BASE_URL = "https://hd7fvh3m00.execute-api.ap-northeast-2.amazonaws.com/Prod/";
     DemoMeetingApp.testVideo = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c0/Big_Buck_Bunny_4K.webm/Big_Buck_Bunny_4K.webm.360p.vp9.webm';
     DemoMeetingApp.LOGGER_BATCH_SIZE = 85;
     DemoMeetingApp.LOGGER_INTERVAL_MS = 2000;
