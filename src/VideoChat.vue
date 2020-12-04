@@ -470,7 +470,6 @@
 
 <script>
 import Vue from 'vue'
-import * as icon from 'open-iconic'
 
 export default Vue.extend({
 name: "VideoChat",
