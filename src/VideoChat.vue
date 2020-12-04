@@ -250,7 +250,8 @@
           <div class="col-8 col-lg-6 order-2 order-lg-2 text-left text-lg-center">
             <div class="btn-group mx-1 mx-xl-2 my-2" role="group" aria-label="Toggle microphone">
               <button id="button-microphone" type="button" class="btn btn-success" title="Toggle microphone">
-                ${require('../node_modules/open-iconic/svg/microphone.svg').default}
+<!--                ${require('../node_modules/open-iconic/svg/microphone.svg').default}-->
+                mic
               </button>
               <div class="btn-group" role="group">
                 <button id="button-microphone-drop" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Select microphone"></button>
@@ -261,7 +262,8 @@
             </div>
             <div class="btn-group mx-1 mx-xl-2 my-2" role="group" aria-label="Toggle camera">
               <button id="button-camera" type="button" class="btn btn-success" title="Toggle camera">
-                ${require('../node_modules/open-iconic/svg/video.svg').default}
+<!--                ${require('../node_modules/open-iconic/svg/video.svg').default}-->
+                cam
               </button>
               <div class="btn-group" role="group">
                 <button id="button-camera-drop" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Select camera"></button>
@@ -272,7 +274,8 @@
             </div>
             <div class="btn-group mx-1 mx-xl-2 my-2" role="group" aria-label="Toggle content share">
               <button id="button-content-share" type="button" class="btn btn-success" title="Toggle content share">
-                ${require('../../node_modules/open-iconic/svg/camera-slr.svg').default}
+<!--                ${require('../../node_modules/open-iconic/svg/camera-slr.svg').default}-->
+                screen
               </button>
               <div class="btn-group" role="group">
                 <button id="button-content-share-drop" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Select content to share"></button>
@@ -284,11 +287,13 @@
               </div>
             </div>
             <button id="button-pause-content-share" type="button" class="btn btn-success mx-1 mx-xl-2 my-2" title="Pause and unpause content share">
-              ${require('../node_modules/open-iconic/svg/media-pause.svg').default}
+<!--              ${require('../node_modules/open-iconic/svg/media-pause.svg').default}-->
+              pause
             </button>
             <div class="btn-group mx-1 mx-xl-2 my-2" role="group" aria-label="Toggle speaker">
               <button id="button-speaker" type="button" class="btn btn-success" title="Toggle speaker">
-                ${require('../node_modules/open-iconic/svg/volume-low.svg').default}
+<!--                ${require('../node_modules/open-iconic/svg/volume-low.svg').default}-->
+                speaker
               </button>
               <div class="btn-group" role="group">
                 <button id="button-speaker-drop" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Select speaker"></button>
@@ -298,15 +303,19 @@
               </div>
             </div>
             <button id="button-video-stats" type="button" class="btn btn-success mx-1 mx-xl-2 my-2" title="Toggle video WebRTC stats display" data-toggle="button" aria-pressed="false" autocomplete="off">
-              ${require('../node_modules/open-iconic/svg/signal.svg').default}
+<!--              ${require('../node_modules/open-iconic/svg/signal.svg').default}-->
+              stats
+
             </button>
           </div>
           <div class="col-4 col-lg-3 order-3 order-lg-3 text-right text-lg-right">
             <button id="button-meeting-leave" type="button" class="btn btn-outline-success mx-1 mx-xl-2 my-2 px-4" title="Leave meeting">
-              ${require('../node_modules/open-iconic/svg/account-logout.svg').default}
+<!--              ${require('../node_modules/open-iconic/svg/account-logout.svg').default}-->
+              leave
             </button>
             <button id="button-meeting-end" type="button" class="btn btn-outline-danger mx-1 mx-xl-2 my-2 px-4" title="End meeting">
-              ${require('../node_modules/open-iconic/svg/power-standby.svg').default}
+<!--              ${require('../node_modules/open-iconic/svg/power-standby.svg').default}-->
+              end
             </button>
           </div>
         </div>
@@ -461,7 +470,7 @@
 
 <script>
 import Vue from 'vue'
-import * as index_1 from 'amazon-chime-sdk-js'
+import * as icon from 'open-iconic'
 
 export default Vue.extend({
 name: "VideoChat",
