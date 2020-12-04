@@ -881,21 +881,21 @@ name: "VideoChat",
           e.preventDefault();
           new index_1.AsyncScheduler().start(() => __awaiter(this, void 0, void 0, function* () {
             try {
-              console.log('1');
+              console.log('hello 1');
               this.showProgress('progress-join');
-              console.log('2');
+              console.log('hello 2');
               yield this.stopAudioPreview();
-              console.log('3');
+              console.log('hello 3');
               this.audioVideo.stopVideoPreviewForVideoInput(document.getElementById('video-preview'));
-              console.log('4');
+              console.log('hello 4');
               yield this.join();
-              console.log('5');
+              console.log('hello 5');
               this.audioVideo.chooseVideoInputDevice(null);
-              console.log('6');
+              console.log('hello 6');
               this.hideProgress('progress-join');
-              console.log('7');
+              console.log('hello 7');
               this.displayButtonStates();
-              console.log('8');
+              console.log('hello 8');
               this.switchToFlow('flow-meeting');
             }
             catch (error) {
@@ -1095,6 +1095,7 @@ name: "VideoChat",
       }
       displayButtonStates() {
         for (const button in this.buttonStates) {
+          consoloe.log('button : ' + button)
           const element = document.getElementById(button);
           const drop = document.getElementById(`${button}-drop`);
           const on = this.buttonStates[button];
