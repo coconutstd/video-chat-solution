@@ -894,7 +894,7 @@ name: "VideoChat",
               console.log('hello 6');
               this.hideProgress('progress-join');
               console.log('hello 7');
-              this.displayButtonStates();
+              // this.displayButtonStates();
               console.log('hello 8');
               this.switchToFlow('flow-meeting');
             }
@@ -1095,6 +1095,7 @@ name: "VideoChat",
       }
       displayButtonStates() {
         console.log('button state');
+        console.log(this);
         for (const button in this.buttonStates) {
           consoloe.log('button : ' + button)
           const element = document.getElementById(button);
