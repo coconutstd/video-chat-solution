@@ -673,6 +673,7 @@ name: "VideoChat",
             yield this.authenticate();
             yield this.join();
             this.displayButtonStates();
+            console.log('flow-meeing!');
             this.switchToFlow('flow-meeting');
           }));
         }
@@ -887,6 +888,7 @@ name: "VideoChat",
               this.audioVideo.chooseVideoInputDevice(null);
               this.hideProgress('progress-join');
               this.displayButtonStates();
+              console.log('switch to flow-meeting');
               this.switchToFlow('flow-meeting');
             }
             catch (error) {
