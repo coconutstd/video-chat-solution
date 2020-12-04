@@ -737,14 +737,14 @@ name: "VideoChat",
           this.meeting = document.getElementById('inputMeeting').value;
           this.name = document.getElementById('inputName').value;
           this.region = document.getElementById('inputRegion').value;
-          this.enableSimulcast = document.getElementById('simulcast').checked;
-          if (this.enableSimulcast) {
-            const videoInputQuality = document.getElementById('video-input-quality');
-            videoInputQuality.value = '720p';
-          }
-          this.enableWebAudio = document.getElementById('webaudio').checked;
-          // js sdk default to enable unified plan, equivalent to "Disable Unified Plan" default unchecked
-          this.enableUnifiedPlanForChromiumBasedBrowsers = !document.getElementById('planB').checked;
+          // this.enableSimulcast = document.getElementById('simulcast').checked;
+          // if (this.enableSimulcast) {
+          //   const videoInputQuality = document.getElementById('video-input-quality');
+          //   videoInputQuality.value = '720p';
+          // }
+          // this.enableWebAudio = document.getElementById('webaudio').checked;
+          // // js sdk default to enable unified plan, equivalent to "Disable Unified Plan" default unchecked
+          // this.enableUnifiedPlanForChromiumBasedBrowsers = !document.getElementById('planB').checked;
           new index_1.AsyncScheduler().start(() => __awaiter(this, void 0, void 0, function* () {
             let chimeMeetingId = '';
             this.showProgress('progress-authenticate');
@@ -780,22 +780,22 @@ name: "VideoChat",
             this.hideProgress('progress-authenticate');
           }));
         });
-        const speechMonoCheckbox = document.getElementById('fullband-speech-mono-quality');
-        const musicMonoCheckbox = document.getElementById('fullband-music-mono-quality');
-        speechMonoCheckbox.addEventListener('change', e => {
-          if (speechMonoCheckbox.checked) {
-            musicMonoCheckbox.checked = false;
-          }
-        });
-        musicMonoCheckbox.addEventListener('change', e => {
-          if (musicMonoCheckbox.checked) {
-            speechMonoCheckbox.checked = false;
-          }
-        });
-        document.getElementById('to-sip-flow').addEventListener('click', e => {
-          e.preventDefault();
-          this.switchToFlow('flow-sip-authenticate');
-        });
+        // const speechMonoCheckbox = document.getElementById('fullband-speech-mono-quality');
+        // const musicMonoCheckbox = document.getElementById('fullband-music-mono-quality');
+        // speechMonoCheckbox.addEventListener('change', e => {
+        //   if (speechMonoCheckbox.checked) {
+        //     musicMonoCheckbox.checked = false;
+        //   }
+        // });
+        // musicMonoCheckbox.addEventListener('change', e => {
+        //   if (musicMonoCheckbox.checked) {
+        //     speechMonoCheckbox.checked = false;
+        //   }
+        // });
+        // document.getElementById('to-sip-flow').addEventListener('click', e => {
+        //   e.preventDefault();
+        //   this.switchToFlow('flow-sip-authenticate');
+        // });
         document.getElementById('form-sip-authenticate').addEventListener('submit', e => {
           e.preventDefault();
           this.meeting = document.getElementById('sip-inputMeeting').value;
@@ -824,11 +824,11 @@ name: "VideoChat",
             this.hideProgress('progress-authenticate');
           }));
         });
-        document.getElementById('copy-sip-uri').addEventListener('click', () => {
-          const sipUriElement = document.getElementById('sip-uri');
-          sipUriElement.select();
-          document.execCommand('copy');
-        });
+        // document.getElementById('copy-sip-uri').addEventListener('click', () => {
+        //   const sipUriElement = document.getElementById('sip-uri');
+        //   sipUriElement.select();
+        //   document.execCommand('copy');
+        // });
         const audioInput = document.getElementById('audio-input');
         audioInput.addEventListener('change', (_ev) => __awaiter(this, void 0, void 0, function* () {
           this.log('audio input device is changed');
