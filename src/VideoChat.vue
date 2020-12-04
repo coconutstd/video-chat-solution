@@ -1109,6 +1109,7 @@ name: "VideoChat",
         for (const button in this.buttonStates) {
           console.log('button : ' + button)
           const element = document.getElementById(button);
+          console.log('element : ' + element)
           const drop = document.getElementById(`${button}-drop`);
           const on = this.buttonStates[button];
           element.classList.add(on ? 'btn-success' : 'btn-outline-secondary');
