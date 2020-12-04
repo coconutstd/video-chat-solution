@@ -1097,7 +1097,7 @@ name: "VideoChat",
         console.log('button state');
         console.log(this);
         for (const button in this.buttonStates) {
-          consoloe.log('button : ' + button)
+          console.log('button : ' + button)
           const element = document.getElementById(button);
           const drop = document.getElementById(`${button}-drop`);
           const on = this.buttonStates[button];
