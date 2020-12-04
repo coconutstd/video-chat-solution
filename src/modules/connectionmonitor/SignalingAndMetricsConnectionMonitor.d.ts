@@ -1,0 +1,34 @@
+import AudioVideoController from '../audiovideocontroller/AudioVideoController';
+import AudioVideoObserver from '../audiovideoobserver/AudioVideoObserver';
+import ClientMetricReport from '../clientmetricreport/ClientMetricReport';
+import ConnectionHealthData from '../connectionhealthpolicy/ConnectionHealthData';
+import PingPong from '../pingpong/PingPong';
+import PingPongObserver from '../pingpongobserver/PingPongObserver';
+import RealtimeController from '../realtimecontroller/RealtimeController';
+import StatsCollector from '../statscollector/StatsCollector';
+import VideoTileController from '../videotilecontroller/VideoTileController';
+import ConnectionMonitor from './ConnectionMonitor';
+export default class SignalingAndMetricsConnectionMonitor implements ConnectionMonitor, PingPongObserver, AudioVideoObserver {
+    private audioVideoController;
+    private realtimeController;
+    private videoTileController;
+    private connectionHealthData;
+    private pingPong;
+    private statsCollector;
+    private isActive;
+    private hasSeenValidPacketMetricsBefore;
+    private lastAvailableSendBandwidthKbps;
+    private lastAvailableRecvBandwidthKbps;
+    constructor(audioVideoController: AudioVideoController, realtimeController: RealtimeController, videoTileController: VideoTileController, connectionHealthData: ConnectionHealthData, pingPong: PingPong, statsCollector: StatsCollector);
+    start(): void;
+    stop(): void;
+    receiveSignalStrengthChange(signalStrength: number): void;
+    didReceivePong(_id: number, latencyMs: number, clockSkewMs: number): void;
+    didMissPongs(): void;
+    metricsDidReceive(clientMetricReport: ClientMetricReport): void;
+    private addToMinuteWindow;
+    private updateAvailableSendBandwidth;
+    private updateAvailableReceiveBandwidth;
+    private updateConnectionHealth;
+    private monitorVideoUplinkHealth;
+}

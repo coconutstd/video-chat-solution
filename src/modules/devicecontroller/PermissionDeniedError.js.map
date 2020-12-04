@@ -1,0 +1,1 @@
+{"version":3,"file":"PermissionDeniedError.js","sourceRoot":"","sources":["../../src/devicecontroller/PermissionDeniedError.ts"],"names":[],"mappings":";AAAA,qEAAqE;AACrE,sCAAsC;;AAEtC,2DAAoD;AAEpD,MAAqB,qBAAsB,SAAQ,2BAAiB;IAClE,YAAY,KAAa,EAAE,OAAgB;QACzC,KAAK,CAAC,KAAK,EAAE,OAAO,CAAC,CAAC;IACxB,CAAC;CACF;AAJD,wCAIC"}

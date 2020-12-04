@@ -1,0 +1,1 @@
+{"version":3,"file":"NoOpTask.js","sourceRoot":"","sources":["../../src/task/NoOpTask.ts"],"names":[],"mappings":";AAAA,qEAAqE;AACrE,sCAAsC;;AAItC,MAAqB,QAAQ;IAC3B,MAAM,KAAU,CAAC;IAEjB,IAAI;QACF,OAAO,UAAU,CAAC;IACpB,CAAC;IAED,GAAG;QACD,OAAO;IACT,CAAC;IAED,SAAS,CAAC,WAAiB,IAAS,CAAC;CACtC;AAZD,2BAYC"}

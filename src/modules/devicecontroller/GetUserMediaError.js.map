@@ -1,0 +1,1 @@
+{"version":3,"file":"GetUserMediaError.js","sourceRoot":"","sources":["../../src/devicecontroller/GetUserMediaError.ts"],"names":[],"mappings":";AAAA,qEAAqE;AACrE,sCAAsC;;AAEtC,MAAqB,iBAAkB,SAAQ,KAAK;IAClD,YAAmB,KAAa,EAAE,OAAgB;QAChD,KAAK,CAAC,OAAO,IAAI,wBAAwB,CAAC,CAAC;QAD1B,UAAK,GAAL,KAAK,CAAQ;IAEhC,CAAC;CACF;AAJD,oCAIC"}

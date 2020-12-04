@@ -1,0 +1,1 @@
+{"version":3,"file":"VideoTransformDevice.js","sourceRoot":"","sources":["../../src/devicecontroller/VideoTransformDevice.ts"],"names":[],"mappings":";AAAA,qEAAqE;AACrE,sCAAsC;;;AA8BtC;;;;GAIG;AACH,SAAgB,sBAAsB,CAAC,MAAe;IACpD,OAAO,CACL,CAAC,CAAC,MAAM;QACR,OAAO,MAAM,KAAK,QAAQ;QAC1B,iBAAiB,IAAI,MAAM;QAC3B,MAAM,IAAI,MAAM;QAChB,iBAAiB,IAAI,MAAM,CAC5B,CAAC;AACJ,CAAC;AARD,wDAQC"}

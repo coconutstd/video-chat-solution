@@ -1,0 +1,1 @@
+{"version":3,"file":"DefaultVideoTileFactory.js","sourceRoot":"","sources":["../../src/videotilefactory/DefaultVideoTileFactory.ts"],"names":[],"mappings":";AAAA,qEAAqE;AACrE,sCAAsC;;AAGtC,oEAA6D;AAK7D,MAAqB,uBAAuB;IAC1C,QAAQ,CACN,MAAc,EACd,SAAkB,EAClB,cAAmC,EACnC,uBAAgD;QAEhD,OAAO,IAAI,0BAAgB,CAAC,MAAM,EAAE,SAAS,EAAE,cAAc,EAAE,uBAAuB,CAAC,CAAC;IAC1F,CAAC;CACF;AATD,0CASC"}

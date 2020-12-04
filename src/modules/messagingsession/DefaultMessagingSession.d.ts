@@ -1,0 +1,31 @@
+import Logger from '../logger/Logger';
+import MessagingSessionObserver from '../messagingsessionobserver/MessagingSessionObserver';
+import ReconnectController from '../reconnectcontroller/ReconnectController';
+import SigV4 from '../sigv4/SigV4';
+import WebSocketAdapter from '../websocketadapter/WebSocketAdapter';
+import MessagingSession from './MessagingSession';
+import MessagingSessionConfiguration from './MessagingSessionConfiguration';
+export default class DefaultMessagingSession implements MessagingSession {
+    private configuration;
+    private logger;
+    private readonly webSocket?;
+    private readonly reconnectController?;
+    private readonly sigV4?;
+    private observerQueue;
+    private isClosing;
+    private isFirstMessageReceived;
+    constructor(configuration: MessagingSessionConfiguration, logger: Logger, webSocket?: WebSocketAdapter, reconnectController?: ReconnectController, sigV4?: SigV4);
+    addObserver(observer: MessagingSessionObserver): void;
+    removeObserver(observer: MessagingSessionObserver): void;
+    start(): void;
+    stop(): void;
+    forEachObserver(observerFunc: (observer: MessagingSessionObserver) => void): void;
+    private setUpEventListeners;
+    private startConnecting;
+    private prepareWebSocketUrl;
+    private isClosed;
+    private openEventHandler;
+    private receiveMessageHandler;
+    private closeEventHandler;
+    private canReconnect;
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"AudioLogEvent.js","sourceRoot":"","sources":["../../src/statscollector/AudioLogEvent.ts"],"names":[],"mappings":";AAAA,qEAAqE;AACrE,sCAAsC;;;AAEtC,IAAY,aAQX;AARD,WAAY,aAAa;IACvB,mEAAa,CAAA;IACb,6DAAU,CAAA;IACV,iEAAY,CAAA;IACZ,2DAAS,CAAA;IACT,mEAAa,CAAA;IACb,uEAAe,CAAA;IACf,mEAAa,CAAA;AACf,CAAC,EARW,aAAa,GAAb,qBAAa,KAAb,qBAAa,QAQxB;AAED,kBAAe,aAAa,CAAC"}

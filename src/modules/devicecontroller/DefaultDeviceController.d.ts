@@ -1,0 +1,112 @@
+import AudioVideoController from '../audiovideocontroller/AudioVideoController';
+import DeviceChangeObserver from '../devicechangeobserver/DeviceChangeObserver';
+import Logger from '../logger/Logger';
+import DeviceControllerBasedMediaStreamBroker from '../mediastreambroker/DeviceControllerBasedMediaStreamBroker';
+import AudioInputDevice from './AudioInputDevice';
+import RemovableAnalyserNode from './RemovableAnalyserNode';
+import VideoInputDevice from './VideoInputDevice';
+import VideoQualitySettings from './VideoQualitySettings';
+export default class DefaultDeviceController implements DeviceControllerBasedMediaStreamBroker {
+    private logger;
+    private static permissionDeniedOriginDetectionThresholdMs;
+    private static defaultVideoWidth;
+    private static defaultVideoHeight;
+    private static defaultVideoFrameRate;
+    private static defaultVideoMaxBandwidthKbps;
+    private static defaultSampleRate;
+    private static defaultSampleSize;
+    private static defaultChannelCount;
+    private static audioContext;
+    private deviceInfoCache;
+    private transform;
+    private activeDevices;
+    private audioOutputDeviceId;
+    private deviceChangeObservers;
+    private boundAudioVideoController;
+    private deviceLabelTrigger;
+    private audioInputDestinationNode;
+    private audioInputSourceNode;
+    private muteCallback;
+    private videoInputQualitySettings;
+    private readonly useWebAudio;
+    private inputDeviceCount;
+    private lastNoVideoInputDeviceCount;
+    private browserBehavior;
+    constructor(logger: Logger, options?: {
+        enableWebAudio?: boolean;
+    });
+    listAudioInputDevices(): Promise<MediaDeviceInfo[]>;
+    listVideoInputDevices(): Promise<MediaDeviceInfo[]>;
+    listAudioOutputDevices(): Promise<MediaDeviceInfo[]>;
+    private pushAudioMeetingStateForPermissions;
+    private pushVideoMeetingStateForPermissions;
+    chooseAudioInputDevice(device: AudioInputDevice): Promise<void>;
+    private chooseAudioTransformInputDevice;
+    chooseVideoInputDevice(device: VideoInputDevice): Promise<void>;
+    chooseAudioOutputDevice(deviceId: string | null): Promise<void>;
+    addDeviceChangeObserver(observer: DeviceChangeObserver): void;
+    removeDeviceChangeObserver(observer: DeviceChangeObserver): void;
+    createAnalyserNodeForAudioInput(): RemovableAnalyserNode | null;
+    createAnalyserNodeForRawAudioInput(): RemovableAnalyserNode | null;
+    private createAnalyserNodeForStream;
+    startVideoPreviewForVideoInput(element: HTMLVideoElement): void;
+    stopVideoPreviewForVideoInput(element: HTMLVideoElement): void;
+    setDeviceLabelTrigger(trigger: () => Promise<MediaStream>): void;
+    mixIntoAudioInput(stream: MediaStream): MediaStreamAudioSourceNode;
+    chooseVideoInputQuality(width: number, height: number, frameRate: number, maxBandwidthKbps: number): void;
+    getVideoInputQualitySettings(): VideoQualitySettings | null;
+    acquireAudioInputStream(): Promise<MediaStream>;
+    acquireVideoInputStream(): Promise<MediaStream>;
+    acquireDisplayInputStream(streamConstraints: MediaStreamConstraints): Promise<MediaStream>;
+    releaseMediaStream(mediaStreamToRelease: MediaStream | null): void;
+    bindToAudioVideoController(audioVideoController: AudioVideoController): void;
+    private subscribeToMuteAndUnmuteLocalAudio;
+    private unsubscribeFromMuteAndUnmuteLocalAudio;
+    static createEmptyAudioDevice(): MediaStream;
+    static createEmptyVideoDevice(): MediaStream | null;
+    static synthesizeAudioDevice(toneHz: number): MediaStream;
+    static synthesizeVideoDevice(colorOrPattern: string): MediaStream | null;
+    private static fillSMPTEColorBars;
+    private updateMaxBandwidthKbps;
+    private listDevicesOfKind;
+    private updateDeviceInfoCacheFromBrowser;
+    private listCachedDevicesOfKind;
+    private alreadyHandlingDeviceChange;
+    private handleDeviceChange;
+    private handleDeviceStreamEnded;
+    private forEachObserver;
+    private areDeviceListsEqual;
+    private intrinsicDeviceAsMediaStream;
+    private hasSameGroupId;
+    private getGroupIdFromDeviceId;
+    private getIntrinsicDeviceIdStr;
+    private getActiveDeviceId;
+    private restartLocalVideoAfterSelection;
+    private handleGetUserMediaError;
+    private chooseInputIntrinsicDevice;
+    private handleNewInputDevice;
+    private bindAudioOutput;
+    private calculateMediaStreamConstraints;
+    private deviceInfoFromDeviceId;
+    private acquireInputStream;
+    hasAppliedTransform(): boolean;
+    private reconnectAudioInputs;
+    private setTransform;
+    private removeTransform;
+    private attachAudioInputStreamToAudioContext;
+    /**
+     * Return the end of the Web Audio graph: post-transform audio.
+     */
+    private getMediaStreamDestinationNode;
+    /**
+     * Return the start of the Web Audio graph: pre-transform audio.
+     * If there's no transform node, this is the destination node.
+     */
+    private getMediaStreamOutputNode;
+    static getAudioContext(): AudioContext;
+    static closeAudioContext(): void;
+    private supportSampleRateConstraint;
+    private supportSampleSizeConstraint;
+    private supportChannelCountConstraint;
+    private trace;
+}
