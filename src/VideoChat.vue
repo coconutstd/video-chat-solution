@@ -1115,8 +1115,8 @@ name: "VideoChat",
           const on = this.buttonStates[button];
           element.classList.add(on ? 'btn-success' : 'btn-outline-secondary');
           element.classList.remove(on ? 'btn-outline-secondary' : 'btn-success');
-          element.firstElementChild.classList.add(on ? 'svg-active' : 'svg-inactive');
-          element.firstElementChild.classList.remove(on ? 'svg-inactive' : 'svg-active');
+          // element.firstElementChild.classList.add(on ? 'svg-active' : 'svg-inactive');
+          // element.firstElementChild.classList.remove(on ? 'svg-inactive' : 'svg-active');
           if (drop) {
             drop.classList.add(on ? 'btn-success' : 'btn-outline-secondary');
             drop.classList.remove(on ? 'btn-outline-secondary' : 'btn-success');
