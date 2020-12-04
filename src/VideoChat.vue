@@ -728,10 +728,10 @@ name: "VideoChat",
       }
       initEventListeners() {
         console.log("init Event Listners")
-        if (!this.defaultBrowserBehaviour.hasChromiumWebRTC()) {
-          document.getElementById('simulcast').disabled = true;
-          document.getElementById('planB').disabled = true;
-        }
+        // if (!this.defaultBrowserBehaviour.hasChromiumWebRTC()) {
+        //   document.getElementById('simulcast').disabled = true;
+        //   document.getElementById('planB').disabled = true;
+        // }
         document.getElementById('form-authenticate').addEventListener('submit', e => {
           e.preventDefault();
           this.meeting = document.getElementById('inputMeeting').value;
