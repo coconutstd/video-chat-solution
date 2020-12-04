@@ -71,11 +71,11 @@
           <p>Anyone with access to the meeting link can join.</p>
         </div>
 <!--        <a id="to-sip-flow" class="row mt-3" href="#">Joining via SIP? Click here.</a>-->
-<!--        <div class="row mt-3">-->
-<!--          <div id="progress-authenticate" class="w-100 progress progress-hidden">-->
-<!--            <div class="w-100 progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--          </div>-->
-<!--        </div>-->
+        <div class="row mt-3">
+          <div id="progress-authenticate" class="w-100 progress progress-hidden">
+            <div class="w-100 progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
       </form>
     </div>
   </div>
