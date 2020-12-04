@@ -881,15 +881,21 @@ name: "VideoChat",
           e.preventDefault();
           new index_1.AsyncScheduler().start(() => __awaiter(this, void 0, void 0, function* () {
             try {
-              console.log('show-progress-bar');
+              console.log('1');
               this.showProgress('progress-join');
+              console.log('2');
               yield this.stopAudioPreview();
+              console.log('3');
               this.audioVideo.stopVideoPreviewForVideoInput(document.getElementById('video-preview'));
+              console.log('4');
               yield this.join();
+              console.log('5');
               this.audioVideo.chooseVideoInputDevice(null);
+              console.log('6');
               this.hideProgress('progress-join');
+              console.log('7');
               this.displayButtonStates();
-              console.log('switch to flow-meeting');
+              console.log('8');
               this.switchToFlow('flow-meeting');
             }
             catch (error) {
