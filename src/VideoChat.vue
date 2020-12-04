@@ -5,77 +5,77 @@
     </div>
     <div class="container">
       <form id="form-authenticate">
-        <h1 class="h3 mb-3 font-weight-normal">Join a meeting</h1>
+        <h1 class="h3 mb-3 font-weight-normal">OMNI Project</h1>
         <div class="row mt-3">
           <label for="inputMeeting" class="sr-only">Meeting Title</label>
-          <input type="name" id="inputMeeting" class="form-control" placeholder="Meeting Title" required autofocus>
+          <input type="name" id="inputMeeting" class="form-control" placeholder="회의 제목" required autofocus>
         </div>
         <div class="row mt-3">
           <label for="inputName" class="sr-only">Your Name</label>
-          <input type="name" id="inputName" class="form-control" placeholder="Your Name" required>
+          <input type="name" id="inputName" class="form-control" placeholder="참가 이름" required>
         </div>
         <div class="row mt-3">
           <label for="inputRegion" class="sr-only">Media Region</label>
           <select id="inputRegion" class="custom-select" style="width:100%">
-            <option value="us-east-1" selected>United States (N. Virginia)</option>
-            <option value="ap-northeast-1">Japan (Tokyo)</option>
-            <option value="ap-southeast-1">Singapore</option>
-            <option value="af-south-1">South Africa (Cape Town)</option>
-            <option value="eu-south-1">Italy (Milan)</option>
-            <option value="ap-south-1">India (Mumbai)</option>
-            <option value="ap-northeast-2">South Korea (Seoul)</option>
-            <option value="ap-southeast-2">Australia (Sydney)</option>
-            <option value="ca-central-1">Canada</option>
-            <option value="eu-central-1">Germany (Frankfurt)</option>
-            <option value="eu-north-1">Sweden (Stockholm)</option>
-            <option value="eu-west-1">Ireland</option>
-            <option value="eu-west-2">United Kingdom (London)</option>
-            <option value="eu-west-3">France (Paris)</option>
-            <option value="sa-east-1">Brazil (São Paulo)</option>
-            <option value="us-east-2">United States (Ohio)</option>
-            <option value="us-west-1">United States (N. California)</option>
-            <option value="us-west-2">United States (Oregon)</option>
+<!--            <option value="us-east-1" selected>United States (N. Virginia)</option>-->
+<!--            <option value="ap-northeast-1">Japan (Tokyo)</option>-->
+<!--            <option value="ap-southeast-1">Singapore</option>-->
+<!--            <option value="af-south-1">South Africa (Cape Town)</option>-->
+<!--            <option value="eu-south-1">Italy (Milan)</option>-->
+<!--            <option value="ap-south-1">India (Mumbai)</option>-->
+<!--            <option value="ap-northeast-2">South Korea (Seoul)</option>-->
+<!--            <option value="ap-southeast-2">Australia (Sydney)</option>-->
+<!--            <option value="ca-central-1">Canada</option>-->
+<!--            <option value="eu-central-1">Germany (Frankfurt)</option>-->
+<!--            <option value="eu-north-1">Sweden (Stockholm)</option>-->
+<!--            <option value="eu-west-1">Ireland</option>-->
+<!--            <option value="eu-west-2">United Kingdom (London)</option>-->
+<!--            <option value="eu-west-3">France (Paris)</option>-->
+<!--            <option value="sa-east-1">Brazil (São Paulo)</option>-->
+<!--            <option value="us-east-2">United States (Ohio)</option>-->
+<!--            <option value="us-west-1">United States (N. California)</option>-->
+<!--            <option value="us-west-2">United States (Oregon)</option>-->
           </select>
         </div>
+<!--        <div class="row mt-3">-->
+<!--          <div class="col-12">-->
+<!--            <fieldset>-->
+<!--              <legend>Choose your optional features</legend>-->
+<!--              <div class="custom-control custom-checkbox" style="text-align: left;">-->
+<!--                <input type="checkbox" id="webaudio" class="custom-control-input">-->
+<!--                <label for="webaudio" class="custom-control-label">Use WebAudio</label>-->
+<!--              </div>-->
+<!--              <div class="custom-control custom-checkbox" style="text-align: left;">-->
+<!--                <input type="checkbox" id="fullband-speech-mono-quality" class="custom-control-input">-->
+<!--                <label for="fullband-speech-mono-quality" class="custom-control-label">Set fullband speech (mono) quality</label>-->
+<!--              </div>-->
+<!--              <div class="custom-control custom-checkbox" style="text-align: left;">-->
+<!--                <input type="checkbox" id="fullband-music-mono-quality" class="custom-control-input">-->
+<!--                <label for="fullband-music-mono-quality" class="custom-control-label">Set fullband music (mono) quality</label>-->
+<!--              </div>-->
+<!--              <div class="custom-control custom-checkbox" style="text-align: left;">-->
+<!--                <input type="checkbox" id="simulcast" class="custom-control-input">-->
+<!--                <label for="simulcast" class="custom-control-label">Enable Simulcast for Chrome</label>-->
+<!--              </div>-->
+<!--              <div class="custom-control custom-checkbox" style="text-align: left;">-->
+<!--                <input type="checkbox" id="planB" class="custom-control-input">-->
+<!--                <label for="planB" class="custom-control-label">Disable Unified Plan for Chrome</label>-->
+<!--              </div>-->
+<!--            </fieldset>-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="row mt-3">
-          <div class="col-12">
-            <fieldset>
-              <legend>Choose your optional features</legend>
-              <div class="custom-control custom-checkbox" style="text-align: left;">
-                <input type="checkbox" id="webaudio" class="custom-control-input">
-                <label for="webaudio" class="custom-control-label">Use WebAudio</label>
-              </div>
-              <div class="custom-control custom-checkbox" style="text-align: left;">
-                <input type="checkbox" id="fullband-speech-mono-quality" class="custom-control-input">
-                <label for="fullband-speech-mono-quality" class="custom-control-label">Set fullband speech (mono) quality</label>
-              </div>
-              <div class="custom-control custom-checkbox" style="text-align: left;">
-                <input type="checkbox" id="fullband-music-mono-quality" class="custom-control-input">
-                <label for="fullband-music-mono-quality" class="custom-control-label">Set fullband music (mono) quality</label>
-              </div>
-              <div class="custom-control custom-checkbox" style="text-align: left;">
-                <input type="checkbox" id="simulcast" class="custom-control-input">
-                <label for="simulcast" class="custom-control-label">Enable Simulcast for Chrome</label>
-              </div>
-              <div class="custom-control custom-checkbox" style="text-align: left;">
-                <input type="checkbox" id="planB" class="custom-control-input">
-                <label for="planB" class="custom-control-label">Disable Unified Plan for Chrome</label>
-              </div>
-            </fieldset>
-          </div>
-        </div>
-        <div class="row mt-3">
-          <button id="authenticate" class="btn btn-lg btn-primary btn-block" type="submit">Continue</button>
+          <button id="authenticate" class="btn btn-lg btn-primary btn-block" type="submit">시작하기</button>
         </div>
         <div class="row mt-3">
           <p>Anyone with access to the meeting link can join.</p>
         </div>
-        <a id="to-sip-flow" class="row mt-3" href="#">Joining via SIP? Click here.</a>
-        <div class="row mt-3">
-          <div id="progress-authenticate" class="w-100 progress progress-hidden">
-            <div class="w-100 progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-        </div>
+<!--        <a id="to-sip-flow" class="row mt-3" href="#">Joining via SIP? Click here.</a>-->
+<!--        <div class="row mt-3">-->
+<!--          <div id="progress-authenticate" class="w-100 progress progress-hidden">-->
+<!--            <div class="w-100 progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--          </div>-->
+<!--        </div>-->
       </form>
     </div>
   </div>
