@@ -89,7 +89,24 @@ exports.join = async(event, context) => {
       Meeting: meeting,
       Attendee: attendee,
     },
-  }, null, 2));
+  }, null, 2),);
+
+  // const response = {
+  //   statusCode: 200,
+  //   headers: {
+  //     "Access-Control-Allow-Headers" : "Content-Type",
+  //     "Access-Control-Allow-Origin" : "*",
+  //     "Access-Control-Allow-Methods" : "OPTIONS, POST, GET"
+  //   },
+  //   contentType: "application/json",
+  //   body: JSON.stringify({
+  //     JoinInfo: {
+  //       Meeting: meeting,
+  //       Attendee: attendee,
+  //     },
+  //   }, null, 2)
+  // }
+  // return response
 };
 
 exports.end = async (event, context) => {
@@ -267,7 +284,12 @@ function createLogStreamName(meetingId, attendeeId) {
 function response(statusCode, contentType, body) {
   return {
     statusCode: statusCode,
-    headers: { 'Content-Type': contentType },
+    headers: {
+      'Content-Type': contentType,
+      'Access-Control-Allow-Headers' : "Content-Type",
+      'Access-Control-Allow-Origin' : "*",
+      'Access-Control-Allow-Methods' : "OPTIONS, POST, GET"
+    },
     body: body,
     isBase64Encoded: false
   };
