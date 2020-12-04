@@ -1289,14 +1289,14 @@ name: "VideoChat",
           configuration.attendeePresenceTimeoutMs = 5000;
           configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = this.enableSimulcast;
           this.meetingSession = new index_1.DefaultMeetingSession(configuration, logger, deviceController);
-          // if (document.getElementById('fullband-speech-mono-quality').checked) {
-          //   this.meetingSession.audioVideo.setAudioProfile(index_1.AudioProfile.fullbandSpeechMono());
-          //   this.meetingSession.audioVideo.setContentAudioProfile(index_1.AudioProfile.fullbandSpeechMono());
-          // }
-          // else if (document.getElementById('fullband-music-mono-quality').checked) {
-          //   this.meetingSession.audioVideo.setAudioProfile(index_1.AudioProfile.fullbandMusicMono());
-          //   this.meetingSession.audioVideo.setContentAudioProfile(index_1.AudioProfile.fullbandMusicMono());
-          // }
+          if (document.getElementById('fullband-speech-mono-quality').checked) {
+            this.meetingSession.audioVideo.setAudioProfile(index_1.AudioProfile.fullbandSpeechMono());
+            this.meetingSession.audioVideo.setContentAudioProfile(index_1.AudioProfile.fullbandSpeechMono());
+          }
+          else if (document.getElementById('fullband-music-mono-quality').checked) {
+            this.meetingSession.audioVideo.setAudioProfile(index_1.AudioProfile.fullbandMusicMono());
+            this.meetingSession.audioVideo.setContentAudioProfile(index_1.AudioProfile.fullbandMusicMono());
+          }
           this.audioVideo = this.meetingSession.audioVideo;
           this.audioVideo.addDeviceChangeObserver(this);
           this.setupDeviceLabelTrigger();
