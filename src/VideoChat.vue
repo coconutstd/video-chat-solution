@@ -2367,6 +2367,11 @@ name: "VideoChat",
 
 
 <style lang="scss">
+
+canvas {
+  position: absolute;
+}
+
 $white: #fff;
 $gray-100: #f8f9fa;
 $gray-200: #ecf0f1;
