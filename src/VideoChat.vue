@@ -492,9 +492,6 @@
 <script>
 import Vue from 'vue'
 
-import * as canvas from 'canvas'
-import * as faceapi from 'face-api.js'
-
 export default Vue.extend({
 name: "VideoChat",
   methods: {
