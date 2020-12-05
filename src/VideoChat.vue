@@ -2366,30 +2366,6 @@ name: "VideoChat",
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <style lang="scss">
 $white: #fff;
 $gray-100: #f8f9fa;
