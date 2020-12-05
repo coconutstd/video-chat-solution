@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="<%= BASE_URL %>js/cature.js"></script>
+    <script src="<%= BASE_URL %>js/face-api.js"></script>
+    <script src="<%= BASE_URL %>js/videoSize.js"></script>
+    <script src="<%= BASE_URL %>models/tiny_face_detector_model-weights_manifest.json"></script>
+    <script src="<%= BASE_URL %>models/face_landmark_68_model-weights_manifest.json"></script>
+    <script src="<%= BASE_URL %>models/face_recognition_model-weights_manifest.json"></script>
+    <script src="<%= BASE_URL %>models/face_expression_model-weights_manifest.json"></script>
+    <style>
+        canvas {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+</body>
 </html>
