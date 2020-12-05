@@ -272,6 +272,21 @@
                 </div>
               </div>
             </div>
+
+
+
+
+
+            <button id="btn-capture" type="button" class="btn btn-success mx-1 mx-xl-2 my-2" title="Track" onclick="capture()">
+<!--              ${require('../node_modules/open-iconic/svg/media-pause.svg').default}-->
+              트랙
+            </button>
+
+
+
+
+
+
             <div class="btn-group mx-1 mx-xl-2 my-2" role="group" aria-label="Toggle content share">
               <button id="button-content-share" type="button" class="btn btn-success" title="Toggle content share">
 <!--                ${require('../../node_modules/open-iconic/svg/camera-slr.svg').default}-->
@@ -2322,8 +2337,37 @@ name: "VideoChat",
 
     new DemoMeetingApp();
   }
-})
+});
+
+
+
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <style lang="scss">
 $white: #fff;
