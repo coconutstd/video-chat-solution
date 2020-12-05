@@ -317,6 +317,10 @@
 <!--              ${require('../node_modules/open-iconic/svg/power-standby.svg').default}-->
               end
             </button>
+            <button  @click.prevent="onClickFaceApi" type="button" class="btn btn-outline-danger mx-1 mx-xl-2 my-2 px-4" title="FaceAPI">
+              <!--              ${require('../node_modules/open-iconic/svg/power-standby.svg').default}-->
+              FaceApi
+            </button>
           </div>
         </div>
         <div id="roster-tile-container" class="row flex-sm-grow-1 overflow-hidden h-100" style="flex: unset;">
@@ -431,12 +435,14 @@
                 <div id="nameplate-15" class="video-tile-nameplate"></div>
                 <button id="video-pause-15" class="video-tile-pause">Pause</button>
               </div>
-              <div id="tile-16" class="video-tile">
-                <video id="video-16" class="video-tile-video"></video>
-                <div id="attendeeid-16" class="video-tile-attendeeid"></div>
-                <div id="nameplate-16" class="video-tile-nameplate"></div>
-                <button id="video-pause-16" class="video-tile-pause btn">Pause</button>
-              </div>
+
+                <div id="tile-16" class="video-tile">
+                  <video id="video-16" class="video-tile-video"></video>
+                  <canvas id="overlay" class="video-tile"></canvas>
+                  <div id="attendeeid-16" class="video-tile-attendeeid"></div>
+                  <div id="nameplate-16" class="video-tile-nameplate"></div>
+                  <button id="video-pause-16" class="video-tile-pause btn">Pause</button>
+                </div>
               <div id="tile-17" class="video-tile">
                 <video id="video-17" class="video-tile-video"></video>
                 <div id="nameplate-17" class="video-tile-nameplate"></div>
@@ -471,8 +477,23 @@
 <script>
 import Vue from 'vue'
 
+import * as canvas from 'canvas'
+import * as faceapi from 'face-api.js'
+
 export default Vue.extend({
 name: "VideoChat",
+  methods: {
+    async onClickFaceApi(){
+      const input = document.getElementById('video-16')
+      const displaySize = { width: input.width, height: input.height }
+      const canvas = document.getElementById('overlay')
+      faceapi.matchDimensions(canvas, displaySize)
+      const detections = await faceapi.detectSingleFace(input)
+      const resizedDetections = faceapi.resizeResults(detections, displaySize)
+      faceapi.draw.drawDetections(canvas, resizedDetections)
+
+    }
+  },
   mounted() {
     var VueDom = this
     var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
