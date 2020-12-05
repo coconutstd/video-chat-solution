@@ -20,7 +20,8 @@ export default class DefaultVideoTile implements DevicePixelRatioObserver, Video
   ): void {
     const transform =
       localTile && videoStream.getVideoTracks()[0].getSettings().facingMode !== 'environment'
-        ? 'rotateY(180deg)'
+            // ? 'rotateY(180deg)'  일단 막아 봄
+            ? 'rotateY(0deg)'
         : '';
 
     DefaultVideoTile.setVideoElementFlag(videoElement, 'disablePictureInPicture', localTile);
