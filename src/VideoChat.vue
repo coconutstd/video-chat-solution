@@ -275,18 +275,6 @@
 
 
 
-
-
-            <button id="btn-capture" type="button" class="btn btn-success mx-1 mx-xl-2 my-2" title="Track" onclick="capture()">
-<!--              ${require('../node_modules/open-iconic/svg/media-pause.svg').default}-->
-              트랙
-            </button>
-
-
-
-
-
-
             <div class="btn-group mx-1 mx-xl-2 my-2" role="group" aria-label="Toggle content share">
               <button id="button-content-share" type="button" class="btn btn-success" title="Toggle content share">
 <!--                ${require('../../node_modules/open-iconic/svg/camera-slr.svg').default}-->
@@ -453,7 +441,6 @@
 
                 <div id="tile-16" class="video-tile">
                   <video id="video-16" class="video-tile-video"></video>
-                  <canvas id="overlay" class="video-tile"></canvas>
                   <div id="attendeeid-16" class="video-tile-attendeeid"></div>
                   <div id="nameplate-16" class="video-tile-nameplate"></div>
                   <button id="video-pause-16" class="video-tile-pause btn">Pause</button>
@@ -492,19 +479,27 @@
 <script>
 /* eslint-disable */
 import Vue from 'vue'
+import { Capture } from './face_module/js/capture'
 
 export default Vue.extend({
 name: "VideoChat",
+  data() {
+    return {
+      isToggle : false
+    }
+  },
   methods: {
-    async onClickFaceApi(){
-      const input = document.getElementById('video-16')
-      const displaySize = { width: input.width, height: input.height }
-      const canvas = document.getElementById('overlay')
-      faceapi.matchDimensions(canvas, displaySize)
-      const detections = await faceapi.detectSingleFace(input)
-      const resizedDetections = faceapi.resizeResults(detections, displaySize)
-      faceapi.draw.drawDetections(canvas, resizedDetections)
-
+    onClickFaceApi(){
+      let capture = new Capture(document.getElementById('video-16'))
+      if(this.isToggle === false){
+        console.log('캡처 시작')
+        capture.capture()
+        this.isToggle = true
+      }else{
+        console.log('캡처 제거')
+        capture.uncapture()
+        this.isToggle = false
+      }
     }
   },
   mounted() {
