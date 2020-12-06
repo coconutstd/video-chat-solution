@@ -1,5 +1,8 @@
 //실제 출력되는 비디오의 left 값을 얻어온다.
-function getVideoOriginLeft(videoObjID) {
+import jQuery from "jquery";
+window.$ = window.jQuery = jQuery;
+
+export function getVideoOriginLeft(videoObjID) {
 
 	var obj = document.getElementById(videoObjID);
 
@@ -27,7 +30,7 @@ function getVideoOriginLeft(videoObjID) {
 	}
 };
 //실제 출력되는 비디오의 top 값을 얻어온다.
-function getVideoOriginTop(videoObjID) {
+export function getVideoOriginTop(videoObjID) {
 
 	var obj = document.getElementById(videoObjID);
 
@@ -56,7 +59,7 @@ function getVideoOriginTop(videoObjID) {
 };
 
 //실제 출력되는 비디오의 width 값을 얻어온다.
-function getVideoOriginWidth(videoObjID) {
+export function getVideoOriginWidth(videoObjID) {
 
 	var obj = document.getElementById(videoObjID);
 
@@ -82,7 +85,7 @@ function getVideoOriginWidth(videoObjID) {
 };
 
 //실제 출력되는 비디오의 height 값을 얻어온다.
-function getVideoOriginHeight(videoObjID) {
+export function getVideoOriginHeight(videoObjID) {
 
 	var obj = document.getElementById(videoObjID);
 
