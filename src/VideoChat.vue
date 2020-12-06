@@ -500,6 +500,7 @@ name: "VideoChat",
         console.log('캡처 제거')
         capture.uncapture()
         this.isToggle = false
+        capture = null
       }
     }
   },
