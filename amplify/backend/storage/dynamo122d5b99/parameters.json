@@ -1,7 +1,0 @@
-{
-    "tableName": "dynamo122d5b99",
-    "partitionKeyName": "meetingId",
-    "partitionKeyType": "S",
-    "sortKeyName": "meetingTitle",
-    "sortKeyType": "S"
-}
