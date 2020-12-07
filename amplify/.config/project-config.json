@@ -1,5 +1,8 @@
 {
-  "projectName": "videochatsolution",
+  "providers": [
+    "awscloudformation"
+  ],
+  "projectName": "video-chat-solution",
   "version": "3.0",
   "frontend": "javascript",
   "javascript": {
@@ -10,8 +13,5 @@
       "BuildCommand": "npm run-script build",
       "StartCommand": "npm run-script serve"
     }
-  },
-  "providers": [
-    "awscloudformation"
-  ]
+  }
 }
