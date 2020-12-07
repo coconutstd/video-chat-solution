@@ -1,6 +1,6 @@
 {
     "identityPoolName": "videochatsolution5ce0db2e_identitypool_5ce0db2e",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "videoc5ce0db2e",
     "userPoolName": "videochatsolution5ce0db2e_userpool_5ce0db2e",
     "autoVerifiedAttributes": [
