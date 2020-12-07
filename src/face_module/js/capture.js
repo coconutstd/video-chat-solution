@@ -3,6 +3,8 @@ import * as faceapi from './face-api'
 
 var interval = 0
 
+const S3_URL = 'https://amplify-videochatsolution-dev-233212-deployment.s3.ap-northeast-2.amazonaws.com/'
+
 export class Capture {
 
     constructor(videoTile) {
@@ -27,10 +29,11 @@ export class Capture {
             console.log(videoSize.getVideoOriginHeight('video-16'))
 
             Promise.all([
-                faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-                faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-                faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-                faceapi.nets.faceExpressionNet.loadFromUri('/models')
+                faceapi.nets.tinyFaceDetector.loadFromUri(S3_URL + 'models/'),
+                faceapi.nets.faceLandmark68Net.loadFromUri(S3_URL + 'models/'),
+                faceapi.nets.faceRecognitionNet.loadFromUri(S3_URL + 'models/'),
+                faceapi.nets.faceExpressionNet.loadFromUri(S3_URL + 'models/'),
+                faceapi.nets.ageGenderNet.loadFromUri(S3_URL + 'models/')
             ]).then(startVideo)
 
 
