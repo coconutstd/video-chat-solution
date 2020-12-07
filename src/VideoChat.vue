@@ -440,7 +440,7 @@
               </div>
 
                 <div id="tile-16" class="video-tile">
-                  <video id="video-16" class="video-tile-video"></video>
+                  <video id="video-16" class="video-tile-video" @click="onClickVideo"></video>
                   <div id="attendeeid-16" class="video-tile-attendeeid"></div>
                   <div id="nameplate-16" class="video-tile-nameplate"></div>
                   <button id="video-pause-16" class="video-tile-pause btn">Pause</button>
@@ -490,7 +490,7 @@ name: "VideoChat",
     }
   },
   methods: {
-    onClickFaceApi(){
+    onClickFaceApi() {
       let capture = new Capture(document.getElementById('video-16'))
       if(this.isToggle === false){
         console.log('캡처 시작')
@@ -501,6 +501,13 @@ name: "VideoChat",
         capture.uncapture()
         this.isToggle = false
         capture = null
+      }
+    },
+    onClickVideo() {
+      if (event.target.mozRequestFullScreen) {
+        event.target.mozRequestFullScreen();
+      } else if (event.target.webkitRequestFullScreen) {
+        event.target.webkitRequestFullScreen();
       }
     }
   },

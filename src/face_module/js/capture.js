@@ -55,6 +55,17 @@ export class Capture {
         //document.body.append(canvas)
         // $("#tile-16").append(canvas)
         document.getElementById("tile-16").append(canvas)
+        console.log(document.getElementsByTagName('canvas')[0])
+        document.getElementsByTagName('canvas')[0].addEventListener('click', () => {
+            console.log('clicked')
+            let videoTag = document.getElementById('video-16')
+            if (videoTag.mozRequestFullScreen) {
+                videoTag.mozRequestFullScreen();
+            } else if (videoTag.webkitRequestFullScreen) {
+                videoTag.webkitRequestFullScreen();
+            }
+        }
+        )
 
         const displaySize = {
             width: videoSize.getVideoOriginWidth('video-16'),
