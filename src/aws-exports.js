@@ -7,7 +7,21 @@ const awsmobile = {
     "aws_cognito_region": "ap-northeast-2",
     "aws_user_pools_id": "ap-northeast-2_6BH8m4f8z",
     "aws_user_pools_web_client_id": "1nf0h801mqastdkhd6gchosm5a",
-    "oauth": {}
+    "oauth": {},
+    "aws_dynamodb_all_tables_region": "ap-northeast-2",
+    "aws_dynamodb_table_schemas": [
+        {
+            "tableName": "dynamoaab56176-dev",
+            "region": "ap-northeast-2"
+        }
+    ],
+    "aws_cloud_logic_custom": [
+        {
+            "name": "todosApi",
+            "endpoint": "https://4829dwss1b.execute-api.ap-northeast-2.amazonaws.com/dev",
+            "region": "ap-northeast-2"
+        }
+    ]
 };
 
 

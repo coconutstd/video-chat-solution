@@ -1,5 +1,5 @@
 <template>
-<div>Home, Hello {{user.username}}</div>
+<div>Home, Hello</div>
 </template>
 
 <script>
