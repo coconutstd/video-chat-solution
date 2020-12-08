@@ -40,7 +40,7 @@ export class Capture {
                 faceapi.nets.faceLandmark68Net.loadFromUri(S3_URL + 'models/'),
                 faceapi.nets.faceRecognitionNet.loadFromUri(S3_URL + 'models/'),
                 faceapi.nets.faceExpressionNet.loadFromUri(S3_URL + 'models/'),
-                faceapi.nets.ageGenderNet.loadFromUri(S3_URL + 'models/')
+                faceapi.nets.ssdMobilenetv1.loadFromUri(S3_URL + 'models/')
             ]).then(start)
 
 
