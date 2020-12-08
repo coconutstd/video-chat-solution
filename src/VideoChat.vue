@@ -1,84 +1,87 @@
 <template>
   <div>
     <div id="flow-authenticate" class="flow text-center p-2">
-    <div class="text-muted" style="position:fixed;right:3px;bottom:3px" ref="sdk-version">
-    </div>
-    <div class="container">
-      <form id="form-authenticate">
-        <h1 class="h3 mb-3 font-weight-normal">OMNI Project</h1>
-        <div class="row mt-3">
-          <label for="inputMeeting" class="sr-only">Meeting Title</label>
-          <input type="name" id="inputMeeting" class="form-control" placeholder="회의 제목" required autofocus>
-        </div>
-        <div class="row mt-3">
-          <label for="inputName" class="sr-only">Your Name</label>
-          <input type="name" id="inputName" class="form-control" placeholder="참가 이름" required>
-        </div>
-        <div class="row mt-3">
-          <label for="inputRegion" class="sr-only">Media Region</label>
-          <select id="inputRegion" class="custom-select" style="width:100%">
-<!--            <option value="us-east-1" selected>United States (N. Virginia)</option>-->
-<!--            <option value="ap-northeast-1">Japan (Tokyo)</option>-->
-<!--            <option value="ap-southeast-1">Singapore</option>-->
-<!--            <option value="af-south-1">South Africa (Cape Town)</option>-->
-<!--            <option value="eu-south-1">Italy (Milan)</option>-->
-<!--            <option value="ap-south-1">India (Mumbai)</option>-->
-<!--            <option value="ap-northeast-2">South Korea (Seoul)</option>-->
-<!--            <option value="ap-southeast-2">Australia (Sydney)</option>-->
-<!--            <option value="ca-central-1">Canada</option>-->
-<!--            <option value="eu-central-1">Germany (Frankfurt)</option>-->
-<!--            <option value="eu-north-1">Sweden (Stockholm)</option>-->
-<!--            <option value="eu-west-1">Ireland</option>-->
-<!--            <option value="eu-west-2">United Kingdom (London)</option>-->
-<!--            <option value="eu-west-3">France (Paris)</option>-->
-<!--            <option value="sa-east-1">Brazil (São Paulo)</option>-->
-<!--            <option value="us-east-2">United States (Ohio)</option>-->
-<!--            <option value="us-west-1">United States (N. California)</option>-->
-<!--            <option value="us-west-2">United States (Oregon)</option>-->
-          </select>
-        </div>
-        <div class="row mt-3">
-          <div class="col-12">
-            <fieldset>
-              <legend>Choose your optional features</legend>
-              <div class="custom-control custom-checkbox" style="text-align: left;">
-                <input type="checkbox" id="webaudio" class="custom-control-input">
-                <label for="webaudio" class="custom-control-label">Use WebAudio</label>
-              </div>
-              <div class="custom-control custom-checkbox" style="text-align: left;">
-                <input type="checkbox" id="fullband-speech-mono-quality" class="custom-control-input">
-                <label for="fullband-speech-mono-quality" class="custom-control-label">Set fullband speech (mono) quality</label>
-              </div>
-              <div class="custom-control custom-checkbox" style="text-align: left;">
-                <input type="checkbox" id="fullband-music-mono-quality" class="custom-control-input">
-                <label for="fullband-music-mono-quality" class="custom-control-label">Set fullband music (mono) quality</label>
-              </div>
-              <div class="custom-control custom-checkbox" style="text-align: left;">
-                <input type="checkbox" id="simulcast" class="custom-control-input">
-                <label for="simulcast" class="custom-control-label">Enable Simulcast for Chrome</label>
-              </div>
-              <div class="custom-control custom-checkbox" style="text-align: left;">
-                <input type="checkbox" id="planB" class="custom-control-input">
-                <label for="planB" class="custom-control-label">Disable Unified Plan for Chrome</label>
-              </div>
-            </fieldset>
+      <div class="text-muted" style="position:fixed;right:3px;bottom:3px" ref="sdk-version">
+      </div>
+      <div class="container">
+        <form id="form-authenticate">
+          <h1 class="h3 mb-3 font-weight-normal">OMNI Project</h1>
+          <div class="row mt-3">
+            <label for="inputMeeting" class="sr-only">Meeting Title</label>
+            <input type="name" id="inputMeeting" class="form-control" placeholder="회의 제목" required autofocus>
           </div>
-        </div>
-        <div class="row mt-3">
-          <button id="authenticate" class="btn btn-lg btn-primary btn-block" type="submit">시작하기</button>
-        </div>
-        <div class="row mt-3">
-          <p>Anyone with access to the meeting link can join.</p>
-        </div>
-        <a id="to-sip-flow" class="row mt-3" href="#">Joining via SIP? Click here.</a>
-        <div class="row mt-3">
-          <div id="progress-authenticate" class="w-100 progress progress-hidden">
-            <div class="w-100 progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+          <div class="row mt-3">
+            <label for="inputName" class="sr-only">Your Name</label>
+            <input type="name" id="inputName" class="form-control" placeholder="참가 이름" required>
           </div>
-        </div>
-      </form>
+          <div class="row mt-3">
+            <label for="inputRegion" class="sr-only">Media Region</label>
+            <select id="inputRegion" class="custom-select" style="width:100%">
+              <!--            <option value="us-east-1" selected>United States (N. Virginia)</option>-->
+              <!--            <option value="ap-northeast-1">Japan (Tokyo)</option>-->
+              <!--            <option value="ap-southeast-1">Singapore</option>-->
+              <!--            <option value="af-south-1">South Africa (Cape Town)</option>-->
+              <!--            <option value="eu-south-1">Italy (Milan)</option>-->
+              <!--            <option value="ap-south-1">India (Mumbai)</option>-->
+              <!--            <option value="ap-northeast-2">South Korea (Seoul)</option>-->
+              <!--            <option value="ap-southeast-2">Australia (Sydney)</option>-->
+              <!--            <option value="ca-central-1">Canada</option>-->
+              <!--            <option value="eu-central-1">Germany (Frankfurt)</option>-->
+              <!--            <option value="eu-north-1">Sweden (Stockholm)</option>-->
+              <!--            <option value="eu-west-1">Ireland</option>-->
+              <!--            <option value="eu-west-2">United Kingdom (London)</option>-->
+              <!--            <option value="eu-west-3">France (Paris)</option>-->
+              <!--            <option value="sa-east-1">Brazil (São Paulo)</option>-->
+              <!--            <option value="us-east-2">United States (Ohio)</option>-->
+              <!--            <option value="us-west-1">United States (N. California)</option>-->
+              <!--            <option value="us-west-2">United States (Oregon)</option>-->
+            </select>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <fieldset>
+                <legend>Choose your optional features</legend>
+                <div class="custom-control custom-checkbox" style="text-align: left;">
+                  <input type="checkbox" id="webaudio" class="custom-control-input">
+                  <label for="webaudio" class="custom-control-label">Use WebAudio</label>
+                </div>
+                <div class="custom-control custom-checkbox" style="text-align: left;">
+                  <input type="checkbox" id="fullband-speech-mono-quality" class="custom-control-input">
+                  <label for="fullband-speech-mono-quality" class="custom-control-label">Set fullband speech (mono)
+                    quality</label>
+                </div>
+                <div class="custom-control custom-checkbox" style="text-align: left;">
+                  <input type="checkbox" id="fullband-music-mono-quality" class="custom-control-input">
+                  <label for="fullband-music-mono-quality" class="custom-control-label">Set fullband music (mono)
+                    quality</label>
+                </div>
+                <div class="custom-control custom-checkbox" style="text-align: left;">
+                  <input type="checkbox" id="simulcast" class="custom-control-input">
+                  <label for="simulcast" class="custom-control-label">Enable Simulcast for Chrome</label>
+                </div>
+                <div class="custom-control custom-checkbox" style="text-align: left;">
+                  <input type="checkbox" id="planB" class="custom-control-input">
+                  <label for="planB" class="custom-control-label">Disable Unified Plan for Chrome</label>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <button id="authenticate" class="btn btn-lg btn-primary btn-block" type="submit">시작하기</button>
+          </div>
+          <div class="row mt-3">
+            <p>Anyone with access to the meeting link can join.</p>
+          </div>
+          <a id="to-sip-flow" class="row mt-3" href="#">Joining via SIP? Click here.</a>
+          <div class="row mt-3">
+            <div id="progress-authenticate" class="w-100 progress progress-hidden">
+              <div class="w-100 progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                   aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
 
     <!-- Authenticate for SIP with meeting and voice connector ID -->
 
@@ -88,14 +91,16 @@
           <h1 class="h3 mb-3 font-weight-normal">Join a meeting via SIP</h1>
           <div class="row mt-3">
             <label for="sip-inputMeeting" class="sr-only">Meeting Title</label>
-            <input type="name" id="sip-inputMeeting" class="form-control" placeholder="Meeting Title" required autofocus>
+            <input type="name" id="sip-inputMeeting" class="form-control" placeholder="Meeting Title" required
+                   autofocus>
           </div>
           <div class="row mt-3">
             <label for="voiceConnectorId" class="sr-only">Voice Connector ID</label>
             <input type="name" id="voiceConnectorId" class="form-control" placeholder="Voice Connector ID" required>
           </div>
           <div class="row mt-3">
-            <button id="button-sip-authenticate" class="btn btn-lg btn-primary btn-block" type="submit">Continue</button>
+            <button id="button-sip-authenticate" class="btn btn-lg btn-primary btn-block" type="submit">Continue
+            </button>
           </div>
           <div class="row mt-3">
             <p>You will need a SIP client in order to join the meeting.</p>
@@ -113,7 +118,8 @@
             <div id="failed-meeting" class="card-header"></div>
             <div class="card-body">
               <h4 class="card-title">Unable to find meeting</h4>
-              <p class="card-text">There was an issue finding that meeting. The meeting may have already ended, or your authorization may have expired.</p>
+              <p class="card-text">There was an issue finding that meeting. The meeting may have already ended, or your
+                authorization may have expired.</p>
               <small id="failed-meeting-error" class="text-muted"></small>
             </div>
           </div>
@@ -131,7 +137,8 @@
             <div class="card-header">Permissions check</div>
             <div class="card-body">
               <h4 class="card-title">Unable to get device labels</h4>
-              <p class="card-text">In order to select media devices, we need to do a quick permissions check of your mic and camera. When the pop-up appears, choose <b>Allow</b>.</p>
+              <p class="card-text">In order to select media devices, we need to do a quick permissions check of your mic
+                and camera. When the pop-up appears, choose <b>Allow</b>.</p>
             </div>
           </div>
         </form>
@@ -169,7 +176,8 @@
             <div class="text-center col-sm-4 d-sm-block">
               <label>Preview</label>
               <div class="w-100 progress" style="margin-top:0.75rem">
-                <div id="audio-preview" class="progress-bar bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                <div id="audio-preview" class="progress-bar bg-success" role="progressbar" aria-valuenow="0"
+                     aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
@@ -185,7 +193,8 @@
               <select id="video-input" class="custom-select" style="width:100%"></select>
             </div>
             <div class="col-sm-4 text-center d-sm-block video-preview">
-              <video id="video-preview" class="w-100 h-100" style="max-width:137px;max-height:82px;border-radius:8px"></video>
+              <video id="video-preview" class="w-100 h-100"
+                     style="max-width:137px;max-height:82px;border-radius:8px"></video>
             </div>
           </div>
           <div class="row mt-3">
@@ -203,7 +212,9 @@
               <select id="audio-output" class="custom-select" style="width:100%"></select>
             </div>
             <div class="col-sm-4">
-              <button id="button-test-sound" class="btn btn-outline-secondary btn-block h-50 d-sm-block" style="margin-top:2rem">Test</button>
+              <button id="button-test-sound" class="btn btn-outline-secondary btn-block h-50 d-sm-block"
+                      style="margin-top:2rem">Test
+              </button>
             </div>
           </div>
 
@@ -214,12 +225,14 @@
           </div>
           <div class="row mt-3">
             <div class="col-lg">
-              <p>Ready to join meeting <b><span id="info-meeting"></span></b> as <b><span id="info-name"></span></b>.</p>
+              <p>Ready to join meeting <b><span id="info-meeting"></span></b> as <b><span id="info-name"></span></b>.
+              </p>
             </div>
           </div>
         </form>
         <div id="progress-join" class="w-100 progress progress-hidden">
-          <div class="w-100 progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+          <div class="w-100 progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+               aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
       </div>
     </div>
@@ -250,77 +263,100 @@
           <div class="col-8 col-lg-6 order-2 order-lg-2 text-left text-lg-center">
             <div class="btn-group mx-1 mx-xl-2 my-2" role="group" aria-label="Toggle microphone">
               <button id="button-microphone" type="button" class="btn btn-success" title="Toggle microphone">
-<!--                ${require('../node_modules/open-iconic/svg/microphone.svg').default}-->
+                <!--                ${require('../node_modules/open-iconic/svg/microphone.svg').default}-->
                 mic
               </button>
               <div class="btn-group" role="group">
-                <button id="button-microphone-drop" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Select microphone"></button>
-                <div id="dropdown-menu-microphone" class="dropdown-menu dropdown-menu-right" aria-labelledby="button-microphone-drop" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <button id="button-microphone-drop" type="button" class="btn btn-success dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        title="Select microphone"></button>
+                <div id="dropdown-menu-microphone" class="dropdown-menu dropdown-menu-right"
+                     aria-labelledby="button-microphone-drop" x-placement="bottom-start"
+                     style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
                   <a class="dropdown-item" href="#">Default microphone</a>
                 </div>
               </div>
             </div>
             <div class="btn-group mx-1 mx-xl-2 my-2" role="group" aria-label="Toggle camera">
               <button id="button-camera" type="button" class="btn btn-success" title="Toggle camera">
-<!--                ${require('../node_modules/open-iconic/svg/video.svg').default}-->
+                <!--                ${require('../node_modules/open-iconic/svg/video.svg').default}-->
                 cam
               </button>
               <div class="btn-group" role="group">
-                <button id="button-camera-drop" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Select camera"></button>
-                <div id="dropdown-menu-camera" class="dropdown-menu dropdown-menu-right" aria-labelledby="button-camera-drop" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <button id="button-camera-drop" type="button" class="btn btn-success dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        title="Select camera"></button>
+                <div id="dropdown-menu-camera" class="dropdown-menu dropdown-menu-right"
+                     aria-labelledby="button-camera-drop" x-placement="bottom-start"
+                     style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
                   <a class="dropdown-item" href="#">Default camera</a>
                 </div>
               </div>
             </div>
 
 
-
             <div class="btn-group mx-1 mx-xl-2 my-2" role="group" aria-label="Toggle content share">
               <button id="button-content-share" type="button" class="btn btn-success" title="Toggle content share">
-<!--                ${require('../../node_modules/open-iconic/svg/camera-slr.svg').default}-->
+                <!--                ${require('../../node_modules/open-iconic/svg/camera-slr.svg').default}-->
                 screen
               </button>
               <div class="btn-group" role="group">
-                <button id="button-content-share-drop" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Select content to share"></button>
-                <div id="dropdown-menu-content-share" class="dropdown-menu dropdown-menu-right" aria-labelledby="button-content-share-drop" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
-                  <a id="dropdown-item-content-share-screen-capture" class="dropdown-item" href="#">Screen Capture...</a>
+                <button id="button-content-share-drop" type="button" class="btn btn-success dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        title="Select content to share"></button>
+                <div id="dropdown-menu-content-share" class="dropdown-menu dropdown-menu-right"
+                     aria-labelledby="button-content-share-drop" x-placement="bottom-start"
+                     style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                  <a id="dropdown-item-content-share-screen-capture" class="dropdown-item" href="#">Screen
+                    Capture...</a>
                   <a id="dropdown-item-content-share-screen-test-video" class="dropdown-item" href="#">Test Video</a>
-                  <a id="dropdown-item-content-share-file-item" class="dropdown-item" href="#"><input id="content-share-item" type="file"></a>
+                  <a id="dropdown-item-content-share-file-item" class="dropdown-item" href="#"><input
+                      id="content-share-item" type="file"></a>
                 </div>
               </div>
             </div>
-            <button id="button-pause-content-share" type="button" class="btn btn-success mx-1 mx-xl-2 my-2" title="Pause and unpause content share">
-<!--              ${require('../node_modules/open-iconic/svg/media-pause.svg').default}-->
+            <button id="button-pause-content-share" type="button" class="btn btn-success mx-1 mx-xl-2 my-2"
+                    title="Pause and unpause content share">
+              <!--              ${require('../node_modules/open-iconic/svg/media-pause.svg').default}-->
               pause
             </button>
             <div class="btn-group mx-1 mx-xl-2 my-2" role="group" aria-label="Toggle speaker">
               <button id="button-speaker" type="button" class="btn btn-success" title="Toggle speaker">
-<!--                ${require('../node_modules/open-iconic/svg/volume-low.svg').default}-->
+                <!--                ${require('../node_modules/open-iconic/svg/volume-low.svg').default}-->
                 speaker
               </button>
               <div class="btn-group" role="group">
-                <button id="button-speaker-drop" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Select speaker"></button>
-                <div id="dropdown-menu-speaker" class="dropdown-menu dropdown-menu-right" aria-labelledby="button-speaker-drop" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <button id="button-speaker-drop" type="button" class="btn btn-success dropdown-toggle"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        title="Select speaker"></button>
+                <div id="dropdown-menu-speaker" class="dropdown-menu dropdown-menu-right"
+                     aria-labelledby="button-speaker-drop" x-placement="bottom-start"
+                     style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: 0px; will-change: transform;">
                   <a class="dropdown-item" href="#">Default speaker</a>
                 </div>
               </div>
             </div>
-            <button id="button-video-stats" type="button" class="btn btn-success mx-1 mx-xl-2 my-2" title="Toggle video WebRTC stats display" data-toggle="button" aria-pressed="false" autocomplete="off">
-<!--              ${require('../node_modules/open-iconic/svg/signal.svg').default}-->
+            <button id="button-video-stats" type="button" class="btn btn-success mx-1 mx-xl-2 my-2"
+                    title="Toggle video WebRTC stats display" data-toggle="button" aria-pressed="false"
+                    autocomplete="off">
+              <!--              ${require('../node_modules/open-iconic/svg/signal.svg').default}-->
               stats
 
             </button>
           </div>
           <div class="col-4 col-lg-3 order-3 order-lg-3 text-right text-lg-right">
-            <button id="button-meeting-leave" type="button" class="btn btn-outline-success mx-1 mx-xl-2 my-2 px-4" title="Leave meeting">
-<!--              ${require('../node_modules/open-iconic/svg/account-logout.svg').default}-->
+            <button id="button-meeting-leave" type="button" class="btn btn-outline-success mx-1 mx-xl-2 my-2 px-4"
+                    title="Leave meeting">
+              <!--              ${require('../node_modules/open-iconic/svg/account-logout.svg').default}-->
               leave
             </button>
-            <button id="button-meeting-end" type="button" class="btn btn-outline-danger mx-1 mx-xl-2 my-2 px-4" title="End meeting">
-<!--              ${require('../node_modules/open-iconic/svg/power-standby.svg').default}-->
+            <button id="button-meeting-end" type="button" class="btn btn-outline-danger mx-1 mx-xl-2 my-2 px-4"
+                    title="End meeting">
+              <!--              ${require('../node_modules/open-iconic/svg/power-standby.svg').default}-->
               end
             </button>
-            <button  @click.prevent="onClickFaceApi" type="button" class="btn btn-outline-danger mx-1 mx-xl-2 my-2 px-4" title="FaceAPI">
+            <button @click.prevent="onClickFaceApi" type="button" class="btn btn-outline-danger mx-1 mx-xl-2 my-2 px-4"
+                    title="FaceAPI">
               <!--              ${require('../node_modules/open-iconic/svg/power-standby.svg').default}-->
               FaceApi
             </button>
@@ -335,12 +371,14 @@
               <div class="list-group receive-message" id="receive-message" style="flex: 1 1 auto; overflow-y: auto;
             border: 1px solid rgba(0, 0, 0, 0.125); background-color: #fff"></div>
               <div class="input-group send-message" style="display:flex;flex:0 0 auto;margin-top:0.2rem">
-            <textarea class="form-control shadow-none" id="send-message" rows="1" placeholder="Type a message (markdown supported)" style="display:inline-block; width:100%;
+            <textarea class="form-control shadow-none" id="send-message" rows="1"
+                      placeholder="Type a message (markdown supported)" style="display:inline-block; width:100%;
               resize:none; border-color: rgba(0, 0, 0, 0.125); outline: none; padding-left: 1.4rem"></textarea>
               </div>
             </div>
           </div>
-          <div id="tile-container" class="col-12 col-sm-6 col-md-7 col-lg-8 my-4 my-sm-0 h-100" style="overflow-y: scroll">
+          <div id="tile-container" class="col-12 col-sm-6 col-md-7 col-lg-8 my-4 my-sm-0 h-100"
+               style="overflow-y: scroll">
             <div id="tile-area" class="v-grid">
               <div id="tile-0" class="video-tile">
                 <video id="video-0" class="video-tile-video"></video>
@@ -439,12 +477,12 @@
                 <button id="video-pause-15" class="video-tile-pause">Pause</button>
               </div>
 
-                <div id="tile-16" class="video-tile">
-                  <video id="video-16" class="video-tile-video" @click="onClickVideo"></video>
-                  <div id="attendeeid-16" class="video-tile-attendeeid"></div>
-                  <div id="nameplate-16" class="video-tile-nameplate"></div>
-                  <button id="video-pause-16" class="video-tile-pause btn">Pause</button>
-                </div>
+              <div id="tile-16" class="video-tile">
+                <video id="video-16" class="video-tile-video" @click="onClickVideo"></video>
+                <div id="attendeeid-16" class="video-tile-attendeeid"></div>
+                <div id="nameplate-16" class="video-tile-nameplate"></div>
+                <button id="video-pause-16" class="video-tile-pause btn">Pause</button>
+              </div>
               <div id="tile-17" class="video-tile">
                 <video id="video-17" class="video-tile-video"></video>
                 <div id="nameplate-17" class="video-tile-nameplate"></div>
@@ -473,30 +511,31 @@
           <button class="btn btn-lg btn-outline-warning btn-block" type="submit">OK</button>
         </form>
       </div>
-    </div></div>
+    </div>
+  </div>
 </template>
 
 <script>
 /* eslint-disable */
 import Vue from 'vue'
-import { Capture } from './face_module/js/capture'
-import { DemoMeetingApp } from './demomeeting'
+import {Capture} from './face_module/js/capture'
+import {DemoMeetingApp} from './demomeeting'
 
 export default Vue.extend({
-name: "VideoChat",
+  name: "VideoChat",
   data() {
     return {
-      isToggle : false
+      isToggle: false
     }
   },
   methods: {
     onClickFaceApi() {
       let capture = new Capture(document.getElementById('video-16'))
-      if(this.isToggle === false){
+      if (this.isToggle === false) {
         console.log('캡처 시작')
         capture.capture()
         this.isToggle = true
-      }else{
+      } else {
         console.log('캡처 제거')
         capture.uncapture()
         this.isToggle = false
@@ -609,6 +648,7 @@ $overlay-z-index: 10;
 
 .bg-dark {
   background-color: $success !important;
+
   &.navbar-dark .navbar-nav {
     .nav-link:focus,
     .nav-link:hover,
@@ -1343,6 +1383,7 @@ a.markdown:active {
 
   .stats-table {
     width: 15rem;
+
     & tr:first-child {
       border-bottom: 1px dotted $white;
     }

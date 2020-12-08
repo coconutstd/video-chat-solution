@@ -6,8 +6,8 @@ import * as videoSize from './videoSize'
 import * as faceapi from './face-api.min'
 
 var interval = 0
-let labeledFaceDescriptors = null; 
-let faceMatcher  = null; 
+let labeledFaceDescriptors = null;
+let faceMatcher = null;
 
 const S3_URL = 'https://amplify-videochatsolution-dev-233212-deployment.s3.ap-northeast-2.amazonaws.com/'
 
@@ -49,15 +49,15 @@ export class Capture {
                 labeledFaceDescriptors = await videoSize.loadLabeledImages()
                 faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
                 // console.log(faceMatcher)
-              }
-              
-          
+            }
+
+
             async function startVideo() {
-            navigator.getUserMedia(
-                { video: {} },
-                stream => video.srcObject = stream,
-                err => console.error(err)
-            )
+                navigator.getUserMedia(
+                    {video: {}},
+                    stream => video.srcObject = stream,
+                    err => console.error(err)
+                )
             }
 
             this.video.addEventListener('play', this.videoCallback(video))
@@ -72,14 +72,14 @@ export class Capture {
         document.getElementById("tile-16").append(canvas)
         console.log(document.getElementsByTagName('canvas')[0])
         document.getElementsByTagName('canvas')[0].addEventListener('click', () => {
-            console.log('clicked')
-            let videoTag = document.getElementById('video-16')
-            if (videoTag.mozRequestFullScreen) {
-                videoTag.mozRequestFullScreen();
-            } else if (videoTag.webkitRequestFullScreen) {
-                videoTag.webkitRequestFullScreen();
+                console.log('clicked')
+                let videoTag = document.getElementById('video-16')
+                if (videoTag.mozRequestFullScreen) {
+                    videoTag.mozRequestFullScreen();
+                } else if (videoTag.webkitRequestFullScreen) {
+                    videoTag.webkitRequestFullScreen();
+                }
             }
-        }
         )
 
         const displaySize = {
@@ -116,25 +116,25 @@ export class Capture {
                 }
                 const dims = faceapi.matchDimensions(canvas, displaySize, true)
                 const resizedDetections = faceapi.resizeResults(detections, dims)
-      
+
                 const results = faceMatcher.findBestMatch(resizedDetections.descriptor)
                 // const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
                 // const results = resizedDetections.map(d => {
                 //   console.log(d.descriptor)
                 //   faceMatcher.findBestMatch(d.descriptor)
-                //   return faceMatcher.findBestMatch(d.descriptor); 
+                //   return faceMatcher.findBestMatch(d.descriptor);
                 // })
                 // console.log(detections.toString())
-      
+
                 // console.log(results.toString())
                 canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
                 const minConfidence = 0.05
-      
+
                 const box = resizedDetections.detection.box
-                
-                const drawBox = new faceapi.draw.DrawBox(box, { label: "         [" + results.toString() + "]"})
+
+                const drawBox = new faceapi.draw.DrawBox(box, {label: "         [" + results.toString() + "]"})
                 drawBox.draw(canvas)
-                
+
                 faceapi.draw.drawDetections(canvas, resizedDetections)
                 faceapi.draw.drawFaceExpressions(canvas, resizedDetections, minConfidence)
                 console.log(detections)
