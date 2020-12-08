@@ -2,8 +2,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-inner-declarations */
 import * as videoSize from './videoSize'
-// import * as faceapi from './face-api'
-import * as faceapi from './face-api.min'
 import {
     loadModels,
     loadLabeledImages,
