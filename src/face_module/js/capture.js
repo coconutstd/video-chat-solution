@@ -1,7 +1,13 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-inner-declarations */
 import * as videoSize from './videoSize'
-import * as faceapi from './face-api'
+// import * as faceapi from './face-api'
+import * as faceapi from './face-api.min'
 
 var interval = 0
+let labeledFaceDescriptors = null; 
+let faceMatcher  = null; 
 
 const S3_URL = 'https://amplify-videochatsolution-dev-233212-deployment.s3.ap-northeast-2.amazonaws.com/'
 
@@ -15,13 +21,14 @@ export class Capture {
         console.log('제거')
         clearInterval(interval)
         let target = document.getElementsByTagName('canvas')
-        console.log(target)
+        // console.log(target)
         target[0].parentNode.removeChild(target[0])
         // this.video.removeEventListener('play', this.videoCallback(this.video))
     }
 
     capture() {
         const video = this.video
+
         if (video) {
             console.log(videoSize.getVideoOriginLeft('video-16'))
             console.log(videoSize.getVideoOriginTop('video-16'))
@@ -34,15 +41,23 @@ export class Capture {
                 faceapi.nets.faceRecognitionNet.loadFromUri(S3_URL + 'models/'),
                 faceapi.nets.faceExpressionNet.loadFromUri(S3_URL + 'models/'),
                 faceapi.nets.ageGenderNet.loadFromUri(S3_URL + 'models/')
-            ]).then(startVideo)
+            ]).then(start)
 
 
-            function startVideo() {
-                navigator.getUserMedia(
-                    {video: {}},
-                    stream => video.srcObject = stream,
-                    err => console.error(err)
-                )
+            async function start() {
+                startVideo()
+                labeledFaceDescriptors = await videoSize.loadLabeledImages()
+                faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
+                // console.log(faceMatcher)
+              }
+              
+          
+            async function startVideo() {
+            navigator.getUserMedia(
+                { video: {} },
+                stream => video.srcObject = stream,
+                err => console.error(err)
+            )
             }
 
             this.video.addEventListener('play', this.videoCallback(video))
@@ -84,7 +99,7 @@ export class Capture {
             const detections = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions({
                 inputSize,
                 scoreThreshold
-            })).withFaceExpressions()
+            })).withFaceLandmarks().withFaceExpressions().withFaceDescriptor()
 
             // console.log(detections)
 
@@ -100,16 +115,34 @@ export class Capture {
                     height: videoSize.getVideoOriginHeight('video-16')
                 }
                 const dims = faceapi.matchDimensions(canvas, displaySize, true)
-                const resizedResult = faceapi.resizeResults(detections, dims)
+                const resizedDetections = faceapi.resizeResults(detections, dims)
+      
+                const results = faceMatcher.findBestMatch(resizedDetections.descriptor)
+                // const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
+                // const results = resizedDetections.map(d => {
+                //   console.log(d.descriptor)
+                //   faceMatcher.findBestMatch(d.descriptor)
+                //   return faceMatcher.findBestMatch(d.descriptor); 
+                // })
+                // console.log(detections.toString())
+      
+                // console.log(results.toString())
                 canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
                 const minConfidence = 0.05
-                faceapi.draw.drawDetections(canvas, resizedResult)
-                faceapi.draw.drawFaceExpressions(canvas, resizedResult, minConfidence)
+      
+                const box = resizedDetections.detection.box
+                
+                const drawBox = new faceapi.draw.DrawBox(box, { label: "         [" + results.toString() + "]"})
+                drawBox.draw(canvas)
+                
+                faceapi.draw.drawDetections(canvas, resizedDetections)
+                faceapi.draw.drawFaceExpressions(canvas, resizedDetections, minConfidence)
                 console.log(detections)
+                console.log(results)
                 // console.log(canvas)
             }
 
-        }, 100)
+        }, 250)
 
     }
-};
+}
