@@ -541,12 +541,12 @@ export default Vue.extend({
       chartData: {
         hoverBackgroundColor: "red",
         hoverBorderWidth: 10,
-        labels: collectedData.keys(),
+        labels: Array.from(collectedData.keys()),
         datasets: [
           {
             label: "Data One",
             backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#41B883", "#E46651", "#00D8FF"],
-            data: collectedData.values(),
+            data: Array.from(collectedData.values()),
           }
         ]
       }
@@ -565,6 +565,8 @@ export default Vue.extend({
         this.isToggle = false
         capture = null
         console.log(collectedData)
+        this.chartData.labels = Array.from(collectedData.keys())
+        this.chartData.datasets[0].data =[1,2,3,4,5,6,7]
       }
     },
     onClickVideo() {
