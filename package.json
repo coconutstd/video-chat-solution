@@ -11,12 +11,15 @@
     "@aws-amplify/ui-components": "^0.9.5",
     "@aws-amplify/ui-vue": "^0.2.29",
     "aws-amplify": "^3.3.10",
+    "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
+    "easytimer.js": "^4.3.1",
     "jquery": "^3.5.1",
     "markdown-it": "^12.0.2",
     "open-iconic": "^1.1.1",
     "popper.js": "^1.16.1",
     "vue": "^2.6.11",
+    "vue-chartjs": "^3.5.1",
     "vue-router": "^3.4.9"
   },
   "devDependencies": {

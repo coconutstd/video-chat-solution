@@ -483,6 +483,10 @@
                 <div id="nameplate-16" class="video-tile-nameplate"></div>
                 <button id="video-pause-16" class="video-tile-pause btn">Pause</button>
               </div>
+
+
+              <pie-chart :data="chartData" :options="chartOptions"></pie-chart>
+
               <div id="tile-17" class="video-tile">
                 <video id="video-17" class="video-tile-video"></video>
                 <div id="nameplate-17" class="video-tile-nameplate"></div>
@@ -518,14 +522,34 @@
 <script>
 /* eslint-disable */
 import Vue from 'vue'
-import {Capture} from './face_module/js/capture'
+import {Capture } from './face_module/js/capture'
 import {DemoMeetingApp} from './demomeeting'
+import {collectedData} from "@/face_module/js/loader"
+import PieChart from "@/router/PieChart";
 
 export default Vue.extend({
   name: "VideoChat",
+  components: {
+    PieChart
+  },
   data() {
     return {
-      isToggle: false
+      isToggle: false,
+      chartOptions: {
+        hoverBorderWidth: 20
+      },
+      chartData: {
+        hoverBackgroundColor: "red",
+        hoverBorderWidth: 10,
+        labels: Array.from(collectedData.keys()),
+        datasets: [
+          {
+            label: "Data One",
+            backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#41B883", "#E46651", "#00D8FF"],
+            data: Array.from(collectedData.values()),
+          }
+        ]
+      }
     }
   },
   methods: {
@@ -540,6 +564,9 @@ export default Vue.extend({
         capture.uncapture()
         this.isToggle = false
         capture = null
+        console.log(collectedData)
+        this.chartData.labels = Array.from(collectedData.keys())
+        this.chartData.datasets[0].data =[1,2,3,4,5,6,7]
       }
     },
     onClickVideo() {

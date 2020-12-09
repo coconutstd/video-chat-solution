@@ -2,7 +2,7 @@ import * as faceapi from './face-api.min'
 import * as videoSize from "@/face_module/js/videoSize";
 
 const S3_URL = 'https://amplify-videochatsolution-dev-233212-deployment.s3.ap-northeast-2.amazonaws.com/'
-
+export let collectedData = new Map()
 var interval = 0
 
 export async function loadModels() {
@@ -75,6 +75,7 @@ export async function videoCallback(video, FaceMatcher) {
     let inputSize = 224
     let scoreThreshold = 0.5
 
+
     interval = setInterval(async () => {
         // const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
         // const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold })).withFaceExpressions()
@@ -120,15 +121,36 @@ export async function videoCallback(video, FaceMatcher) {
 
             faceapi.draw.drawDetections(canvas, resizedDetections)
             faceapi.draw.drawFaceExpressions(canvas, resizedDetections, minConfidence)
-            console.log(detections)
-            console.log(results)
-            // console.log(canvas)
+            // console.log(detections.expressions)
+            let result_entries = Object.entries(detections.expressions)
+            // console.log(result_entries)
+
+            for (let i = 0; i < result_entries.length; ++i) {
+                if (collectedData.get(result_entries[i][0]) === undefined) {
+                    collectedData.set(result_entries[i][0], {val: 0})
+                } else {
+                    break
+                }
+            }
+
+            let max_val = 0
+            let max_key = ''
+            for (let i = 0; i < result_entries.length; ++i) {
+                if (result_entries[i][1] > max_val) {
+                    max_val = result_entries[i][1]
+                    max_key = result_entries[i][0]
+                }
+            }
+            collectedData.get(max_key).val += 1
         }
 
     }, 250)
 }
 
 export function destroyInterval() {
+    // for (const [key, value] of collectedData) {
+    //     console.log(key, value)
+    // }
     clearInterval(interval)
     let target = document.getElementsByTagName('canvas')
     target[0].parentNode.removeChild(target[0])
