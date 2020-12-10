@@ -239,7 +239,7 @@
 
     <!-- In-meeting screen -->
 
-    <div id="flow-meeting" class="flow" style="position:absolute;left:0;top:0;bottom:55px;right:0">
+    <div id="flow-meeting" class="flow" style="position:absolute;left:0;top:85px;bottom:55px;right:0">
       <div class="p-2 d-none d-sm-block align-items-end" style="position:fixed;right:0;bottom:0;left:0;">
         <div class="row align-items-end">
           <div class="col">
@@ -913,24 +913,24 @@ $overlay-z-index: 10;
 
 // Custom
 
-html {
-  height: 100%;
-}
-
-body {
-  min-width: 320px;
-  height: 100%;
-  display: -ms-flexbox;
-  display: -webkit-box;
-  display: flex;
-  -ms-flex-align: center;
-  -ms-flex-pack: center;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  background-color: #f5f5f5;
-}
+//html {
+//  height: 100%;
+//}
+//
+//body {
+//  min-width: 320px;
+//  height: 100%;
+//  display: -ms-flexbox;
+//  display: -webkit-box;
+//  display: flex;
+//  -ms-flex-align: center;
+//  -ms-flex-pack: center;
+//  -webkit-box-align: center;
+//  align-items: center;
+//  -webkit-box-pack: center;
+//  justify-content: center;
+//  background-color: #f5f5f5;
+//}
 
 svg {
   width: 20px;
