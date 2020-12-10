@@ -360,6 +360,11 @@
               <!--              ${require('../node_modules/open-iconic/svg/power-standby.svg').default}-->
               FaceApi
             </button>
+            <button @click.prevent="onClickChart" type="button" class="btn btn-outline-danger mx-1 mx-xl-2 my-2 px-4"
+                    title="FaceAPI">
+              <!--              ${require('../node_modules/open-iconic/svg/power-standby.svg').default}-->
+              Chart
+            </button>
           </div>
         </div>
         <div id="roster-tile-container" class="row flex-sm-grow-1 overflow-hidden h-100" style="flex: unset;">
@@ -483,15 +488,15 @@
                 <div id="nameplate-16" class="video-tile-nameplate"></div>
                 <button id="video-pause-16" class="video-tile-pause btn">Pause</button>
               </div>
-
-
-              <pie-chart :data="chartData" :options="chartOptions"></pie-chart>
-
+<!--              <pie-chart v-if="isChartToggle" :chart-data="pieChartData"></pie-chart>-->
+              <pie-chart :chart-data="pieChartData"></pie-chart>
+<!--              <line-chart :chart-data="pieChartData"></line-chart>-->
               <div id="tile-17" class="video-tile">
                 <video id="video-17" class="video-tile-video"></video>
                 <div id="nameplate-17" class="video-tile-nameplate"></div>
                 <button id="video-pause-17" class="video-tile-pause btn">Pause</button>
               </div>
+
             </div>
           </div>
           <video id="content-share-video" crossOrigin="anonymous" style="display:none"></video>
@@ -525,48 +530,32 @@ import Vue from 'vue'
 import {Capture } from './face_module/js/capture'
 import {DemoMeetingApp} from './demomeeting'
 import {collectedData} from "@/face_module/js/loader"
-import PieChart from "@/router/PieChart";
+import PieChart from "@/PieChart";
+import LineChart from "@/LineChart";
 
 export default Vue.extend({
   name: "VideoChat",
   components: {
-    PieChart
+    PieChart,
+    LineChart
   },
   data() {
     return {
       isToggle: false,
-      chartOptions: {
-        hoverBorderWidth: 20
-      },
-      chartData: {
-        hoverBackgroundColor: "red",
-        hoverBorderWidth: 10,
-        labels: Array.from(collectedData.keys()),
-        datasets: [
-          {
-            label: "Data One",
-            backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#41B883", "#E46651", "#00D8FF"],
-            data: Array.from(collectedData.values()),
-          }
-        ]
-      }
+      isChartToggle: false,
+      pieChartData: null,
     }
   },
   methods: {
     onClickFaceApi() {
       let capture = new Capture(document.getElementById('video-16'))
       if (this.isToggle === false) {
-        console.log('캡처 시작')
         capture.capture()
         this.isToggle = true
       } else {
-        console.log('캡처 제거')
         capture.uncapture()
         this.isToggle = false
         capture = null
-        console.log(collectedData)
-        this.chartData.labels = Array.from(collectedData.keys())
-        this.chartData.datasets[0].data =[1,2,3,4,5,6,7]
       }
     },
     onClickVideo() {
@@ -574,6 +563,32 @@ export default Vue.extend({
         event.target.mozRequestFullScreen();
       } else if (event.target.webkitRequestFullScreen) {
         event.target.webkitRequestFullScreen();
+      }
+    },
+    onClickChart() {
+      // if (this.isChartToggle) {
+      //   this.isChartToggle = false
+      // } else {
+      //   this.fillData()
+      //   this.isChartToggle = true;
+      // }
+      this.fillData()
+    },
+    fillData(){
+      let values = []
+      Array.from(collectedData.values()).forEach((item) => {
+        values.push(item.val)
+      })
+      console.log(values)
+      this.pieChartData = {
+        labels : Array.from(collectedData.keys()),
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: ["#93DAFF", "#96A5FF", "#3DFF92","#80E12A", "#13C7A3", "#FFB6C1", "#FAEB78" ],
+            data: values
+          }
+        ]
       }
     }
   },
