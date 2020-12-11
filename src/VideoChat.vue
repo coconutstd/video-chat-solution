@@ -575,18 +575,13 @@ export default Vue.extend({
       this.fillData()
     },
     fillData(){
-      let values = []
-      Array.from(collectedData.values()).forEach((item) => {
-        values.push(item.val)
-      })
-      console.log(values)
       this.pieChartData = {
         labels : Array.from(collectedData.keys()),
         datasets: [
           {
             label: 'Data One',
             backgroundColor: ["#93DAFF", "#96A5FF", "#3DFF92","#80E12A", "#13C7A3", "#FFB6C1", "#FAEB78" ],
-            data: values
+            data: Array.from(collectedData.values())
           }
         ]
       }

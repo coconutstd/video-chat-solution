@@ -54,6 +54,7 @@ export async function videoCallback(video, FaceMatcher) {
     // $("#tile-16").append(canvas)
     document.getElementById("tile-16").append(canvas)
     console.log(document.getElementsByTagName('canvas')[0])
+    // 전체화면 전환 기
     document.getElementsByTagName('canvas')[0].addEventListener('click', () => {
             console.log('clicked')
             let videoTag = document.getElementById('video-16')
@@ -122,37 +123,39 @@ export async function videoCallback(video, FaceMatcher) {
             faceapi.draw.drawDetections(canvas, resizedDetections)
             faceapi.draw.drawFaceExpressions(canvas, resizedDetections, minConfidence)
             // console.log(detections.expressions)
+
             let result_entries = Object.entries(detections.expressions)
-            // console.log(result_entries)
-
-            for (let i = 0; i < result_entries.length; ++i) {
-                if (collectedData.get(result_entries[i][0]) === undefined) {
-                    collectedData.set(result_entries[i][0], {val: 0})
-                } else {
-                    break
-                }
-            }
-
-            let max_val = 0
-            let max_key = ''
-            for (let i = 0; i < result_entries.length; ++i) {
-                if (result_entries[i][1] > max_val) {
-                    max_val = result_entries[i][1]
-                    max_key = result_entries[i][0]
-                }
-            }
-            collectedData.get(max_key).val += 1
+            const keys = result_entries.map(entry => entry[0])
+            const values = result_entries.map(entry => entry[1])
+            initExpressionData(keys)
+            const max_key = findMaxDetectedExpression(keys, values)
+            const curValue = collectedData.get(max_key)
+            collectedData.set(max_key, curValue + 1)
         }
 
     }, 250)
 }
 
 export function destroyInterval() {
-    // for (const [key, value] of collectedData) {
-    //     console.log(key, value)
-    // }
     clearInterval(interval)
     let target = document.getElementsByTagName('canvas')
     target[0].parentNode.removeChild(target[0])
 }
 
+function initExpressionData(keys){
+    if(collectedData.size === 0){
+        keys.forEach(key => collectedData.set(key, 0))
+    }
+}
+
+function findMaxDetectedExpression(keys, values){
+    let max_val = 0
+    let max_key = ''
+    for (let i = 0; i < keys.length; ++i) {
+        if (values[i] > max_val) {
+            max_val = values[i]
+            max_key = keys[i]
+        }
+    }
+    return max_key
+}
