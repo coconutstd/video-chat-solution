@@ -6,6 +6,7 @@
   <button class="btn-warning" @click.prevent="postTodos">POST</button>
   <button class="btn-success" :disabled='lastTodoId==""' @click.prevent="deleteTodos">DELETE</button>
   <div>CUrrent Todo: {{ lastTodoId || "Not set. Add a new todo" }}</div>
+  <pre v-for="todo in todos">{{ todo }}</pre>
 </div>
 </template>
 
@@ -23,6 +24,7 @@ name: "Todo",
   created () {
     API.get('todosApi', '/todos', {}).then(result => {
       console.log(result)
+      this.todos = JSON.parse(result.body)
     }).catch(err => {
       console.log(err)
     })
@@ -31,6 +33,7 @@ name: "Todo",
     getTodos(){
       API.get('todosApi', '/todos', {}).then(result => {
         console.log(result)
+        this.todos = result.body
       }).catch(err => {
         console.log(err)
       })
