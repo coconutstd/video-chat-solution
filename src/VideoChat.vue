@@ -576,12 +576,12 @@ export default Vue.extend({
     },
     fillData(){
       this.pieChartData = {
-        labels : Array.from(collectedData.keys()),
+        labels : [...collectedData.keys()],
         datasets: [
           {
             label: 'Data One',
             backgroundColor: ["#93DAFF", "#96A5FF", "#3DFF92","#80E12A", "#13C7A3", "#FFB6C1", "#FAEB78" ],
-            data: Array.from(collectedData.values())
+            data: [...collectedData.values()]
           }
         ]
       }
