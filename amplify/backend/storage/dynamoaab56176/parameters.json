@@ -1,7 +1,0 @@
-{
-    "tableName": "dynamoaab56176",
-    "partitionKeyName": "title",
-    "partitionKeyType": "S",
-    "sortKeyName": "description",
-    "sortKeyType": "S"
-}

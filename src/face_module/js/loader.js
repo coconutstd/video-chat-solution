@@ -3,8 +3,9 @@ import * as videoSize from "@/face_module/js/videoSize";
 
 const S3_URL = 'https://amplify-videochatsolution-dev-233212-deployment.s3.ap-northeast-2.amazonaws.com/'
 export let collectedData = new Map()
-var interval = 0
-
+let interval = 0
+let detectedCount = 0
+let timeCount = 0
 export async function loadModels() {
     return Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri(S3_URL + 'models/'),
@@ -80,7 +81,8 @@ export async function videoCallback(video, FaceMatcher) {
     interval = setInterval(async () => {
         // const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
         // const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold })).withFaceExpressions()
-
+        timeCount++
+        console.log(`측정시간 ${timeCount} , detect되지 않은 시간${timeCount-detectedCount}`)
         const detections = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions({
             inputSize,
             scoreThreshold
@@ -95,6 +97,7 @@ export async function videoCallback(video, FaceMatcher) {
         // faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
 
         if (detections) {
+            detectedCount++
             const displaySize = {
                 width: videoSize.getVideoOriginWidth('video-16'),
                 height: videoSize.getVideoOriginHeight('video-16')
@@ -123,8 +126,8 @@ export async function videoCallback(video, FaceMatcher) {
             faceapi.draw.drawDetections(canvas, resizedDetections)
             faceapi.draw.drawFaceExpressions(canvas, resizedDetections, minConfidence)
             // console.log(detections.expressions)
-
-            let result_entries = Object.entries(detections.expressions)
+            console.log(detections)
+            const result_entries = Object.entries(detections.expressions)
             const keys = result_entries.map(entry => entry[0])
             const values = result_entries.map(entry => entry[1])
             initExpressionData(keys)
@@ -133,7 +136,7 @@ export async function videoCallback(video, FaceMatcher) {
             collectedData.set(max_key, curValue + 1)
         }
 
-    }, 250)
+    }, 100)
 }
 
 export function destroyInterval() {
