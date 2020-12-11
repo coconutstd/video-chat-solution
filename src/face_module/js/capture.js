@@ -10,7 +10,7 @@ import {
     videoCallback,
     destroyInterval
 } from "@/face_module/js/loader";
-import {init} from "../../../public/bundle"
+import {initEyeblink} from "../../../public/bundle"
 
 
 export class Capture {
@@ -27,17 +27,17 @@ export class Capture {
         const video = this.video
 
         if (video) {
-            console.log(videoSize.getVideoOriginLeft('video-16'))
-            console.log(videoSize.getVideoOriginTop('video-16'))
-            console.log(videoSize.getVideoOriginWidth('video-16'))
-            console.log(videoSize.getVideoOriginHeight('video-16'))
+            // console.log(videoSize.getVideoOriginLeft('video-16'))
+            // console.log(videoSize.getVideoOriginTop('video-16'))
+            // console.log(videoSize.getVideoOriginWidth('video-16'))
+            // console.log(videoSize.getVideoOriginHeight('video-16'))
 
             let loadedModels = await loadModels()
             let labeledFaceDescriptors = await loadLabeledImages()
             let FaceMatcher = faceMatcher(labeledFaceDescriptors)
             let userMedia = await getUserMedia(video)
             this.video.addEventListener('play', videoCallback(video, FaceMatcher))
-            init()
+            initEyeblink()
         }
     }
 

@@ -104444,16 +104444,19 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getVideoOriginHeight = exports.getVideoOriginWidth = exports.getVideoOriginTop = exports.getVideoOriginLeft = exports.init = exports.animate = exports.getImageData = void 0;
+exports.getVideoOriginHeight = exports.getVideoOriginWidth = exports.getVideoOriginTop = exports.getVideoOriginLeft = exports.initEyeblink = exports.animate = exports.getImageData = void 0;
 
 const tf = __importStar(require("@tensorflow/tfjs"));
 
 const blinkModel = __importStar(require("@mirrory/eyeblink/dist/umd/eyeblink"));
 
+const jquery_1 = __importDefault(require("jquery"));
+
+window.$ = window.jQuery = jquery_1.default;
 let predictor;
 let webcam;
 let webcamEl = null;
-const fps = 1;
+const fps = 4;
 const fpsInterval = 1000 / fps;
 let then = Date.now();
 let elapsed = 0;
@@ -104490,18 +104493,14 @@ async function animate() {
 
 exports.animate = animate;
 
-async function init() {
+async function initEyeblink() {
   webcamEl = document.querySelector('#video-16');
   predictor = await blinkModel.load('./model.json');
   webcam = await tf.data.webcam(webcamEl);
   animate();
 }
 
-exports.init = init;
-
-const jquery_1 = __importDefault(require("jquery"));
-
-window.$ = window.jQuery = jquery_1.default;
+exports.initEyeblink = initEyeblink;
 
 function getVideoOriginLeft(videoObjID) {
   var obj = document.getElementById(videoObjID);
