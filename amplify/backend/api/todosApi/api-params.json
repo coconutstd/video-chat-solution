@@ -1,0 +1,45 @@
+{
+    "paths": [
+        {
+            "name": "/todos",
+            "lambdaFunction": "todosApi",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/GET"
+                ]
+            },
+            "policyResourceName": "/todos"
+        }
+    ],
+    "resourceName": "todosApi",
+    "apiName": "todosApi",
+    "functionArns": [
+        {
+            "lambdaFunction": "todosApi"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 1,
+        "authRoleName": "amplify-videochatsolution-dev-233212-authRole",
+        "unAuthRoleName": "amplify-videochatsolution-dev-233212-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "todosApi",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

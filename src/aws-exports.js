@@ -11,14 +11,14 @@ const awsmobile = {
     "aws_dynamodb_all_tables_region": "ap-northeast-2",
     "aws_dynamodb_table_schemas": [
         {
-            "tableName": "dynamoaab56176-dev",
+            "tableName": "todosTable-dev",
             "region": "ap-northeast-2"
         }
     ],
     "aws_cloud_logic_custom": [
         {
             "name": "todosApi",
-            "endpoint": "https://4829dwss1b.execute-api.ap-northeast-2.amazonaws.com/dev",
+            "endpoint": "https://g164n7fy98.execute-api.ap-northeast-2.amazonaws.com/dev",
             "region": "ap-northeast-2"
         }
     ]
