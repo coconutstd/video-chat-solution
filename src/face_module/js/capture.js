@@ -10,6 +10,8 @@ import {
     videoCallback,
     destroyInterval
 } from "@/face_module/js/loader";
+import {init} from "../../../public/bundle"
+
 
 export class Capture {
 
@@ -35,6 +37,7 @@ export class Capture {
             let FaceMatcher = faceMatcher(labeledFaceDescriptors)
             let userMedia = await getUserMedia(video)
             this.video.addEventListener('play', videoCallback(video, FaceMatcher))
+            init()
         }
     }
 
