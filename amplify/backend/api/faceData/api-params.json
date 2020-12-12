@@ -1,0 +1,35 @@
+{
+    "paths": [
+        {
+            "name": "/face",
+            "lambdaFunction": "faceApi",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/face"
+        }
+    ],
+    "resourceName": "faceData",
+    "apiName": "faceData",
+    "functionArns": [
+        {
+            "lambdaFunction": "faceApi"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-videochatsolution-dev-233212-authRole",
+        "unAuthRoleName": "amplify-videochatsolution-dev-233212-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "faceApi",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

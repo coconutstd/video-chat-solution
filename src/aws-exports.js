@@ -13,12 +13,21 @@ const awsmobile = {
         {
             "tableName": "todosTable-dev",
             "region": "ap-northeast-2"
+        },
+        {
+            "tableName": "faceData-dev",
+            "region": "ap-northeast-2"
         }
     ],
     "aws_cloud_logic_custom": [
         {
             "name": "todosApi",
             "endpoint": "https://g164n7fy98.execute-api.ap-northeast-2.amazonaws.com/dev",
+            "region": "ap-northeast-2"
+        },
+        {
+            "name": "faceData",
+            "endpoint": "https://1n0kjskm2j.execute-api.ap-northeast-2.amazonaws.com/dev",
             "region": "ap-northeast-2"
         }
     ]

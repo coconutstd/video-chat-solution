@@ -11,6 +11,10 @@
     "todosTable": {
       "service": "DynamoDB",
       "providerPlugin": "awscloudformation"
+    },
+    "faceData": {
+      "service": "DynamoDB",
+      "providerPlugin": "awscloudformation"
     }
   },
   "function": {
@@ -32,6 +36,25 @@
           }
         }
       ]
+    },
+    "faceApi": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "faceData",
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "attributeEnvMap": {
+            "Name": "TABLE_NAME",
+            "Arn": "TABLE_ARN"
+          }
+        }
+      ]
     }
   },
   "api": {
@@ -42,6 +65,20 @@
         {
           "category": "function",
           "resourceName": "todosApi",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "faceData": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "faceApi",
           "attributes": [
             "Name",
             "Arn"
