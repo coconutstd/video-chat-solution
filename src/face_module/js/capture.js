@@ -10,7 +10,7 @@ import {
     videoCallback,
     destroyInterval
 } from "@/face_module/js/loader";
-import {initEyeblink} from "../../../public/bundle"
+import {initEyeblink, cancelAnimation} from "./bundle"
 
 
 export class Capture {
@@ -21,6 +21,7 @@ export class Capture {
 
     uncapture() {
         destroyInterval()
+        cancelAnimation()
     }
 
     async capture() {
@@ -36,8 +37,8 @@ export class Capture {
             let labeledFaceDescriptors = await loadLabeledImages()
             let FaceMatcher = faceMatcher(labeledFaceDescriptors)
             let userMedia = await getUserMedia(video)
+            await initEyeblink()
             this.video.addEventListener('play', videoCallback(video, FaceMatcher))
-            initEyeblink()
         }
     }
 

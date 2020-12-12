@@ -59831,10 +59831,10 @@ var define;
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -104444,7 +104444,7 @@ var __importDefault = this && this.__importDefault || function (mod) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getVideoOriginHeight = exports.getVideoOriginWidth = exports.getVideoOriginTop = exports.getVideoOriginLeft = exports.initEyeblink = exports.animate = exports.getImageData = void 0;
+exports.getOpenness = exports.cancelAnimation = exports.openness = exports.req = exports.getVideoOriginHeight = exports.getVideoOriginWidth = exports.getVideoOriginTop = exports.getVideoOriginLeft = exports.initEyeblink = exports.animate = exports.getImageData = void 0;
 
 const tf = __importStar(require("@tensorflow/tfjs"));
 
@@ -104460,6 +104460,8 @@ const fps = 4;
 const fpsInterval = 1000 / fps;
 let then = Date.now();
 let elapsed = 0;
+let req = 0;
+let openness = {};
 
 function getImageData(videoEl, {
   width,
@@ -104478,20 +104480,32 @@ function getImageData(videoEl, {
 exports.getImageData = getImageData;
 
 async function animate() {
-  requestAnimationFrame(animate);
+  req = requestAnimationFrame(animate);
   const now = Date.now();
   elapsed = now - then;
-
   if (elapsed > fpsInterval) {
     then = now - elapsed % fpsInterval;
     const image = getImageData(webcamEl);
-    const openness = await predictor.predictEyeOpenness(image);
+    openness = await predictor.predictEyeOpenness(image);
     if (!openness) return;
-    console.log('right', openness.right, 'left', openness.left);
+    // console.log('right', openness.right, 'left', openness.left);
   }
 }
-
+exports.req = req;
+exports.openness = openness;
 exports.animate = animate;
+
+function cancelAnimation() {
+    cancelAnimationFrame(req);
+}
+
+exports.cancelAnimation = cancelAnimation;
+
+function getOpenness() {
+    return openness
+}
+
+exports.getOpenness = getOpenness;
 
 async function initEyeblink() {
   webcamEl = document.querySelector('#video-16');
