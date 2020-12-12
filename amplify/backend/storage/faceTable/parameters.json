@@ -1,5 +1,5 @@
 {
-    "tableName": "faceData",
+    "tableName": "faceTable",
     "partitionKeyName": "id",
     "partitionKeyType": "S"
 }

@@ -15,7 +15,7 @@ const awsmobile = {
             "region": "ap-northeast-2"
         },
         {
-            "tableName": "faceData-dev",
+            "tableName": "faceTable-dev",
             "region": "ap-northeast-2"
         }
     ],
@@ -26,8 +26,8 @@ const awsmobile = {
             "region": "ap-northeast-2"
         },
         {
-            "name": "faceData",
-            "endpoint": "https://1n0kjskm2j.execute-api.ap-northeast-2.amazonaws.com/dev",
+            "name": "faceApi",
+            "endpoint": "https://ixlbkmbq7i.execute-api.ap-northeast-2.amazonaws.com/dev",
             "region": "ap-northeast-2"
         }
     ]

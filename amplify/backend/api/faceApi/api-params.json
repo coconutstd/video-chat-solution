@@ -4,21 +4,31 @@
             "name": "/face",
             "lambdaFunction": "faceApi",
             "privacy": {
-                "open": true
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/GET"
+                ]
             },
             "policyResourceName": "/face"
         }
     ],
-    "resourceName": "faceData",
-    "apiName": "faceData",
+    "resourceName": "faceApi",
+    "apiName": "faceApi",
     "functionArns": [
         {
             "lambdaFunction": "faceApi"
         }
     ],
     "privacy": {
-        "auth": 0,
-        "unauth": 0,
+        "auth": 1,
+        "unauth": 1,
         "authRoleName": "amplify-videochatsolution-dev-233212-authRole",
         "unAuthRoleName": "amplify-videochatsolution-dev-233212-unauthRole"
     },

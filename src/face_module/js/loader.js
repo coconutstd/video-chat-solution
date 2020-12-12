@@ -1,5 +1,6 @@
 import * as faceapi from './face-api.min'
 import * as videoSize from "@/face_module/js/videoSize";
+import { API } from 'aws-amplify'
 
 const S3_URL = 'https://amplify-videochatsolution-dev-233212-deployment.s3.ap-northeast-2.amazonaws.com/'
 export let collectedData = new Map()
@@ -134,6 +135,14 @@ export async function videoCallback(video, FaceMatcher) {
             const max_key = findMaxDetectedExpression(keys, values)
             const curValue = collectedData.get(max_key)
             collectedData.set(max_key, curValue + 1)
+
+            API.post('faceApi', '/face', {
+                body: detections.expressions
+            }).then(result => {
+                console.log(result)
+            }).catch(err => {
+                console.log(err)
+            })
         }
 
     }, 100)
