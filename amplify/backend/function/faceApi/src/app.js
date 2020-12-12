@@ -12,6 +12,7 @@ const AWS = require('aws-sdk')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 var bodyParser = require('body-parser')
 var express = require('express')
+const { v4: uuidv4 } = require('uuid')
 
 AWS.config.update({ region: process.env.TABLE_REGION });
 
@@ -68,44 +69,71 @@ const convertUrlType = (param, type) => {
  * HTTP Get method for list objects *
  ********************************/
 
-app.get() {
-
-});
+app.get(path, function(request, response){
+  let params = {
+    TableName: tableName,
+    limit: 100
+  }
+  dynamodb.scan(params, (error, result) => {
+    if (error) {
+      response.json({ statusCode: 500, error: error.message })
+    } else {
+      response.json({ statusCode: 200, url: request.url, body: JSON.stringify(result.Items)})
+    }
+  })
+})
 
 /*****************************************
  * HTTP Get method for get single object *
  *****************************************/
 
-app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
+// app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
+//
+// });
 
-});
-
-
-/************************************
-* HTTP put method for insert object *
-*************************************/
-
-app.put() {
-
-});
 
 /************************************
-* HTTP post method for insert object *
-*************************************/
+ * HTTP put method for insert object *
+ *************************************/
+//
+// app.put() {
+//
+// });
 
-app.post() {
+/************************************
+ * HTTP post method for insert object *
+ *************************************/
 
+app.post(path, function(request, response) {
+  const timestamp = new Date().toISOString()
+  let params = {
+    TableName: tableName,
+    Item: {
+      ...request.body,
+      id: uuidv4(),
+      createdAt: timestamp,
+      userId: getUserId(request)
+    }
+  }
+
+  dynamodb.put(params, (error, result) => {
+    if (error) {
+      response.json({ statusCode: 500, error: error.message, url: request.url })
+    } else {
+      response.json({ statusCode: 200, url: request.url, body: JSON.stringify(params.Item)})
+    }
+  })
 });
 
 /**************************************
-* HTTP remove method to delete object *
-***************************************/
+ * HTTP remove method to delete object *
+ ***************************************/
 
-app.delete() {
-
-});
+// app.delete() {
+//
+// });
 app.listen(3000, function() {
-    console.log("App started")
+  console.log("App started")
 });
 
 // Export the app object. When executing the application local this does nothing. However,
