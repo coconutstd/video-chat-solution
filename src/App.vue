@@ -22,7 +22,7 @@
 </template>
 <script>
 import { onAuthUIStateChange } from '@aws-amplify/ui-components'
-import ToolBar from "./ToolBar.vue"
+import ToolBar from "./components/ToolBar.vue"
 
 export default {
   name: 'AuthStateApp',

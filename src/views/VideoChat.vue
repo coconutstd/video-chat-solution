@@ -527,11 +527,11 @@
 <script>
 /* eslint-disable */
 import Vue from 'vue'
-import {Capture } from './face_module/js/capture'
-import {DemoMeetingApp} from './demomeeting'
+import {Capture } from '../face_module/js/capture'
+import {DemoMeetingApp} from '../demomeeting'
 import {collectedData} from "@/face_module/js/loader"
-import PieChart from "@/PieChart";
-import LineChart from "@/LineChart";
+import PieChart from "@/plugins/PieChart";
+import LineChart from "@/plugins/LineChart";
 
 export default Vue.extend({
   name: "VideoChat",
@@ -668,7 +668,7 @@ $close-color: $white;
 $close-text-shadow: none;
 $overlay-z-index: 10;
 
-@import 'node_modules/bootstrap/scss/bootstrap';
+@import '../../node_modules/bootstrap/scss/bootstrap';
 
 // Flatly 4.3.1
 // Bootswatch
