@@ -48,6 +48,10 @@ li{
   text-align: center;
 }
 
+.menu-link .hydrated {
+  padding: 0;
+}
+
 .sign-out-button {
   width: 100px;
 }
