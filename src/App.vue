@@ -5,7 +5,7 @@
         <ToolBar></ToolBar>
       </header>
       <section class="content">
-        <router-view v-bind:user="user"></router-view>
+        <router-view :user="user"></router-view>
       </section>
       <footer>
         OMNI Project

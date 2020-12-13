@@ -10,14 +10,24 @@
         <router-link class="menu-link" to="/todos">Todos</router-link>
       </li>
       <li class="menu-item">
-        <amplify-sign-out class="menu-link"></amplify-sign-out>
+        <button class="menu-link" @click="signOut">Sign out</button>
       </li>
     </ul>
 </template>
 
 <script>
+import { Auth } from 'aws-amplify';
+
 export default {
-  name: "ToolBar"
+  methods:{
+    async signOut(){
+      try {
+        await Auth.signOut();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 }
 </script>
 <style scoped>
@@ -46,11 +56,9 @@ li{
   color: white;
   text-decoration: none;
   text-align: center;
+  border: none;
 }
 
-.menu-link .hydrated {
-  padding: 0;
-}
 
 .sign-out-button {
   width: 100px;
