@@ -3,7 +3,8 @@
     "graphqltransformer": {
       "addmissingownerfields": true,
       "validatetypenamereservedwords": true,
-      "useexperimentalpipelinedtransformer": false
+      "useexperimentalpipelinedtransformer": false,
+      "enableiterativegsiupdates": false
     }
   }
 }

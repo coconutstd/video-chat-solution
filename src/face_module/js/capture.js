@@ -37,7 +37,7 @@ export class Capture {
             let labeledFaceDescriptors = await loadLabeledImages()
             let FaceMatcher = faceMatcher(labeledFaceDescriptors)
             let userMedia = await getUserMedia(video)
-            await initEyeblink()
+            // await initEyeblink()
             this.video.addEventListener('play', videoCallback(video, FaceMatcher))
         }
     }

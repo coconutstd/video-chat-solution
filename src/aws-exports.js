@@ -3,17 +3,13 @@
 
 const awsmobile = {
     "aws_project_region": "ap-northeast-2",
-    "aws_cognito_identity_pool_id": "ap-northeast-2:8c8c941e-e4cc-4301-a29f-9b65ba206ca0",
+    "aws_cognito_identity_pool_id": "ap-northeast-2:62e968ae-f91f-4a7b-bed6-0ba7ef2c179d",
     "aws_cognito_region": "ap-northeast-2",
-    "aws_user_pools_id": "ap-northeast-2_6BH8m4f8z",
-    "aws_user_pools_web_client_id": "1nf0h801mqastdkhd6gchosm5a",
+    "aws_user_pools_id": "ap-northeast-2_21OIRcb1Q",
+    "aws_user_pools_web_client_id": "45e7sn56ntu9blfs8gf6ianf1l",
     "oauth": {},
     "aws_dynamodb_all_tables_region": "ap-northeast-2",
     "aws_dynamodb_table_schemas": [
-        {
-            "tableName": "todosTable-dev",
-            "region": "ap-northeast-2"
-        },
         {
             "tableName": "faceTable-dev",
             "region": "ap-northeast-2"
@@ -21,13 +17,8 @@ const awsmobile = {
     ],
     "aws_cloud_logic_custom": [
         {
-            "name": "todosApi",
-            "endpoint": "https://g164n7fy98.execute-api.ap-northeast-2.amazonaws.com/dev",
-            "region": "ap-northeast-2"
-        },
-        {
             "name": "faceApi",
-            "endpoint": "https://ixlbkmbq7i.execute-api.ap-northeast-2.amazonaws.com/dev",
+            "endpoint": "https://shcb95gdu7.execute-api.ap-northeast-2.amazonaws.com/dev",
             "region": "ap-northeast-2"
         }
     ]

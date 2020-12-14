@@ -1,19 +1,19 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-videochatsolution-dev-233212-authRole",
-      "UnauthRoleArn": "arn:aws:iam::813574216010:role/amplify-videochatsolution-dev-233212-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::813574216010:role/amplify-videochatsolution-dev-233212-authRole",
+      "AuthRoleName": "amplify-videochatsolution-dev-141403-authRole",
+      "UnauthRoleArn": "arn:aws:iam::221545953602:role/amplify-videochatsolution-dev-141403-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::221545953602:role/amplify-videochatsolution-dev-141403-authRole",
       "Region": "ap-northeast-2",
-      "DeploymentBucketName": "amplify-videochatsolution-dev-233212-deployment",
-      "UnauthRoleName": "amplify-videochatsolution-dev-233212-unauthRole",
-      "StackName": "amplify-videochatsolution-dev-233212",
-      "StackId": "arn:aws:cloudformation:ap-northeast-2:813574216010:stack/amplify-videochatsolution-dev-233212/ac4db0f0-324f-11eb-95d4-020145ca6aac",
-      "AmplifyAppId": "d2va81juaem8l3"
+      "DeploymentBucketName": "amplify-videochatsolution-dev-141403-deployment",
+      "UnauthRoleName": "amplify-videochatsolution-dev-141403-unauthRole",
+      "StackName": "amplify-videochatsolution-dev-141403",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:221545953602:stack/amplify-videochatsolution-dev-141403/30909810-3dcb-11eb-85a3-0a4b48ea15b0",
+      "AmplifyAppId": "d2ajsje5ljp5i"
     },
     "categories": {
       "auth": {
-        "videochatsolution5ce0db2e": {}
+        "videochatsolution320903db": {}
       }
     }
   }

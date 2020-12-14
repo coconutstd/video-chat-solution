@@ -5,7 +5,7 @@
         <ToolBar></ToolBar>
       </header>
       <section class="content">
-        <router-view :user="user"></router-view>
+        <router-view></router-view>
       </section>
       <footer>
         OMNI Project
@@ -33,6 +33,7 @@ export default {
     onAuthUIStateChange((authState, authData) => {
       this.authState = authState;
       this.user = authData;
+      this.$store.commit('SET_USERDATA', authData);
     })
   },
   data() {
@@ -42,8 +43,8 @@ export default {
       signInFormFields: [
         {
           type: 'username',
-          label: '아이디',
-          placeholder: '아이디를 입력해주세요',
+          label: '이메일',
+          placeholder: '이메일을 입력해주세요',
           required: true,
         },
         {
