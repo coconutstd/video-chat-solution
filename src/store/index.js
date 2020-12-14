@@ -9,6 +9,7 @@ export const store = new Vuex.Store({
     state : {
         todos: [],
         userData: {},
+        faceData: {},
     },
     actions,
     mutations,

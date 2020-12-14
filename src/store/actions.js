@@ -1,11 +1,11 @@
-import { fetchTodos } from "../api/index.js";
+import { getFaceData } from "../api/index.js";
 
 export default {
-    FETCH_TODOS({commit}){
-        fetchTodos()
-            .then(response => {
-                console.log(response.body);
-                commit('SET_TODOS', JSON.parse(response.body));
+
+    FETCH_FACE({commit}){
+        getFaceData()
+            .then(({body}) => {
+                commit('SET_FACEDATA', JSON.parse(body));
             })
             .catch(error => {
                 console.log(error);

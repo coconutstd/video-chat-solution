@@ -71,9 +71,22 @@ const getUserId = request => {
 app.get(path, function(request, response) {
   let params = {
     TableName: tableName,
-    limit: 100
+    IndexName: "userId",
+    KeyConditionExpression: "#userId = :userId",
+    FilterExpression: "#angry > :angry_val and #disgusted >= :disgusted_val",
+    ExpressionAttributeNames: {
+      "#userId": "userId",
+      "#angry": "angry",
+      "#disgusted": "disgusted"
+    },
+    ExpressionAttributeValues: {
+      ":userId" : getUserId(request),
+      ":angry_val" : 0.002,
+      ":disgusted_val" : 0.00001,
+    },
+    limit: 5
   }
-  dynamodb.scan(params, (error, result) => {
+  dynamodb.query(params, (error, result) => {
     if (error) {
       response.json({ statusCode: 500, error: error.message })
     } else {

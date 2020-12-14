@@ -35,6 +35,11 @@
                   {
                       "AttributeName": "id",
                       "AttributeType": "S"
+                  }  , 
+                  
+                  {
+                      "AttributeName": "userId",
+                      "AttributeType": "S"
                   } 
                   
                 ],
@@ -76,6 +81,29 @@
                         }
                     ]
                 }
+                
+                ,"GlobalSecondaryIndexes": [
+                  
+                    {
+                        "IndexName": "userId",
+                        "KeySchema": [
+                            
+                            {
+                                "AttributeName": "userId",
+                                "KeyType": "HASH"
+                            } 
+                            
+                        ],
+                        "Projection": {
+                            "ProjectionType": "ALL"
+                        },
+                        "ProvisionedThroughput": {
+                            "ReadCapacityUnits": "5",
+                            "WriteCapacityUnits": "5"
+                        }
+                    } 
+                  
+                ]
                 
             }
         }

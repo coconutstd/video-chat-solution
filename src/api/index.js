@@ -1,7 +1,7 @@
 import {API} from "aws-amplify";
 
 function postFaceData(data){
-    API.post('faceApi', '/face', {
+    return API.post('faceApi', '/face', {
         body: data
     })
         .then(result => {
@@ -10,7 +10,10 @@ function postFaceData(data){
         .catch(error => {
             console.log(error);
         })
-
 }
 
-export { postFaceData }
+function getFaceData(){
+    return API.get('faceApi', '/face', {});
+}
+
+export { postFaceData, getFaceData }
