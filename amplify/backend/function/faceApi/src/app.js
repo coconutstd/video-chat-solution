@@ -12,7 +12,7 @@ const AWS = require('aws-sdk')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 var bodyParser = require('body-parser')
 var express = require('express')
-const { v4: uuidv4 } = require('uuid')
+
 AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
@@ -54,32 +54,40 @@ const convertUrlType = (param, type) => {
   }
 }
 
-const getUserId = request => {
-  try {
-    const reqContext = request.apiGateway.event.requestContext;
-    const authProvider = reqContext.identity.cognitoAuthenticationProvider;
-    return authProvider ? authProvider.split(":CognitoSignIn:").pop() : "UNAUTH";
-  } catch (error) {
-    return "UNAUTH";
-  }
-}
-
 /********************************
  * HTTP Get method for list objects *
  ********************************/
 
-app.get(path, function(request, response) {
-  let params = {
-    TableName: tableName,
-    limit: 100
+app.get(path + hashKeyPath, function(req, res) {
+  var condition = {}
+  condition[partitionKeyName] = {
+    ComparisonOperator: 'EQ'
   }
-  dynamodb.scan(params, (error, result) => {
-    if (error) {
-      response.json({ statusCode: 500, error: error.message })
-    } else {
-      response.json({ statusCode: 200, url: request.url, body: JSON.stringify(result.Items)})
+
+  if (userIdPresent && req.apiGateway) {
+    condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
+  } else {
+    try {
+      condition[partitionKeyName]['AttributeValueList'] = [ convertUrlType(req.params[partitionKeyName], partitionKeyType) ];
+    } catch(err) {
+      res.statusCode = 500;
+      res.json({error: 'Wrong column type ' + err});
     }
-  })
+  }
+
+  let queryParams = {
+    TableName: tableName,
+    KeyConditions: condition
+  }
+
+  dynamodb.query(queryParams, (err, data) => {
+    if (err) {
+      res.statusCode = 500;
+      res.json({error: 'Could not load items: ' + err});
+    } else {
+      res.json(data.Items);
+    }
+  });
 });
 
 /*****************************************
@@ -156,26 +164,24 @@ app.put(path, function(req, res) {
 * HTTP post method for insert object *
 *************************************/
 
-app.post(path, function(request, response) {
-  const timestamp = new Date().toISOString()
-  let params = {
-    TableName: tableName,
-    Item: {
-      ...request.body,
-      id: uuidv4(),
-      createdAt: timestamp,
-      userId: getUserId(request)
-    }
+app.post(path, function(req, res) {
+
+  if (userIdPresent) {
+    req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
   }
 
-  dynamodb.put(params, (error, result) => {
-    if (error) {
-      response.json({ statusCode: 500, error: error.message, url: request.url })
-    } else {
-      response.json({ statusCode: 200, url: request.url, body: JSON.stringify(params.Item)})
+  let putItemParams = {
+    TableName: tableName,
+    Item: req.body
+  }
+  dynamodb.put(putItemParams, (err, data) => {
+    if(err) {
+      res.statusCode = 500;
+      res.json({error: err, url: req.url, body: req.body});
+    } else{
+      res.json({success: 'post call succeed!', url: req.url, data: data})
     }
-  })
-
+  });
 });
 
 /**************************************

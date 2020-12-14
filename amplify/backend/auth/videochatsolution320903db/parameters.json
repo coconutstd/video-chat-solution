@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "videochatsolution5ce0db2e_identitypool_5ce0db2e",
+    "identityPoolName": "videochatsolution320903db_identitypool_320903db",
     "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "videoc5ce0db2e",
-    "userPoolName": "videochatsolution5ce0db2e_userpool_5ce0db2e",
+    "resourceNameTruncated": "videoc320903db",
+    "userPoolName": "videochatsolution320903db_userpool_320903db",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "videoc5ce0db2e_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "videoc320903db_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "5ce0db2e",
-    "resourceName": "videochatsolution5ce0db2e",
+    "sharedId": "320903db",
+    "resourceName": "videochatsolution320903db",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -46,6 +46,9 @@
         ]
     },
     "useDefault": "default",
+    "usernameAttributes": [
+        "email"
+    ],
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "dependsOn": []

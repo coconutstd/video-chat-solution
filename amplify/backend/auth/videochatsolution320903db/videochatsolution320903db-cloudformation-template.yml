@@ -114,6 +114,10 @@ Parameters:
   
             
         
+  usernameAttributes:
+    Type: CommaDelimitedList
+      
+        
   userPoolGroupList:
     Type: CommaDelimitedList
       
@@ -136,7 +140,7 @@ Resources:
   # Created to allow the UserPool SMS Config to publish via the Simple Notification Service during MFA Process
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !If [ShouldNotCreateEnvResources, 'videoc5ce0db2e_sns-role', !Join ['',[ 'sns', '5ce0db2e', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
+      RoleName: !If [ShouldNotCreateEnvResources, 'videoc320903db_sns-role', !Join ['',[ 'sns', '320903db', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
       AssumeRolePolicyDocument: 
         Version: "2012-10-17"
         Statement: 
@@ -148,10 +152,10 @@ Resources:
               - "sts:AssumeRole"
             Condition: 
               StringEquals:
-                sts:ExternalId: videoc5ce0db2e_role_external_id
+                sts:ExternalId: videoc320903db_role_external_id
       Policies: 
         - 
-          PolicyName: videoc5ce0db2e-sns-policy
+          PolicyName: videoc320903db-sns-policy
           PolicyDocument: 
             Version: "2012-10-17"
             Statement: 
@@ -192,12 +196,14 @@ Resources:
           RequireNumbers: false
           RequireSymbols: false
           RequireUppercase: false
+      
+      UsernameAttributes: !Ref usernameAttributes
           
       MfaConfiguration: !Ref mfaConfiguration
       SmsVerificationMessage: !Ref smsVerificationMessage
       SmsConfiguration: 
         SnsCallerArn: !GetAtt SNSRole.Arn
-        ExternalId: videoc5ce0db2e_role_external_id
+        ExternalId: videoc320903db_role_external_id
     
   
   UserPoolClientWeb:
@@ -205,7 +211,7 @@ Resources:
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: videoc5ce0db2e_app_clientWeb
+      ClientName: videoc320903db_app_clientWeb
       
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
@@ -215,7 +221,7 @@ Resources:
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: videoc5ce0db2e_app_client
+      ClientName: videoc320903db_app_client
       
       GenerateSecret: !Ref userpoolClientGenerateSecret
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
@@ -226,7 +232,7 @@ Resources:
   # Created to execute Lambda which gets userpool app client config values
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !If [ShouldNotCreateEnvResources, !Ref userpoolClientLambdaRole, !Join ['',['upClientLambdaRole', '5ce0db2e', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
+      RoleName: !If [ShouldNotCreateEnvResources, !Ref userpoolClientLambdaRole, !Join ['',['upClientLambdaRole', '320903db', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -280,7 +286,7 @@ Resources:
   # Marked as depending on UserPoolClientRole for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: videoc5ce0db2e_userpoolclient_lambda_iam_policy
+      PolicyName: videoc320903db_userpoolclient_lambda_iam_policy
       Roles: 
         - !Ref UserPoolClientRole
       PolicyDocument:
@@ -297,7 +303,7 @@ Resources:
   # Marked as depending on UserPoolClientLambdaPolicy for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: videoc5ce0db2e_userpoolclient_lambda_log_policy
+      PolicyName: videoc320903db_userpoolclient_lambda_log_policy
       Roles: 
         - !Ref UserPoolClientRole
       PolicyDocument:
@@ -337,7 +343,7 @@ Resources:
   # Always created
     Type: AWS::Cognito::IdentityPool
     Properties: 
-      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'videochatsolution5ce0db2e_identitypool_5ce0db2e', !Join ['',['videochatsolution5ce0db2e_identitypool_5ce0db2e', '__', !Ref env]]]
+      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'videochatsolution320903db_identitypool_320903db', !Join ['',['videochatsolution320903db_identitypool_320903db', '__', !Ref env]]]
       
       CognitoIdentityProviders:
         - ClientId:  !Ref UserPoolClient

@@ -3,18 +3,18 @@ import * as videoSize from "@/face_module/js/videoSize";
 import { API } from 'aws-amplify'
 import { getOpenness } from './bundle'
 
-const S3_URL = 'https://amplify-videochatsolution-dev-233212-deployment.s3.ap-northeast-2.amazonaws.com/'
+const S3_URL = 'https://amplify-videochatsolution-dev-141403-deployment.s3.ap-northeast-2.amazonaws.com/'
 export let collectedData = new Map()
 let interval = 0
 let detectedCount = 0
 let timeCount = 0
 export async function loadModels() {
     return Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri(S3_URL + 'models/'),
-        faceapi.nets.faceLandmark68Net.loadFromUri(S3_URL + 'models/'),
-        faceapi.nets.faceRecognitionNet.loadFromUri(S3_URL + 'models/'),
-        faceapi.nets.faceExpressionNet.loadFromUri(S3_URL + 'models/'),
-        faceapi.nets.ssdMobilenetv1.loadFromUri(S3_URL + 'models/')
+        faceapi.nets.tinyFaceDetector.loadFromUri(`${S3_URL}models/`),
+        faceapi.nets.faceLandmark68Net.loadFromUri(`${S3_URL}models/`),
+        faceapi.nets.faceRecognitionNet.loadFromUri(`${S3_URL}models/`),
+        faceapi.nets.faceExpressionNet.loadFromUri(`${S3_URL}models/`),
+        faceapi.nets.ssdMobilenetv1.loadFromUri(`${S3_URL}models/`)
     ])
 }
 

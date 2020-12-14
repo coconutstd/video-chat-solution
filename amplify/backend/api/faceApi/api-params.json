@@ -29,8 +29,8 @@
     "privacy": {
         "auth": 1,
         "unauth": 1,
-        "authRoleName": "amplify-videochatsolution-dev-233212-authRole",
-        "unAuthRoleName": "amplify-videochatsolution-dev-233212-unauthRole"
+        "authRoleName": "amplify-videochatsolution-dev-141403-authRole",
+        "unAuthRoleName": "amplify-videochatsolution-dev-141403-unauthRole"
     },
     "dependsOn": [
         {
