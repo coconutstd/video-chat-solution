@@ -59,8 +59,13 @@ li{
   border: none;
 }
 
-
-.sign-out-button {
-  width: 100px;
+.menu-link:hover {
+  background-color: aquamarine;
 }
+
+.menu-item button {
+  width: 100%;
+}
+
+
 </style>
