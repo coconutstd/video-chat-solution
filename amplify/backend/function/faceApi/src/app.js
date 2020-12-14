@@ -12,7 +12,7 @@ const AWS = require('aws-sdk')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 var bodyParser = require('body-parser')
 var express = require('express')
-
+const { v4: uuidv4 } = require('uuid')
 AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
@@ -54,40 +54,32 @@ const convertUrlType = (param, type) => {
   }
 }
 
+const getUserId = request => {
+  try {
+    const reqContext = request.apiGateway.event.requestContext;
+    const authProvider = reqContext.identity.cognitoAuthenticationProvider;
+    return authProvider ? authProvider.split(":CognitoSignIn:").pop() : "UNAUTH";
+  } catch (error) {
+    return "UNAUTH";
+  }
+}
+
 /********************************
  * HTTP Get method for list objects *
  ********************************/
 
-app.get(path + hashKeyPath, function(req, res) {
-  var condition = {}
-  condition[partitionKeyName] = {
-    ComparisonOperator: 'EQ'
-  }
-
-  if (userIdPresent && req.apiGateway) {
-    condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
-  } else {
-    try {
-      condition[partitionKeyName]['AttributeValueList'] = [ convertUrlType(req.params[partitionKeyName], partitionKeyType) ];
-    } catch(err) {
-      res.statusCode = 500;
-      res.json({error: 'Wrong column type ' + err});
-    }
-  }
-
-  let queryParams = {
+app.get(path, function(request, response) {
+  let params = {
     TableName: tableName,
-    KeyConditions: condition
+    limit: 100
   }
-
-  dynamodb.query(queryParams, (err, data) => {
-    if (err) {
-      res.statusCode = 500;
-      res.json({error: 'Could not load items: ' + err});
+  dynamodb.scan(params, (error, result) => {
+    if (error) {
+      response.json({ statusCode: 500, error: error.message })
     } else {
-      res.json(data.Items);
+      response.json({ statusCode: 200, url: request.url, body: JSON.stringify(result.Items)})
     }
-  });
+  })
 });
 
 /*****************************************
@@ -137,8 +129,8 @@ app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
 
 
 /************************************
-* HTTP put method for insert object *
-*************************************/
+ * HTTP put method for insert object *
+ *************************************/
 
 app.put(path, function(req, res) {
 
@@ -161,32 +153,34 @@ app.put(path, function(req, res) {
 });
 
 /************************************
-* HTTP post method for insert object *
-*************************************/
+ * HTTP post method for insert object *
+ *************************************/
 
-app.post(path, function(req, res) {
-
-  if (userIdPresent) {
-    req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
-  }
-
-  let putItemParams = {
+app.post(path, function(request, response) {
+  const timestamp = new Date().toISOString()
+  let params = {
     TableName: tableName,
-    Item: req.body
-  }
-  dynamodb.put(putItemParams, (err, data) => {
-    if(err) {
-      res.statusCode = 500;
-      res.json({error: err, url: req.url, body: req.body});
-    } else{
-      res.json({success: 'post call succeed!', url: req.url, data: data})
+    Item: {
+      ...request.body,
+      id: uuidv4(),
+      createdAt: timestamp,
+      userId: getUserId(request)
     }
-  });
+  }
+
+  dynamodb.put(params, (error, result) => {
+    if (error) {
+      response.json({ statusCode: 500, error: error.message, url: request.url })
+    } else {
+      response.json({ statusCode: 200, url: request.url, body: JSON.stringify(params.Item)})
+    }
+  })
+
 });
 
 /**************************************
-* HTTP remove method to delete object *
-***************************************/
+ * HTTP remove method to delete object *
+ ***************************************/
 
 app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   var params = {};
@@ -194,7 +188,7 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
     params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
   } else {
     params[partitionKeyName] = req.params[partitionKeyName];
-     try {
+    try {
       params[partitionKeyName] = convertUrlType(req.params[partitionKeyName], partitionKeyType);
     } catch(err) {
       res.statusCode = 500;
@@ -224,7 +218,7 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   });
 });
 app.listen(3000, function() {
-    console.log("App started")
+  console.log("App started")
 });
 
 // Export the app object. When executing the application local this does nothing. However,

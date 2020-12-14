@@ -1,6 +1,6 @@
 import * as faceapi from './face-api.min'
 import * as videoSize from "@/face_module/js/videoSize";
-import { API } from 'aws-amplify'
+import { postFaceData } from "../../api/index.js";
 import { getOpenness } from './bundle'
 
 const S3_URL = 'https://amplify-videochatsolution-dev-141403-deployment.s3.ap-northeast-2.amazonaws.com/'
@@ -143,13 +143,7 @@ export async function videoCallback(video, FaceMatcher) {
             const labeledEyeData = {'left_eye_blink' : eyeData.left, 'right_eye_blink' : eyeData.right }
             const postData = Object.assign({}, detections.expressions, labeledEyeData)
             console.log(postData)
-            API.post('faceApi', '/face', {
-                body: postData
-            }).then(result => {
-                console.log(result)
-            }).catch(err => {
-                console.log(err)
-            })
+            postFaceData(postData);
         }
 
     }, 100)

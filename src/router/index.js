@@ -10,6 +10,10 @@ export const router = new VueRouter({
     mode: 'history',
     routes: [
         {
+            path: '/',
+            redirect: '/home',
+        },
+        {
             path: '/home',
             component: Home
         },
