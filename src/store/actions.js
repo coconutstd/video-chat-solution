@@ -1,4 +1,4 @@
-import {getFaceData, getUserFaceData} from "../api/index.js";
+import {getFaceData, getMeetingList, getUserFaceData} from "../api/index.js";
 
 export default {
 
@@ -12,10 +12,18 @@ export default {
             })
     },
     FETCH_USER_FACE({commit}, userid){
-        console.log(userid);
         getUserFaceData(userid)
             .then(({body})=> {
                 commit('SET_USER_FACEDATA', JSON.parse(body));
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    },
+    FETCH_MEETING_LIST({commit}){
+        getMeetingList()
+            .then(({body})=>{
+                commit('SET_MEETING_LIST', JSON.parse(body));
             })
             .catch(error => {
                 console.log(error);

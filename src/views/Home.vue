@@ -3,7 +3,7 @@
   <h1>안녕하세요!</h1>
   <router-link :to="`/home/${userData.username}`">{{ userData.attributes.email }}</router-link>
   <pre>
-    {{ faceData }}
+    {{ meetingData }}
   </pre>
 </div>
 </template>
@@ -16,10 +16,13 @@ export default {
     },
     faceData(){
       return this.$store.state.faceData;
+    },
+    meetingData(){
+      return this.$store.state.meetingList;
     }
   },
   created() {
-    this.$store.dispatch('FETCH_FACE');
+    this.$store.dispatch('FETCH_MEETING_LIST');
   }
 }
 </script>

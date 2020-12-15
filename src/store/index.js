@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
         userData: {},
         faceData: {},
         userFaceData: {},
+        meetingList: [],
     },
     actions,
     mutations,

@@ -104509,7 +104509,7 @@ exports.getOpenness = getOpenness;
 
 async function initEyeblink() {
   webcamEl = document.querySelector('#video-16');
-  predictor = await blinkModel.load('./model.json');
+  predictor = await blinkModel.load('https://amplify-videochatsolution-dev-141403-deployment.s3.ap-northeast-2.amazonaws.com/models/model.json');
   webcam = await tf.data.webcam(webcamEl);
   animate();
 }

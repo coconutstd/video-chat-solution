@@ -17,9 +17,12 @@ function getFaceData(){
 }
 
 function getUserFaceData(userId){
-    return API.get('faceApi', `/face/${userId}`, {})
+    return API.get('faceApi', `/face/${userId}`, {});
+}
+
+function getMeetingList(){
+    return API.get('meetingApi', '/meeting', {});
 }
 
 
-
-export { postFaceData, getFaceData, getUserFaceData }
+export { postFaceData, getFaceData, getUserFaceData, getMeetingList }
