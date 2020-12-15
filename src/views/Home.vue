@@ -1,7 +1,7 @@
 <template>
 <div>
   <h1>안녕하세요!</h1>
-  <p>{{ userData.attributes.email }}</p>
+  <router-link :to="`/home/${userData.username}`">{{ userData.attributes.email }}</router-link>
   <pre>
     {{ faceData }}
   </pre>

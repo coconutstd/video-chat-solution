@@ -4,5 +4,8 @@ export default {
     },
     SET_FACEDATA(state, facedata){
         state.faceData = facedata;
+    },
+    SET_USER_FACEDATA(state, userfacedata){
+        state.userFaceData = userfacedata;
     }
 }

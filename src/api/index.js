@@ -16,4 +16,10 @@ function getFaceData(){
     return API.get('faceApi', '/face', {});
 }
 
-export { postFaceData, getFaceData }
+function getUserFaceData(userId){
+    return API.get('faceApi', `/face/${userId}`, {})
+}
+
+
+
+export { postFaceData, getFaceData, getUserFaceData }

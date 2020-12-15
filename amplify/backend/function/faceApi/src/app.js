@@ -64,6 +64,27 @@ const getUserId = request => {
   }
 }
 
+Date.prototype.yyyymmdd= function() {
+  let mm = this.getMonth() + 1;
+  let dd = this.getDate();
+
+  return [this.getFullYear(),
+    (mm>9 ? '' : '0') + mm,
+    (dd>9 ? '' : '0') + dd
+  ].join('-');
+};
+
+Date.prototype.hhmmss = function() {
+  let hh = this.getHours();
+  let mm = this.getMinutes();
+  let ss = this.getSeconds();
+
+  return [(hh>9 ? '' : '0') + hh,
+    (mm>9 ? '' : '0') + mm,
+    (ss>9 ? '' : '0') + ss,
+  ].join(':');
+}
+
 /********************************
  * HTTP Get method for list objects *
  ********************************/
@@ -71,22 +92,9 @@ const getUserId = request => {
 app.get(path, function(request, response) {
   let params = {
     TableName: tableName,
-    IndexName: "userId",
-    KeyConditionExpression: "#userId = :userId",
-    FilterExpression: "#angry > :angry_val and #disgusted >= :disgusted_val",
-    ExpressionAttributeNames: {
-      "#userId": "userId",
-      "#angry": "angry",
-      "#disgusted": "disgusted"
-    },
-    ExpressionAttributeValues: {
-      ":userId" : getUserId(request),
-      ":angry_val" : 0.002,
-      ":disgusted_val" : 0.00001,
-    },
-    limit: 5
+    limit: 100
   }
-  dynamodb.query(params, (error, result) => {
+  dynamodb.scan(params, (error, result) => {
     if (error) {
       response.json({ statusCode: 500, error: error.message })
     } else {
@@ -99,45 +107,45 @@ app.get(path, function(request, response) {
  * HTTP Get method for get single object *
  *****************************************/
 
-app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
-  var params = {};
-  if (userIdPresent && req.apiGateway) {
-    params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
-  } else {
-    params[partitionKeyName] = req.params[partitionKeyName];
-    try {
-      params[partitionKeyName] = convertUrlType(req.params[partitionKeyName], partitionKeyType);
-    } catch(err) {
-      res.statusCode = 500;
-      res.json({error: 'Wrong column type ' + err});
-    }
-  }
-  if (hasSortKey) {
-    try {
-      params[sortKeyName] = convertUrlType(req.params[sortKeyName], sortKeyType);
-    } catch(err) {
-      res.statusCode = 500;
-      res.json({error: 'Wrong column type ' + err});
-    }
-  }
+app.get("/face/:id", function(request, response) {
 
-  let getItemParams = {
+  // let params = {
+  //   TableName: tableName,
+  //   IndexName: "userId",
+  //   KeyConditionExpression: "#userId = :userId",
+  //   FilterExpression: "#angry > :angry_val and #disgusted >= :disgusted_val",
+  //   ExpressionAttributeNames: {
+  //     "#userId": "userId",
+  //     "#angry": "angry",
+  //     "#disgusted": "disgusted"
+  //   },
+  //   ExpressionAttributeValues: {
+  //     ":userId" : getUserId(request),
+  //     ":angry_val" : 0.002,
+  //     ":disgusted_val" : 0.00001,
+  //   },
+  //   limit: 5
+  // }
+  let params = {
     TableName: tableName,
-    Key: params
+    IndexName: "userId",
+    KeyConditionExpression: "#userId = :userId",
+    ExpressionAttributeNames: {
+      "#userId": "userId"
+    },
+    ExpressionAttributeValues: {
+      ":userId": request.params.id
+    },
+    limit: 100
   }
 
-  dynamodb.get(getItemParams,(err, data) => {
-    if(err) {
-      res.statusCode = 500;
-      res.json({error: 'Could not load items: ' + err.message});
+  dynamodb.query(params, (error, result) => {
+    if (error) {
+      response.json({ statusCode: 500, error: error.message })
     } else {
-      if (data.Item) {
-        res.json(data.Item);
-      } else {
-        res.json(data) ;
-      }
+      response.json({ statusCode: 200, url: request.url, body: JSON.stringify(result.Items)})
     }
-  });
+  })
 });
 
 
@@ -170,13 +178,13 @@ app.put(path, function(req, res) {
  *************************************/
 
 app.post(path, function(request, response) {
-  const timestamp = new Date().toISOString()
+  const timestamp = new Date()
   let params = {
     TableName: tableName,
     Item: {
       ...request.body,
       id: uuidv4(),
-      createdAt: timestamp,
+      createdAt: timestamp.yyyymmdd() + ' ' + timestamp.hhmmss(),
       userId: getUserId(request)
     }
   }
