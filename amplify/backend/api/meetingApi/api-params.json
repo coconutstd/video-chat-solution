@@ -1,8 +1,8 @@
 {
     "paths": [
         {
-            "name": "/face",
-            "lambdaFunction": "faceApi",
+            "name": "/meeting",
+            "lambdaFunction": "meetingApi",
             "privacy": {
                 "protected": true,
                 "auth": [
@@ -13,27 +13,21 @@
                     "/DELETE"
                 ],
                 "unauth": [
-                    "/GET"
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
                 ]
             },
-            "policyResourceName": "/face"
-        },
-        {
-            "name": "/facetest",
-            "lambdaFunction": "faceTest",
-            "privacy": {
-                "open": true
-            }
+            "policyResourceName": "/meeting"
         }
     ],
-    "resourceName": "faceApi",
-    "apiName": "faceApi",
+    "resourceName": "meetingApi",
+    "apiName": "meetingApi",
     "functionArns": [
         {
-            "lambdaFunction": "faceApi"
-        },
-        {
-            "lambdaFunction": "faceTest"
+            "lambdaFunction": "meetingApi"
         }
     ],
     "privacy": {
@@ -45,20 +39,11 @@
     "dependsOn": [
         {
             "category": "function",
-            "resourceName": "faceApi",
-            "attributes": [
-                "Name",
-                "Arn"
-            ]
-        },
-        {
-            "category": "function",
-            "resourceName": "faceTest",
+            "resourceName": "meetingApi",
             "attributes": [
                 "Name",
                 "Arn"
             ]
         }
-    ],
-    "uuid": "239ee66e"
+    ]
 }

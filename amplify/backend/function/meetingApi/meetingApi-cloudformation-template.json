@@ -41,12 +41,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "faceApi",
+            "meetingApi",
             {
               "Fn::Join": [
                 "",
                 [
-                  "faceApi",
+                  "meetingApi",
                   "-",
                   {
                     "Ref": "env"
@@ -77,7 +77,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-videochatsolution-dev-141403-deployment",
-          "S3Key": "amplify-builds/faceApi-716c49715164384b697a-build.zip"
+          "S3Key": "amplify-builds/meetingApi-6373435963476533574e-build.zip"
         }
       }
     },
@@ -87,12 +87,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "videochatsolutionLambdaRolee2a3364e",
+            "videochatsolutionLambdaRole84de4029",
             {
               "Fn::Join": [
                 "",
                 [
-                  "videochatsolutionLambdaRolee2a3364e",
+                  "videochatsolutionLambdaRole84de4029",
                   "-",
                   {
                     "Ref": "env"

@@ -17,7 +17,7 @@ AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-let tableName = "faceTable";
+let tableName = "faceTest";
 if(process.env.ENV && process.env.ENV !== "NONE") {
   tableName = tableName + '-' + process.env.ENV;
 }
@@ -28,7 +28,7 @@ const partitionKeyType = "S";
 const sortKeyName = "";
 const sortKeyType = "";
 const hasSortKey = sortKeyName !== "";
-const path = "/face";
+const path = "/facetest";
 const UNAUTH = 'UNAUTH';
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
@@ -53,6 +53,7 @@ const convertUrlType = (param, type) => {
       return param;
   }
 }
+
 
 const getUserId = request => {
   try {
@@ -150,8 +151,8 @@ app.get("/face/:id", function(request, response) {
 
 
 /************************************
- * HTTP put method for insert object *
- *************************************/
+* HTTP put method for insert object *
+*************************************/
 
 app.put(path, function(req, res) {
 
@@ -174,8 +175,8 @@ app.put(path, function(req, res) {
 });
 
 /************************************
- * HTTP post method for insert object *
- *************************************/
+* HTTP post method for insert object *
+*************************************/
 
 app.post(path, function(request, response) {
   const timestamp = new Date()
@@ -185,7 +186,6 @@ app.post(path, function(request, response) {
       ...request.body,
       id: uuidv4(),
       createdAt: timestamp.yyyymmdd() + ' ' + timestamp.hhmmss(),
-      userId: getUserId(request)
     }
   }
 
@@ -199,8 +199,8 @@ app.post(path, function(request, response) {
 });
 
 /**************************************
- * HTTP remove method to delete object *
- ***************************************/
+* HTTP remove method to delete object *
+***************************************/
 
 app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   var params = {};
@@ -208,7 +208,7 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
     params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
   } else {
     params[partitionKeyName] = req.params[partitionKeyName];
-    try {
+     try {
       params[partitionKeyName] = convertUrlType(req.params[partitionKeyName], partitionKeyType);
     } catch(err) {
       res.statusCode = 500;
@@ -238,7 +238,7 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   });
 });
 app.listen(3000, function() {
-  console.log("App started")
+    console.log("App started")
 });
 
 // Export the app object. When executing the application local this does nothing. However,

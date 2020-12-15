@@ -13,12 +13,21 @@ const awsmobile = {
         {
             "tableName": "faceTable-dev",
             "region": "ap-northeast-2"
+        },
+        {
+            "tableName": "faceTest-dev",
+            "region": "ap-northeast-2"
         }
     ],
     "aws_cloud_logic_custom": [
         {
             "name": "faceApi",
             "endpoint": "https://shcb95gdu7.execute-api.ap-northeast-2.amazonaws.com/dev",
+            "region": "ap-northeast-2"
+        },
+        {
+            "name": "meetingApi",
+            "endpoint": "https://hdf4fnjf7k.execute-api.ap-northeast-2.amazonaws.com/dev",
             "region": "ap-northeast-2"
         }
     ]
