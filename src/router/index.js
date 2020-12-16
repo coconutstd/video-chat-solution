@@ -27,7 +27,7 @@ export const router = new VueRouter({
             component: VideoChat,
         },
         {
-            path: '/todos',
+            path: '/todo',
             component: Todo,
         }
     ]

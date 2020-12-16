@@ -2,14 +2,22 @@
 <div>
   <h1>안녕하세요!</h1>
   <router-link :to="`/home/${userData.username}`">{{ userData.attributes.email }}</router-link>
-  <pre>
-    {{ meetingData }}
-  </pre>
+  <v-container fluid>
+    <v-row>
+      <v-col v-for="item in meetingData" class="mt-2 mb-2" cols="12" md="4">
+        <meeting-card :data="item"></meeting-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </div>
 </template>
 
 <script>
+import MeetingCard from "../components/MeetingCard.vue";
 export default {
+  components:{
+    MeetingCard
+  },
   computed:{
     userData(){
       return this.$store.state.userData;
