@@ -24,6 +24,13 @@
             "privacy": {
                 "open": true
             }
+        },
+        {
+            "name": "/score",
+            "lambdaFunction": "scoreApi",
+            "privacy": {
+                "open": true
+            }
         }
     ],
     "resourceName": "faceApi",
@@ -34,6 +41,9 @@
         },
         {
             "lambdaFunction": "faceTest"
+        },
+        {
+            "lambdaFunction": "scoreApi"
         }
     ],
     "privacy": {
@@ -58,7 +68,15 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "scoreApi",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
     ],
-    "uuid": "239ee66e"
+    "uuid": "18f3daa1"
 }

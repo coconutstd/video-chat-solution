@@ -15,6 +15,10 @@
     "faceTest": {
       "service": "DynamoDB",
       "providerPlugin": "awscloudformation"
+    },
+    "scoreTable": {
+      "service": "DynamoDB",
+      "providerPlugin": "awscloudformation"
     }
   },
   "function": {
@@ -74,6 +78,25 @@
           }
         }
       ]
+    },
+    "scoreApi": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "scoreTable",
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "attributeEnvMap": {
+            "Name": "TABLE_NAME",
+            "Arn": "TABLE_ARN"
+          }
+        }
+      ]
     }
   },
   "api": {
@@ -92,6 +115,14 @@
         {
           "category": "function",
           "resourceName": "faceTest",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "scoreApi",
           "attributes": [
             "Name",
             "Arn"

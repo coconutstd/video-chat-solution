@@ -17,6 +17,10 @@ const awsmobile = {
         {
             "tableName": "faceTest-dev",
             "region": "ap-northeast-2"
+        },
+        {
+            "tableName": "scoreTable-dev",
+            "region": "ap-northeast-2"
         }
     ],
     "aws_cloud_logic_custom": [

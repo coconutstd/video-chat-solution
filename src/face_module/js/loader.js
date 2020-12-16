@@ -2,6 +2,7 @@ import * as faceapi from './face-api.min'
 import * as videoSize from "@/face_module/js/videoSize";
 import { postFaceData } from "../../api/index.js";
 import { getOpenness } from './bundle'
+import { Time } from './time.js';
 
 const S3_URL = 'https://amplify-videochatsolution-dev-141403-deployment.s3.ap-northeast-2.amazonaws.com/'
 export let collectedData = new Map()
@@ -139,11 +140,14 @@ export async function videoCallback(video, FaceMatcher) {
             collectedData.set(max_key, curValue + 1)
 
             const eyeData = getOpenness()
+            let time = new Time();
+            const createdAt = { 'createdAt' : time.yyyymmdd() + ' ' + time.hhmmssms()};
             const labeledEyeData = {'left_eye_blink' : eyeData.left, 'right_eye_blink' : eyeData.right }
             const meetingTitle = {'meeting_title' : decodeURI(document.location.href.split('?')[1].split('=')[1])};
-            const postData = Object.assign({}, detections.expressions, labeledEyeData, meetingTitle);
+            const postData = Object.assign({}, detections.expressions, labeledEyeData, meetingTitle, createdAt);
             console.log(postData)
             postFaceData(postData);
+            // console.log(time.yyyymmdd() + ' ' + time.hhmmssms());
         }
 
     }, 100)
