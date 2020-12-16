@@ -1,5 +1,5 @@
 {
     "tableName": "scoreTable",
-    "partitionKeyName": "userId",
+    "partitionKeyName": "id",
     "partitionKeyType": "S"
 }

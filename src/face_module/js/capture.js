@@ -11,7 +11,7 @@ import {
     destroyInterval
 } from "@/face_module/js/loader";
 import {initEyeblink, cancelAnimation} from "./bundle"
-
+import { totalTimer, secondsTimer } from './loader';
 
 export class Capture {
 
@@ -20,6 +20,9 @@ export class Capture {
     }
 
     uncapture() {
+        console.log(totalTimer.getTimeValues().toString());
+        totalTimer.stop();
+        secondsTimer.stop();
         destroyInterval()
         cancelAnimation()
     }

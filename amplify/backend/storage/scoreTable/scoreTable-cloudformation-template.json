@@ -11,7 +11,7 @@
         "env": {
             "Type": "String"
         },
-
+        
         "tableName": {
             "Type": "String"
         }
@@ -31,25 +31,20 @@
             "Type": "AWS::DynamoDB::Table",
             "Properties": {
                 "AttributeDefinitions": [
-
-                  {
-                      "AttributeName": "userId",
-                      "AttributeType": "S"
-                  }  ,
-
+                  
                   {
                       "AttributeName": "id",
                       "AttributeType": "S"
-                  }
-
+                  } 
+                  
                 ],
                 "KeySchema": [
-
+                  
                   {
-                    "AttributeName": "userId",
+                    "AttributeName": "id",
                     "KeyType": "HASH"
-                  }
-
+                  } 
+                  
                 ],
                 "ProvisionedThroughput": {
                     "ReadCapacityUnits": "5",
@@ -63,7 +58,7 @@
                         "ShouldNotCreateEnvResources",
                         {
                            "Ref": "tableName"
-                        },
+                        }, 
                         {
 
                             "Fn::Join": [
@@ -81,7 +76,7 @@
                         }
                     ]
                 }
-
+                
             }
         }
     },
@@ -117,7 +112,7 @@
                 "Ref": "partitionKeyType"
             }
         },
-
+        
         "Region": {
             "Value": {
                 "Ref": "AWS::Region"

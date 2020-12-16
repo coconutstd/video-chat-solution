@@ -1,14 +1,18 @@
 import * as faceapi from './face-api.min'
 import * as videoSize from "@/face_module/js/videoSize";
-import { postFaceData } from "../../api/index.js";
+import { postFaceData, postScoreData } from "../../api/index.js";
 import { getOpenness } from './bundle'
 import { Time } from './time.js';
+import { Timer } from 'easytimer.js';
 
 const S3_URL = 'https://amplify-videochatsolution-dev-141403-deployment.s3.ap-northeast-2.amazonaws.com/'
 export let collectedData = new Map()
 let interval = 0
-let detectedCount = 0
-let timeCount = 0
+export let totalTimer = new Timer();
+export let secondsTimer = new Timer();
+let detectedData = {"Items": []};
+let totalScore = 100;
+
 export async function loadModels() {
     return Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri(`${S3_URL}models/`),
@@ -80,12 +84,12 @@ export async function videoCallback(video, FaceMatcher) {
     let inputSize = 224
     let scoreThreshold = 0.5
 
-
+    totalTimer.start();
+    secondsTimer.start();
     interval = setInterval(async () => {
         // const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
         // const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold })).withFaceExpressions()
-        timeCount++
-        console.log(`측정시간 ${timeCount} , detect되지 않은 시간${timeCount-detectedCount}`)
+        console.log(totalTimer.getTimeValues().toString());
         const detections = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions({
             inputSize,
             scoreThreshold
@@ -100,7 +104,6 @@ export async function videoCallback(video, FaceMatcher) {
         // faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
 
         if (detections) {
-            detectedCount++
             const displaySize = {
                 width: videoSize.getVideoOriginWidth('video-16'),
                 height: videoSize.getVideoOriginHeight('video-16')
@@ -140,16 +143,23 @@ export async function videoCallback(video, FaceMatcher) {
             collectedData.set(max_key, curValue + 1)
 
             const eyeData = getOpenness()
-            let time = new Time();
-            const createdAt = { 'createdAt' : time.yyyymmdd() + ' ' + time.hhmmssms()};
             const labeledEyeData = {'left_eye_blink' : eyeData.left, 'right_eye_blink' : eyeData.right }
-            const meetingTitle = {'meeting_title' : decodeURI(document.location.href.split('?')[1].split('=')[1])};
-            const postData = Object.assign({}, detections.expressions, labeledEyeData, meetingTitle, createdAt);
-            console.log(postData)
+            const postData = Object.assign({}, detections.expressions, labeledEyeData, getMeetingTitle(), getCreatedTime());
+            detectedData.Items.push(postData);
+            // console.log(detectedData);
+            // console.log(postData)
             postFaceData(postData);
             // console.log(time.yyyymmdd() + ' ' + time.hhmmssms());
         }
-
+        if(secondsTimer.getTimeValues().seconds >= 10){
+            secondsTimer.reset();
+            let score = getScore(detectedData);
+            totalScore += score
+            console.log(`가감스코어==========${score}=====종합스코어=============${totalScore}`);
+            const postData = Object.assign({}, getMeetingTitle(), getCreatedTime(), {'score_per_second' : score}, {'applied_score': totalScore});
+            postScoreData(postData);
+            detectedData.Items = [];
+        }
     }, 100)
 }
 
@@ -175,4 +185,56 @@ function findMaxDetectedExpression(keys, values){
         }
     }
     return max_key
+}
+
+function getMeetingTitle(){
+    const meetingTitle = {'meeting_title' : decodeURI(document.location.href.split('?')[1].split('=')[1])};
+    return {...meetingTitle};
+}
+
+function getCreatedTime(){
+    let time = new Time();
+    const createdAt = { 'createdAt' : time.yyyymmdd() + ' ' + time.hhmmssms()};
+    return {...createdAt};
+}
+
+function getScore(data) {
+    var idealLogCount = 1 * 5 * 10              // 1초 * 5개 * 10초 = 50개 (1분: 300개, 5분: 1500개)
+    var blinkOffSet = 0.03;                      // 두눈이 0.03 이하일 경우 감은 것 (테스트용)
+    var neutralOffSet = 0.8;                    // neutral이 0.8 이상
+    var blinkBaseOffSet = idealLogCount * 0.5   // 예상했던 로그수의 반이상이 잡힐 때만, 25개 이상의 log가 잡힐 경우만 졸림을 감지
+
+    var logArray = data.Items                   // 대상 로그 배열
+    var logCount = logArray.length              // 추출된 로그수
+    var blinkCount = 0;                         // 두눈이 모두 감은 경우
+    var neutralCount = 0;                       // neutral이 0.8이상인 로그수
+    var returnScore = 0;                        // 최종 가감 스코어
+
+    for (let i = 0; i < logCount; i++) {            // 로그 개수 만큼돌면서 변수 계산
+
+        if (logCount >= blinkBaseOffSet && parseFloat(logArray[i].left_eye_blink) <= blinkOffSet &&
+            parseFloat(logArray[i].right_eye_blink) <= blinkOffSet) {           // log수가 50%이상 잡히고 두눈을 감은 경우만
+                                                                                // console.log(logArray[i].left_eye_blink, logArray[i].right_eye_blink)
+            blinkCount += 1;
+        }
+        if (parseFloat(logArray[i].neutral) >= neutralOffSet) {                 // 일단 neutral만
+            neutralCount += 1;
+        }
+    }
+
+    if (logCount >= blinkBaseOffSet && blinkCount >= blinkBaseOffSet * 0.8) {    // 졸음 감점 시 화면집중과 안면집중 점수는 적용되지 않음 (1분 졸면 -12 급경히 감소)
+        returnScore =- 2;
+    } else {
+        returnScore = (logCount / idealLogCount) - ((idealLogCount - logCount) / idealLogCount) + (neutralCount / idealLogCount);
+    }
+
+    console.log("idealLogCount -> " + idealLogCount);
+    console.log("logCount -> " + logCount);
+    console.log("blinkCount -> " + blinkCount);
+    console.log("neutralCount -> " + neutralCount);
+    console.log("blinkScore -> " + (blinkCount == logCount));
+    console.log("logCount/idealLogCount -> " + (logCount / idealLogCount));
+    console.log("neutralCount/idealLogCount -> " + (neutralCount / idealLogCount));
+
+    return returnScore
 }

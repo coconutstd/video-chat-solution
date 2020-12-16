@@ -29,7 +29,21 @@
             "name": "/score",
             "lambdaFunction": "scoreApi",
             "privacy": {
-                "open": true
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
             }
         }
     ],
@@ -47,8 +61,8 @@
         }
     ],
     "privacy": {
-        "auth": 1,
-        "unauth": 1,
+        "auth": 2,
+        "unauth": 2,
         "authRoleName": "amplify-videochatsolution-dev-141403-authRole",
         "unAuthRoleName": "amplify-videochatsolution-dev-141403-unauthRole"
     },
@@ -78,5 +92,5 @@
             ]
         }
     ],
-    "uuid": "18f3daa1"
+    "uuid": "f54a65cf"
 }

@@ -3,13 +3,7 @@ import {API} from "aws-amplify";
 function postFaceData(data){
     return API.post('faceApi', '/face', {
         body: data
-    })
-        .then(result => {
-            console.log(result);
-        })
-        .catch(error => {
-            console.log(error);
-        })
+    });
 }
 
 function getFaceData(){
@@ -24,5 +18,11 @@ function getMeetingList(){
     return API.get('meetingApi', '/meeting', {});
 }
 
+function postScoreData(data){
+    return API.post('faceApi', '/score', {
+        body: data
+    });
+}
 
-export { postFaceData, getFaceData, getUserFaceData, getMeetingList }
+
+export { postFaceData, getFaceData, getUserFaceData, getMeetingList, postScoreData }

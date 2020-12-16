@@ -54,7 +54,6 @@ const convertUrlType = (param, type) => {
   }
 }
 
-
 const getUserId = request => {
   try {
     const reqContext = request.apiGateway.event.requestContext;
@@ -65,27 +64,6 @@ const getUserId = request => {
   }
 }
 
-Date.prototype.yyyymmdd= function() {
-  let mm = this.getMonth() + 1;
-  let dd = this.getDate();
-
-  return [this.getFullYear(),
-    (mm>9 ? '' : '0') + mm,
-    (dd>9 ? '' : '0') + dd
-  ].join('-');
-};
-
-Date.prototype.hhmmss = function() {
-  let hh = this.getHours();
-  let mm = this.getMinutes();
-  let ss = this.getSeconds();
-
-  return [(hh>9 ? '' : '0') + hh,
-    (mm>9 ? '' : '0') + mm,
-    (ss>9 ? '' : '0') + ss,
-  ].join(':');
-}
-
 /********************************
  * HTTP Get method for list objects *
  ********************************/
@@ -93,7 +71,7 @@ Date.prototype.hhmmss = function() {
 app.get(path, function(request, response) {
   let params = {
     TableName: tableName,
-    limit: 100
+    limit: 50
   }
   dynamodb.scan(params, (error, result) => {
     if (error) {
@@ -108,8 +86,25 @@ app.get(path, function(request, response) {
  * HTTP Get method for get single object *
  *****************************************/
 
-app.get("/score/:id", function(request, response) {
+app.get("/face/:id", function(request, response) {
 
+  // let params = {
+  //   TableName: tableName,
+  //   IndexName: "userId",
+  //   KeyConditionExpression: "#userId = :userId",
+  //   FilterExpression: "#angry > :angry_val and #disgusted >= :disgusted_val",
+  //   ExpressionAttributeNames: {
+  //     "#userId": "userId",
+  //     "#angry": "angry",
+  //     "#disgusted": "disgusted"
+  //   },
+  //   ExpressionAttributeValues: {
+  //     ":userId" : getUserId(request),
+  //     ":angry_val" : 0.002,
+  //     ":disgusted_val" : 0.00001,
+  //   },
+  //   limit: 5
+  // }
   let params = {
     TableName: tableName,
     IndexName: "userId",
@@ -168,7 +163,7 @@ app.post(path, function(request, response) {
     Item: {
       ...request.body,
       id: uuidv4(),
-      // createdAt: timestamp.yyyymmdd() + ' ' + timestamp.hhmmss(),
+      userId: getUserId(request)
     }
   }
 
