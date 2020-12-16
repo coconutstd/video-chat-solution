@@ -70,7 +70,8 @@ export default {
       group: null,
       menuItems: [
         {'title' : '화상채팅', 'link' : '/videochat'},
-        {'title' : '할일리스트', 'link' : '/todo'}
+        {'title' : '할일리스트', 'link' : '/todo'},
+        {'title' : '나의집중도현황', 'link' : '/concentration'},
       ]
     }
   },

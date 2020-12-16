@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import VideoChat from '../views/VideoChat.vue'
 import Todo from '../views/Todo'
 import UserView from "../views/UserView";
+import ConcentrationView from "../views/ConcentrationView";
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,10 @@ export const router = new VueRouter({
         {
             path: '/todo',
             component: Todo,
+        },
+        {
+            path: '/concentration',
+            component: ConcentrationView,
         }
     ]
 })
