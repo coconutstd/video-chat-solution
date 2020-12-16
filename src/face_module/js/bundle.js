@@ -60317,7 +60317,7 @@ function copy(f, t) {
   t.w = f.w;
   t.X = f.X.slice();
   return t;
-};
+}
 
 function impl(seed, opts) {
   if (seed == null) seed = +(new Date);
@@ -60422,7 +60422,7 @@ function copy(f, t) {
   t.c = f.c;
   t.d = f.d;
   return t;
-};
+}
 
 function impl(seed, opts) {
   var xg = new XorGen(seed),
@@ -60622,7 +60622,7 @@ function copy(f, t) {
   t.j = f.j;
   t.S = f.S.slice();
   return t;
-};
+}
 
 //
 // flatten()
@@ -85585,7 +85585,7 @@ function getNodeNameAndIndex(inputName, context) {
 }
 
 function getNodeNameWithContextId(name, contextId) {
-  return !!contextId ? `${name}-${contextId}` : name;
+  return contextId ? `${name}-${contextId}` : name;
 }
 
 function parseNodeName(name) {
@@ -96555,7 +96555,7 @@ function nodeName( elem, name ) {
 
   return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
 
-};
+}
 var rsingleTag = ( /^<([a-z][^\/\0>:\x20\t\r\n\f]*)[\x20\t\r\n\f]*\/?>(?:<\/\1>|)$/i );
 
 

@@ -161,7 +161,7 @@ class DefaultVideoStreamIndex {
         return this.highestQualityStreamFromEachGroupExcludingSelf(selfAttendeeId).array().length;
     }
     numberOfParticipants() {
-        if (!!this.currentIndex.numParticipants) {
+        if (this.currentIndex.numParticipants) {
             return this.currentIndex.numParticipants;
         }
         return -1;
@@ -215,7 +215,7 @@ class DefaultVideoStreamIndex {
             }
         }
         // If wasn't found in current index, then it could be in index used in last subscribe
-        if (!!this.indexForSubscribe) {
+        if (this.indexForSubscribe) {
             for (const source of this.indexForSubscribe.sources) {
                 if (source.streamId === streamId) {
                     return source.groupId;
@@ -284,7 +284,7 @@ class DefaultVideoStreamIndex {
         const map = new Map();
         if (indexFrame) {
             for (const source of indexFrame.sources) {
-                if (!!source.externalUserId) {
+                if (source.externalUserId) {
                     map.set(source.streamId, source.externalUserId);
                 }
             }

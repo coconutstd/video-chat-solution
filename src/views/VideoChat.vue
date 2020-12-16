@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="videochat">
     <div id="flow-authenticate" class="flow text-center p-2">
       <div class="text-muted" style="position:fixed;right:3px;bottom:3px" ref="sdk-version">
       </div>
@@ -239,7 +239,7 @@
 
     <!-- In-meeting screen -->
 
-    <div id="flow-meeting" class="flow" style="position:absolute;left:0;top:85px;bottom:55px;right:0">
+    <div id="flow-meeting" class="flow" style="position:absolute;left:0;top:0;bottom:55px;right:0;min-height:87vh;">
       <div class="p-2 d-none d-sm-block align-items-end" style="position:fixed;right:0;bottom:0;left:0;">
         <div class="row align-items-end">
           <div class="col">

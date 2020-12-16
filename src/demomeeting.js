@@ -132,7 +132,7 @@ var ContentShareType;
     ContentShareType[ContentShareType["ScreenCapture"] = 0] = "ScreenCapture";
     ContentShareType[ContentShareType["VideoFile"] = 1] = "VideoFile";
 })(ContentShareType = exports.ContentShareType || (exports.ContentShareType = {}));
-;
+
 const SimulcastLayerMapping = {
     [index_1.SimulcastLayers.Low]: 'Low',
     [index_1.SimulcastLayers.LowAndMedium]: 'Low and Medium',

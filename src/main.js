@@ -5,11 +5,13 @@ import Amplify from "aws-amplify";
 import awsconfig from "./aws-exports";
 import { store } from './store/index.js';
 import { router } from './router/index.js';
+import vuetify from './plugins/vuetify';
 
 Amplify.configure(awsconfig);
 
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  vuetify,
+  render: (h) => h(App)
 }).$mount("#app");

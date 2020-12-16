@@ -18,7 +18,7 @@ var StreamDirection;
     StreamDirection["Downstream"] = "Downstream";
     StreamDirection["Upstream"] = "Upstream";
 })(StreamDirection || (StreamDirection = {}));
-;
+
 const getCurrentUpstreamMetrics = (report, timestamp) => {
     const currentMetrics = {};
     const { frameHeight, frameWidth, bytesSent, packetsSent, framesEncoded } = report;

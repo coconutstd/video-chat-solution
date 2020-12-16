@@ -271,7 +271,7 @@ class MonitorTask extends BaseTask_1.default {
             this.hasSignalingError = false;
         }
         if (event.type === SignalingClientEventType_1.default.ReceivedSignalFrame) {
-            if (!!event.message.bitrates) {
+            if (event.message.bitrates) {
                 const bitrateFrame = event.message.bitrates;
                 this.context.videoStreamIndex.integrateBitratesFrame(bitrateFrame);
                 this.context.videoDownlinkBandwidthPolicy.updateIndex(this.context.videoStreamIndex);

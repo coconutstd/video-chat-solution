@@ -195,7 +195,7 @@ const decideExecutionApproach = ({ supportsSIMD, supportsSAB, duration, executio
                 if (variant === 'failed') {
                     return unsupported(`Performance score ${inlineScore} not sufficient for inline use with variant preference ${variantPreference}.`);
                 }
-                ;
+                
                 return succeed('voicefocus-inline-processor', 'inline', variant);
             }
             case 'worker-sab': {
@@ -208,7 +208,7 @@ const decideExecutionApproach = ({ supportsSIMD, supportsSAB, duration, executio
                 if (variant === 'failed') {
                     return unsupported(`Performance score ${workerScore} not sufficient for worker use with variant preference ${variantPreference}.`);
                 }
-                ;
+                
                 return succeed('voicefocus-worker-sab-processor', 'worker-sab', variant);
             }
             case 'worker-postMessage': {
@@ -216,7 +216,7 @@ const decideExecutionApproach = ({ supportsSIMD, supportsSAB, duration, executio
                 if (variant === 'failed') {
                     return unsupported(`Performance score ${workerScore} not sufficient for worker use.`);
                 }
-                ;
+                
                 return succeed('voicefocus-worker-postMessage-processor', 'worker-postMessage', variant);
             }
         }

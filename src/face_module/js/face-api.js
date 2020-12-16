@@ -1836,7 +1836,7 @@
                   case 0:
                       Canvas = env.getEnv().Canvas;
                       canvas = input;
-                      if (!!(input instanceof Canvas)) return [3 /*break*/, 5];
+                      if (input instanceof Canvas) return [3 /*break*/, 5];
                       return [4 /*yield*/, toNetInput(input)];
                   case 1:
                       netInput = _b.sent();
