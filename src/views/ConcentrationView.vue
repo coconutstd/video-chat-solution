@@ -1,5 +1,7 @@
 <template>
-나의 집중 현황
+<div>
+  나의 집중 현황
+</div>
 </template>
 
 <script>
