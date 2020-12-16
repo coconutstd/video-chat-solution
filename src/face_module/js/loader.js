@@ -156,11 +156,11 @@ export async function videoCallback(video, FaceMatcher) {
             let score = getScore(detectedData);
             totalScore += score
             console.log(`가감스코어==========${score}=====종합스코어=============${totalScore}`);
-            const postData = Object.assign({}, getMeetingTitle(), getCreatedTime(), {'score_per_second' : score}, {'applied_score': totalScore});
+            const postData = Object.assign({}, getMeetingTitle(), getCreatedTime(), {'score_per_second' : score}, {'applied_score': totalScore}, {'total_time': totalTimer.getTimeValues().toString()});
             postScoreData(postData);
             detectedData.Items = [];
         }
-    }, 100)
+    }, 200)
 }
 
 export function destroyInterval() {
