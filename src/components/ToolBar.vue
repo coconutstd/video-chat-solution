@@ -12,11 +12,13 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-items class="hidden-xs-only">
+        <v-icon></v-icon>
         <v-btn
           v-for="item in menuItems"
           :to="item.link"
           class="indigo darken-1"
-        >{{item.title}}</v-btn>
+        ><v-icon>{{item.icon}}</v-icon>
+          {{item.title}}</v-btn>
       </v-toolbar-items>
 
 
@@ -42,6 +44,7 @@
         >
           <v-list-item :to="item.link" v-for="item in menuItems">
             <v-list-item-title>
+              <v-icon>{{item.icon}}</v-icon>
               {{item.title}}
             </v-list-item-title>
           </v-list-item>
@@ -69,9 +72,9 @@ export default {
       drawer: false,
       group: null,
       menuItems: [
-        {'title' : '화상채팅', 'link' : '/videochat'},
-        {'title' : '할일리스트', 'link' : '/todo'},
-        {'title' : '나의집중도현황', 'link' : '/concentration'},
+        {'title' : '화상채팅', 'link' : '/videochat', 'icon': 'mdi-video'},
+        {'title' : '할일리스트', 'link' : '/todo', 'icon': 'mdi-playlist-check'},
+        {'title' : '나의집중도현황', 'link' : '/concentration', 'icon': 'mdi-account-box'},
       ]
     }
   },

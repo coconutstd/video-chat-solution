@@ -4,6 +4,11 @@
   <router-link :to="`/home/${userData.username}`">{{ userData.attributes.email }}</router-link>
   <v-container fluid>
     <v-row>
+      <v-col v-for="item in items" cols="12" md="4">
+        <MainInfoCard :data="item"></MainInfoCard>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col v-for="item in meetingData" class="mt-2 mb-2" cols="12" md="4">
         <meeting-card :data="item"></meeting-card>
       </v-col>
@@ -14,9 +19,20 @@
 
 <script>
 import MeetingCard from "../components/MeetingCard.vue";
+import MainInfoCard from "../components/MainInfoCard.vue";
 export default {
+  data() {
+    return {
+        items: [
+          {'title' : 'one', 'userId' : '이준의', "bgcolor" : "#F44336"},
+          {'title' : 'two', 'userId' : '김유철', "bgcolor" : "#E91E63"},
+          {'title' : 'three', 'userId' : '이준의', "bgcolor" : "#9C27B0"},
+        ]
+    }
+  },
   components:{
-    MeetingCard
+    MeetingCard,
+    MainInfoCard
   },
   computed:{
     userData(){

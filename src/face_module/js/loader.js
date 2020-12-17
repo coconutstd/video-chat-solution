@@ -170,6 +170,9 @@ export async function videoCallback(video, FaceMatcher) {
                 }, 0);
                 userLogCount = result / logCountArr.length;
                 console.log(`현재 셋팅된 userLogCount는 ${userLogCount}입니다`);
+                if(totalTimer.getTimeValues().minutes >= 2) {
+                    logCountTimer.stop();
+                }
                 if(!isSecondsTimer){
                     detectedData.Items = [];
                     isSecondsTimer = true;
