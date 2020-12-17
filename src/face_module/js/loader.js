@@ -10,6 +10,8 @@ export let collectedData = new Map()
 let interval = 0
 export let totalTimer = new Timer();
 export let secondsTimer = new Timer();
+export let logCountTimer = new Timer();
+let userLogCount = 0;
 let detectedData = {"Items": []};
 let totalScore = 100;
 
@@ -83,9 +85,12 @@ export async function videoCallback(video, FaceMatcher) {
     // tiny_face_detector options
     let inputSize = 224
     let scoreThreshold = 0.5
-
+    let detectedCount = 0;
+    let logCountTimerCount = 0;
+    let logCountArr = [];
     totalTimer.start();
-    secondsTimer.start();
+    // secondsTimer.start();
+    logCountTimer.start();
     interval = setInterval(async () => {
         // const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
         // const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold })).withFaceExpressions()
@@ -104,6 +109,7 @@ export async function videoCallback(video, FaceMatcher) {
         // faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
 
         if (detections) {
+            detectedCount++;
             const displaySize = {
                 width: videoSize.getVideoOriginWidth('video-16'),
                 height: videoSize.getVideoOriginHeight('video-16')
@@ -150,6 +156,21 @@ export async function videoCallback(video, FaceMatcher) {
             // console.log(postData)
             postFaceData(postData);
             // console.log(time.yyyymmdd() + ' ' + time.hhmmssms());
+        }
+        if(logCountTimer.getTimeValues().seconds >= 10){
+            logCountArr.push(detectedCount);
+            detectedCount = 0;
+            logCountTimer.reset();
+            logCountTimerCount++;
+            if(logCountTimerCount == 3){
+                logCountTimer.stop();
+                const result = logCountArr.reduce((sum, curValue) => {
+                    return sum + curValue;
+                }, 0);
+                userLogCount = result / logCountArr.length;
+                console.log(`현재 셋팅된 userLogCount는 ${userLogCount}입니다`);
+                secondsTimer.start();
+            }
         }
         if(secondsTimer.getTimeValues().seconds >= 10){
             secondsTimer.reset();
@@ -199,7 +220,7 @@ function getCreatedTime(){
 }
 
 function getScore(data) {
-    var idealLogCount = 1 * 5 * 10              // 1초 * 5개 * 10초 = 50개 (1분: 300개, 5분: 1500개)
+    var idealLogCount = 1 * userLogCount * 10              // 1초 * 5개 * 10초 = 50개 (1분: 300개, 5분: 1500개)
     var blinkOffSet = 0.03;                      // 두눈이 0.03 이하일 경우 감은 것 (테스트용)
     var neutralOffSet = 0.8;                    // neutral이 0.8 이상
     var blinkBaseOffSet = idealLogCount * 0.5   // 예상했던 로그수의 반이상이 잡힐 때만, 25개 이상의 log가 잡힐 경우만 졸림을 감지
