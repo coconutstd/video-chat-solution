@@ -23,6 +23,8 @@ const awsmobile = {
             "region": "ap-northeast-2"
         }
     ],
+    "aws_user_files_s3_bucket": "snstest-1308141403-dev",
+    "aws_user_files_s3_bucket_region": "ap-northeast-2",
     "aws_cloud_logic_custom": [
         {
             "name": "faceApi",

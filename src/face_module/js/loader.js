@@ -88,8 +88,8 @@ export async function videoCallback(video, FaceMatcher) {
     let detectedCount = 0;
     let logCountTimerCount = 0;
     let logCountArr = [];
+    let isSecondsTimer = false;
     totalTimer.start();
-    // secondsTimer.start();
     logCountTimer.start();
     interval = setInterval(async () => {
         // const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
@@ -163,13 +163,18 @@ export async function videoCallback(video, FaceMatcher) {
             logCountTimer.reset();
             logCountTimerCount++;
             if(logCountTimerCount == 3){
-                logCountTimer.stop();
+                logCountTimerCount = 0;
+                logCountTimer.reset();
                 const result = logCountArr.reduce((sum, curValue) => {
                     return sum + curValue;
                 }, 0);
                 userLogCount = result / logCountArr.length;
                 console.log(`현재 셋팅된 userLogCount는 ${userLogCount}입니다`);
-                secondsTimer.start();
+                if(!isSecondsTimer){
+                    detectedData.Items = [];
+                    isSecondsTimer = true;
+                    secondsTimer.start();
+                }
             }
         }
         if(secondsTimer.getTimeValues().seconds >= 10){
@@ -220,7 +225,8 @@ function getCreatedTime(){
 }
 
 function getScore(data) {
-    var idealLogCount = 1 * userLogCount * 10              // 1초 * 5개 * 10초 = 50개 (1분: 300개, 5분: 1500개)
+    var idealLogCount = userLogCount
+    // var idealLogCount = 1 * userLogCount * 10              // 1초 * 5개 * 10초 = 50개 (1분: 300개, 5분: 1500개)
     var blinkOffSet = 0.03;                      // 두눈이 0.03 이하일 경우 감은 것 (테스트용)
     var neutralOffSet = 0.8;                    // neutral이 0.8 이상
     var blinkBaseOffSet = idealLogCount * 0.5   // 예상했던 로그수의 반이상이 잡힐 때만, 25개 이상의 log가 잡힐 경우만 졸림을 감지

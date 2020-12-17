@@ -19,6 +19,21 @@
     "scoreTable": {
       "service": "DynamoDB",
       "providerPlugin": "awscloudformation"
+    },
+    "snstest": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "S3Trigger319ba723",
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ]
+        }
+      ]
     }
   },
   "function": {
@@ -97,6 +112,11 @@
           }
         }
       ]
+    },
+    "S3Trigger319ba723": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true
     }
   },
   "api": {
