@@ -97,11 +97,6 @@
           }
         }
       ]
-    },
-    "face222": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
     }
   },
   "api": {
@@ -128,14 +123,6 @@
         {
           "category": "function",
           "resourceName": "scoreApi",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "face222",
           "attributes": [
             "Name",
             "Arn"

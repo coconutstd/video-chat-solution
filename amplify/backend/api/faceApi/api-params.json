@@ -45,13 +45,6 @@
                     "/DELETE"
                 ]
             }
-        },
-        {
-            "name": "/face222",
-            "lambdaFunction": "face222",
-            "privacy": {
-                "open": true
-            }
         }
     ],
     "resourceName": "faceApi",
@@ -65,9 +58,6 @@
         },
         {
             "lambdaFunction": "scoreApi"
-        },
-        {
-            "lambdaFunction": "face222"
         }
     ],
     "privacy": {
@@ -100,15 +90,7 @@
                 "Name",
                 "Arn"
             ]
-        },
-        {
-            "category": "function",
-            "resourceName": "face222",
-            "attributes": [
-                "Name",
-                "Arn"
-            ]
         }
     ],
-    "uuid": "53254c19"
+    "uuid": "63f40f74"
 }
