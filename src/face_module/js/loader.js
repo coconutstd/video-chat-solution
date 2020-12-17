@@ -13,7 +13,7 @@ export let secondsTimer = new Timer();
 export let logCountTimer = new Timer();
 let userLogCount = 0;
 let detectedData = {"Items": []};
-let totalScore = 100;
+let totalScore = 0;
 
 export async function loadModels() {
     return Promise.all([
@@ -151,7 +151,7 @@ export async function videoCallback(video, FaceMatcher) {
 
             const eyeData = getOpenness()
             const labeledEyeData = {'left_eye_blink' : eyeData.left, 'right_eye_blink' : eyeData.right }
-            const postData = Object.assign({}, detections.expressions, labeledEyeData, getMeetingTitle(), getCreatedTime());
+            const postData = Object.assign({}, detections.expressions, labeledEyeData, getMeetingTitle(), getCreatedTime(), {'total_time': totalTimer.getTimeValues().toString()});
             detectedData.Items.push(postData);
             // console.log(detectedData);
             // console.log(postData)

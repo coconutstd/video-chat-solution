@@ -71,13 +71,13 @@ const getUserId = request => {
 app.get(path, function(request, response) {
   let params = {
     TableName: tableName,
-    limit: 50
+    Limit: 1
   }
   dynamodb.scan(params, (error, result) => {
     if (error) {
       response.json({ statusCode: 500, error: error.message })
     } else {
-      response.json({ statusCode: 200, url: request.url, body: JSON.stringify(result.Items)})
+      response.json(result.Items)
     }
   })
 });
@@ -86,7 +86,7 @@ app.get(path, function(request, response) {
  * HTTP Get method for get single object *
  *****************************************/
 
-app.get("/face/:id", function(request, response) {
+app.get("/score/:id", function(request, response) {
 
   // let params = {
   //   TableName: tableName,
@@ -107,22 +107,21 @@ app.get("/face/:id", function(request, response) {
   // }
   let params = {
     TableName: tableName,
-    IndexName: "userId",
+    IndexName: "userId-index",
     KeyConditionExpression: "#userId = :userId",
     ExpressionAttributeNames: {
       "#userId": "userId"
     },
     ExpressionAttributeValues: {
       ":userId": request.params.id
-    },
-    limit: 100
+    }
   }
 
   dynamodb.query(params, (error, result) => {
     if (error) {
       response.json({ statusCode: 500, error: error.message })
     } else {
-      response.json({ statusCode: 200, url: request.url, body: JSON.stringify(result.Items)})
+      response.json(result.Items)
     }
   })
 });

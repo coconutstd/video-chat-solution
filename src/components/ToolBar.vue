@@ -1,9 +1,7 @@
 <template>
   <div>
     <v-app-bar color="indigo" dark fixed app>
-
       <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = !drawer"></v-app-bar-nav-icon>
-
       <v-toolbar-title>
         <router-link to="/" tag="span" style="cursor: pointer">
           OMNI
@@ -74,7 +72,7 @@ export default {
       menuItems: [
         {'title' : '화상채팅', 'link' : '/videochat', 'icon': 'mdi-video'},
         {'title' : '할일리스트', 'link' : '/todo', 'icon': 'mdi-playlist-check'},
-        {'title' : '나의집중도현황', 'link' : '/concentration', 'icon': 'mdi-account-box'},
+        {'title' : '나의집중도현황', 'link' : `/concentration`, 'icon': 'mdi-account-box'},
       ]
     }
   },
@@ -82,7 +80,7 @@ export default {
     group () {
       this.drawer = false
     },
-  },
+  }
 }
 </script>
 <style scoped>

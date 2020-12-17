@@ -1,4 +1,4 @@
-import {getFaceData, getMeetingList, getUserFaceData} from "../api/index.js";
+import {getFaceData, getMeetingList, getUserFaceData, getUserScoreData} from "../api/index.js";
 
 export default {
 
@@ -24,6 +24,15 @@ export default {
         getMeetingList()
             .then(({body})=>{
                 commit('SET_MEETING_LIST', JSON.parse(body));
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    },
+    FETCH_USER_SCORE({commit}, userid){
+        getUserScoreData(userid)
+            .then(result => {
+                commit('SET_USER_SCORE', result);
             })
             .catch(error => {
                 console.log(error);

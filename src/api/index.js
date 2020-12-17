@@ -24,5 +24,9 @@ function postScoreData(data){
     });
 }
 
+function getUserScoreData(userId){
+    return API.get('faceApi', `/score/${userId}`, {});
+}
 
-export { postFaceData, getFaceData, getUserFaceData, getMeetingList, postScoreData }
+
+export { postFaceData, getFaceData, getUserFaceData, getMeetingList, postScoreData, getUserScoreData }

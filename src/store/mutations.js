@@ -10,5 +10,8 @@ export default {
     },
     SET_MEETING_LIST(state, meetinglist){
         state.meetingList = meetinglist;
+    },
+    SET_USER_SCORE(state, userscoredata){
+        state.userScoreData = userscoredata;
     }
 }

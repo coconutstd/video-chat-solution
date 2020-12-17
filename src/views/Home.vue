@@ -1,8 +1,8 @@
 <template>
 <div>
-  <h1>안녕하세요!</h1>
-  <router-link :to="`/home/${userData.username}`">{{ userData.attributes.email }}</router-link>
   <v-container fluid>
+    <h1 style="display:inline;">안녕하세요!</h1>
+    <router-link to="/concentration">{{ userData.attributes.email }}</router-link>
     <v-row>
       <v-col v-for="item in items" cols="12" md="4">
         <MainInfoCard :data="item"></MainInfoCard>
