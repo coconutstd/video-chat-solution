@@ -19,21 +19,6 @@
     "scoreTable": {
       "service": "DynamoDB",
       "providerPlugin": "awscloudformation"
-    },
-    "snstest": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger319ba723",
-          "attributes": [
-            "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ]
-        }
-      ]
     }
   },
   "function": {
@@ -113,10 +98,10 @@
         }
       ]
     },
-    "S3Trigger319ba723": {
-      "service": "Lambda",
+    "face222": {
+      "build": true,
       "providerPlugin": "awscloudformation",
-      "build": true
+      "service": "Lambda"
     }
   },
   "api": {
@@ -143,6 +128,14 @@
         {
           "category": "function",
           "resourceName": "scoreApi",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "face222",
           "attributes": [
             "Name",
             "Arn"
