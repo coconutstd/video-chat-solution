@@ -26,7 +26,7 @@ export default {
         items: [
           {'title' : 'one', 'userId' : '이준의', "bgcolor" : "#F44336"},
           {'title' : 'two', 'userId' : '김유철', "bgcolor" : "#E91E63"},
-          {'title' : 'three', 'userId' : '이준의', "bgcolor" : "#9C27B0"},
+          {'title' : 'three', 'userId' : '정해창', "bgcolor" : "#9C27B0"},
         ]
     }
   },
