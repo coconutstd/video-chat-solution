@@ -360,7 +360,7 @@
               <!--              ${require('../node_modules/open-iconic/svg/power-standby.svg').default}-->
               FaceApi
             </button>
-            <div id="loader" class="loader"></div>
+            <div id="facespinner" class="facespinner"></div>
             <button @click.prevent="onClickChart" type="button" class="btn btn-outline-danger mx-1 mx-xl-2 my-2 px-4"
                     title="FaceAPI">
               <!--              ${require('../node_modules/open-iconic/svg/power-standby.svg').default}-->
@@ -550,9 +550,9 @@ export default Vue.extend({
   },
   methods: {
     onClickFaceApi() {
-      document.getElementById("loader").style.display = "inline-block";
       let capture = new Capture(document.getElementById('video-16'))
       if (this.isToggle === false) {
+        document.getElementById("facespinner").style.display = "inline-block";
         capture.capture()
         this.isToggle = true
       } else {
@@ -560,7 +560,6 @@ export default Vue.extend({
         this.isToggle = false
         capture = null
       }
-      document.getElementById("loader").style.display = "none";
     },
     onClickVideo() {
       if (event.target.mozRequestFullScreen) {
@@ -600,7 +599,7 @@ export default Vue.extend({
 
 <style lang="scss">
 
-.loader {
+.facespinner {
   border: 16px solid #f3f3f3; /* Light grey */
   border-top: 16px solid #3498db; /* Blue */
   border-radius: 50%;

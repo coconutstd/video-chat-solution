@@ -89,6 +89,7 @@ export async function videoCallback(video, FaceMatcher) {
     let logCountTimerCount = 0;
     let logCountArr = [];
     let isSecondsTimer = false;
+
     totalTimer.start();
     logCountTimer.start();
     interval = setInterval(async () => {

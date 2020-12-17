@@ -42,6 +42,7 @@ export class Capture {
             let userMedia = await getUserMedia(video)
             await initEyeblink()
             this.video.addEventListener('play', videoCallback(video, FaceMatcher))
+            document.getElementById('facespinner').style.display = 'none';
         }
     }
 
