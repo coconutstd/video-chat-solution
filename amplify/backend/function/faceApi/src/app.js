@@ -117,6 +117,7 @@ app.get("/face/:id", function(request, response) {
     },
   }
 
+
   dynamodb.query(params, (error, result) => {
     if (error) {
       response.json({ statusCode: 500, error: error.message })

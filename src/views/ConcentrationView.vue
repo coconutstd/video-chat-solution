@@ -11,7 +11,9 @@
   </div>
   <v-row>
     <v-col v-for="chartData in chartDatas" cols="12" md="6">
-      <line-chart :chartData="chartData" v-if="!chartLoading" ></line-chart>
+      <v-card  min-height="550">
+        <line-chart :chartData="chartData" v-if="!chartLoading" ></line-chart>
+      </v-card>
     </v-col>
   </v-row>
 
@@ -70,7 +72,7 @@ export default {
 
         dailyData.forEach((data) => {
           this.chartDatas.push({
-            labels: data[Object.keys(data)[0]].map(item => item[0]),
+            labels: data[Object.keys(data)[0]].map(item => item[0].split(' ')[1]),
             datasets: [{
               label: Object.keys(data)[0],
               backgroundColor: '#f87979',
