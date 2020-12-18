@@ -5,6 +5,7 @@ import VideoChat from '../views/VideoChat.vue'
 import Todo from '../views/Todo'
 import UserView from "../views/UserView";
 import ConcentrationView from "../views/ConcentrationView";
+import MeetingInfoView from "../views/MeetingInfoView";
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,10 @@ export const router = new VueRouter({
         {
             path: '/concentration',
             component: ConcentrationView,
+        },
+        {
+            path: '/meeting/:id',
+            component: MeetingInfoView
         }
     ]
 })

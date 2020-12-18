@@ -13,5 +13,8 @@ export default {
     },
     SET_USER_SCORE(state, userscoredata){
         state.userScoreData = userscoredata;
+    },
+    SET_MEETING_FACE(state, meetingfacedata){
+        state.meetingFaceData = meetingfacedata;
     }
 }

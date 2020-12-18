@@ -107,15 +107,14 @@ app.get("/face/:id", function(request, response) {
   // }
   let params = {
     TableName: tableName,
-    IndexName: "userId",
-    KeyConditionExpression: "#userId = :userId",
+    IndexName: "meeting_title-index",
+    KeyConditionExpression: "#meeting_title = :meeting_title",
     ExpressionAttributeNames: {
-      "#userId": "userId"
+      "#meeting_title": "meeting_title"
     },
     ExpressionAttributeValues: {
-      ":userId": request.params.id
+      ":meeting_title": request.params.id
     },
-    limit: 100
   }
 
   dynamodb.query(params, (error, result) => {

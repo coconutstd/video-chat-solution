@@ -13,6 +13,7 @@
         <v-btn
             text
             color="deep-purple accent-4"
+            :to="`/meeting/${data.Title}`"
         >
           정보보기
         </v-btn>

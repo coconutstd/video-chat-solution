@@ -10,8 +10,13 @@ function getFaceData(){
     return API.get('faceApi', '/face', {});
 }
 
-function getUserFaceData(userId){
-    return API.get('faceApi', `/face/${userId}`, {});
+// function getUserFaceData(userId){
+//     return API.get('faceApi', `/face/${userId}`, {});
+// }
+
+function getMeetingFaceDate(meetingtitle){
+    const encoded_uri = encodeURI(meetingtitle);
+    return API.get('faceApi', `/face/${encoded_uri}`, {});
 }
 
 function getMeetingList(){
@@ -29,4 +34,4 @@ function getUserScoreData(userId){
 }
 
 
-export { postFaceData, getFaceData, getUserFaceData, getMeetingList, postScoreData, getUserScoreData }
+export { postFaceData, getFaceData, getMeetingFaceDate, getMeetingList, postScoreData, getUserScoreData }
