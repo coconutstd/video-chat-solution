@@ -1,5 +1,4 @@
 <template>
-<div>
   <v-container fluid>
     <h1 style="display:inline;">안녕하세요!</h1>
     <router-link to="/concentration">{{ userData.attributes.email }}</router-link>
@@ -14,12 +13,12 @@
       </v-col>
     </v-row>
   </v-container>
-</div>
 </template>
 
 <script>
 import MeetingCard from "../components/MeetingCard.vue";
 import MainInfoCard from "../components/MainInfoCard.vue";
+
 export default {
   data() {
     return {

@@ -33,6 +33,7 @@ export default {
         getUserScoreData(userid)
             .then(result => {
                 commit('SET_USER_SCORE', result);
+                return result;
             })
             .catch(error => {
                 console.log(error);

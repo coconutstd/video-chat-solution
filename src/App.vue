@@ -3,7 +3,16 @@
     <amplify-authenticator>
       <tool-bar></tool-bar>
       <v-main>
-        <router-view></router-view>
+        <div class="text-lg-center pa-5" style="width: 100%;" v-if="loadingStatus">
+          <v-progress-circular
+              width="7"
+              size="70"
+              indeterminate
+              color="red"
+          ></v-progress-circular>
+        </div>
+        <router-view>
+        </router-view>
       </v-main>
       <amplify-sign-in
           header-text="옴니프로젝트"
@@ -18,6 +27,7 @@
 import {onAuthUIStateChange} from '@aws-amplify/ui-components'
 import ToolBar from "./components/ToolBar.vue"
 import Home from "@/views/Home";
+import bus from './utils/bus.js'
 
 export default {
   name: 'AuthStateApp',
@@ -25,16 +35,26 @@ export default {
     ToolBar,
     Home,
   },
-
   created() {
     onAuthUIStateChange((authState, authData) => {
       this.authState = authState;
       this.user = authData;
       this.$store.commit('SET_USERDATA', authData);
     })
+    bus.$on('start:spinner', this.startSpinner);
+    bus.$on('end:spinner', this.endSpinner);
+  },
+  methods: {
+    startSpinner() {
+      this.loadingStatus = true;
+    },
+    endSpinner() {
+      this.loadingStatus = false;
+    }
   },
   data() {
     return {
+      loadingStatus: false,
       user: undefined,
       authState: undefined,
       signInFormFields: [
@@ -54,6 +74,8 @@ export default {
     }
   },
   beforeDestroy() {
+    bus.$off('start:spinner', this.startSpinner);
+    bus.$off('end:spinner', this.endSpinner);
     return onAuthUIStateChange;
   }
 }

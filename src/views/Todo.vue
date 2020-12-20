@@ -1,20 +1,16 @@
 <template>
 <div>
-  할일목록
-  <p v-for="item in fetchedTodos">{{ item }}</p>
+  <v-container fluid>
+    할일목록
+  </v-container>
 </div>
 </template>
 
 <script>
+import bus from '../utils/bus.js';
 export default {
-
-  computed: {
-    fetchedTodos(){
-      return this.$store.state.todos;
-    }
-  },
   created () {
-    this.$store.dispatch('FETCH_TODOS');
+    bus.$emit('start:spinner');
   }
 }
 </script>

@@ -22,6 +22,7 @@
 
 <script>
 import LineChart from "../plugins/LineChart";
+import bus from '../utils/bus.js';
 
 export default {
   components:{
@@ -33,11 +34,13 @@ export default {
       chartDatas: [],
     }
   },
-  mounted() {
-    this.init();
-  },
-  created(){
-    this.$store.dispatch('FETCH_USER_SCORE', this.$store.state.userData.username);
+  async created(){
+    await this.$store.dispatch('FETCH_USER_SCORE', this.$store.state.userData.username)
+      .then(() => {
+        bus.$emit('end:spinner');
+        this.init();
+      })
+      .catch(error => console.log(error))
   },
   methods: {
     init(){
