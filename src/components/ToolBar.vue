@@ -10,7 +10,6 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-items class="hidden-xs-only">
-        <v-icon></v-icon>
         <v-btn
           v-for="item in menuItems"
           :to="item.link"
@@ -19,11 +18,30 @@
           {{item.title}}</v-btn>
       </v-toolbar-items>
 
+<!--      <v-btn icon @click="signOut">-->
+<!--        <v-icon>mdi-lock-open</v-icon>-->
+<!--      </v-btn>-->
 
-      <v-btn icon @click="signOut">
-        <v-icon>mdi-lock-open</v-icon>
-      </v-btn>
-
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+              icon
+              v-bind="attrs"
+              v-on="on"
+          >
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+              v-for="(item, index) in dropItems"
+              :key="index"
+              @click="onDropClick(item)"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
 
@@ -63,6 +81,11 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    onDropClick(item){
+      if(item.title === '로그아웃'){
+        this.signOut();
+      }
     }
   },
   data(){
@@ -73,6 +96,11 @@ export default {
         {'title' : '화상채팅', 'link' : '/videochat', 'icon': 'mdi-video'},
         {'title' : '할일리스트', 'link' : '/todo', 'icon': 'mdi-playlist-check'},
         {'title' : '나의집중도현황', 'link' : `/concentration`, 'icon': 'mdi-account-box'},
+      ],
+      dropItems: [
+        { title: '개인정보' , onClick: 'userProfile'},
+        { title: '환경설정' , onClick: 'setting'},
+        { title: '로그아웃' , onClick : 'signOut' }
       ]
     }
   },
@@ -80,7 +108,7 @@ export default {
     group () {
       this.drawer = false
     },
-  }
+  },
 }
 </script>
 <style scoped>
