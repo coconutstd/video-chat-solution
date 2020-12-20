@@ -1,14 +1,6 @@
 <template>
 <v-container fluid>
   나의 집중 현황
-  <div class="text-lg-center pa-5" style="width: 100%;" v-if="chartLoading">
-    <v-progress-circular
-        width="7"
-        size="70"
-        indeterminate
-        color="red"
-    ></v-progress-circular>
-  </div>
   <v-row>
     <v-col v-for="chartData in chartDatas" cols="12" md="6">
       <v-card  min-height="550">
@@ -38,12 +30,12 @@ export default {
     await this.$store.dispatch('FETCH_USER_SCORE', this.$store.state.userData.username)
       .then(() => {
         bus.$emit('end:spinner');
-        this.init();
+        this.drawChart();
       })
       .catch(error => console.log(error))
   },
   methods: {
-    init(){
+    drawChart(){
       setTimeout(() => {
         const fetchedData = [...this.$store.state.userScoreData]
           .sort((a, b) => {

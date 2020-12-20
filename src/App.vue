@@ -14,6 +14,12 @@
         <router-view>
         </router-view>
       </v-main>
+      <amplify-sign-up
+          header-text="회원가입"
+          slot="sign-up"
+          username-alias="email"
+          :form-fields.prop="signUpformFields"
+      ></amplify-sign-up>
       <amplify-sign-in
           header-text="옴니프로젝트"
           username-alias="username"
@@ -62,6 +68,20 @@ export default {
           type: 'username',
           label: '이메일',
           placeholder: '이메일을 입력해주세요',
+          required: true,
+        },
+        {
+          type: 'password',
+          label: '비밀번호',
+          placeholder: '비밀번호를 입력해주세요',
+          required: true,
+        }
+      ],
+      signUpformFields: [
+        {
+          type: 'email',
+          label: '이메일',
+          placeholder: '이메일 주소를 입력해주세요',
           required: true,
         },
         {
