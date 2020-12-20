@@ -85,6 +85,8 @@ export default {
     onDropClick(item){
       if(item.title === '로그아웃'){
         this.signOut();
+      } else if(item.title === '개인정보'){
+        this.$router.push(`/home/${this.$store.state.userData.username}`);
       }
     }
   },

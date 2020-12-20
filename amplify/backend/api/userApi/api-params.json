@@ -1,0 +1,50 @@
+{
+    "paths": [
+        {
+            "name": "/user",
+            "lambdaFunction": "userApi",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            },
+            "policyResourceName": "/user"
+        }
+    ],
+    "resourceName": "userApi",
+    "apiName": "userApi",
+    "functionArns": [
+        {
+            "lambdaFunction": "userApi"
+        }
+    ],
+    "privacy": {
+        "auth": 2,
+        "unauth": 2,
+        "authRoleName": "amplify-videochatsolution-dev-141403-authRole",
+        "unAuthRoleName": "amplify-videochatsolution-dev-141403-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "userApi",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ],
+    "uuid": "2c6a7ad9"
+}

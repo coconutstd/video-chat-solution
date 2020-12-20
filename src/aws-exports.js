@@ -21,8 +21,14 @@ const awsmobile = {
         {
             "tableName": "scoreTable-dev",
             "region": "ap-northeast-2"
+        },
+        {
+            "tableName": "userTable-dev",
+            "region": "ap-northeast-2"
         }
     ],
+    "aws_user_files_s3_bucket": "labeledimage-omni141652-dev",
+    "aws_user_files_s3_bucket_region": "ap-northeast-2",
     "aws_cloud_logic_custom": [
         {
             "name": "faceApi",
@@ -32,6 +38,11 @@ const awsmobile = {
         {
             "name": "meetingApi",
             "endpoint": "https://hdf4fnjf7k.execute-api.ap-northeast-2.amazonaws.com/dev",
+            "region": "ap-northeast-2"
+        },
+        {
+            "name": "userApi",
+            "endpoint": "https://wqakfsakad.execute-api.ap-northeast-2.amazonaws.com/dev",
             "region": "ap-northeast-2"
         }
     ]
