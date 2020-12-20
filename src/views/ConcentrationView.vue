@@ -45,35 +45,27 @@ export default {
   methods: {
     init(){
       setTimeout(() => {
-        let fetchedData = [...this.$store.state.userScoreData];
-        let totalScore = fetchedData.reduce((sum, cur) => {
-          return sum + cur.applied_score;
-        }, 0)
-        let title_set = new Set();
-        let date_set = new Set();
-        fetchedData.forEach( cur => {
-          title_set.add(cur.meeting_title);
-          date_set.add(cur.createdAt.split(' ')[0]);
-        })
-        console.log(totalScore);
-        console.log(title_set);
-        console.log(date_set);
-
-        fetchedData.sort((a, b) => {
-          return a.createdAt < b.createdAt ? -1 : a.createdAt < b.createdAt ? 1 : 0;
-        })
-
-        let dailyData = [];
-        date_set.forEach(date => {
-          const perDayData = fetchedData.filter(item => item.createdAt.startsWith(date))
-          const tempPerDayData = perDayData.map(item => {
-            return [item.createdAt, item.applied_score];
+        const fetchedData = [...this.$store.state.userScoreData]
+          .sort((a, b) => {
+            return a.createdAt < b.createdAt ? -1 : a.createdAt < b.createdAt ? 1 : 0;
           })
-          dailyData.push({[date] : tempPerDayData});
+
+        const keySets = fetchedData.reduce((keySets, item) => {
+          keySets.date.add(item.createdAt.split(' ')[0]);
+          return keySets;
+        }, {
+          date : new Set()
         })
+
+        const dailyData = [...keySets.date.values()].reduce((dailyData, date) => {
+          const perDayData = fetchedData.filter(item => item.createdAt.startsWith(date)).map(item => [item.createdAt, item.applied_score]);
+          return [...dailyData, {[date] : perDayData}];
+        }, []);
+
         console.log(dailyData);
 
         dailyData.forEach((data) => {
+          console.log(data);
           this.chartDatas.push({
             labels: data[Object.keys(data)[0]].map(item => item[0].split(' ')[1]),
             datasets: [{

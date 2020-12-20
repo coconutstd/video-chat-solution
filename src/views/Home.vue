@@ -18,6 +18,7 @@
 <script>
 import MeetingCard from "../components/MeetingCard.vue";
 import MainInfoCard from "../components/MainInfoCard.vue";
+import bus from "../utils/bus.js";
 
 export default {
   data() {
@@ -45,7 +46,16 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('FETCH_MEETING_LIST');
+    bus.$emit('start:spinner');
+    this.$store.dispatch('FETCH_MEETING_LIST')
+      .then(() => {
+        setTimeout(() => {
+          bus.$emit('end:spinner');
+        }, 1000);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 }
 </script>
