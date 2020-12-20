@@ -1,5 +1,4 @@
 <template>
-<div>
   <v-container fluid>
     <h1 style="display:inline;">안녕하세요!</h1>
     <router-link to="/concentration">{{ userData.attributes.email }}</router-link>
@@ -14,12 +13,13 @@
       </v-col>
     </v-row>
   </v-container>
-</div>
 </template>
 
 <script>
 import MeetingCard from "../components/MeetingCard.vue";
 import MainInfoCard from "../components/MainInfoCard.vue";
+import bus from "../utils/bus.js";
+
 export default {
   data() {
     return {
@@ -46,7 +46,16 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('FETCH_MEETING_LIST');
+    bus.$emit('start:spinner');
+    this.$store.dispatch('FETCH_MEETING_LIST')
+      .then(() => {
+        setTimeout(() => {
+          bus.$emit('end:spinner');
+        }, 1000);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 }
 </script>

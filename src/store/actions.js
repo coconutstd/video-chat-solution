@@ -22,8 +22,9 @@ export default {
     // },
     FETCH_MEETING_LIST({commit}){
         getMeetingList()
-            .then(({body})=>{
-                commit('SET_MEETING_LIST', JSON.parse(body));
+            .then((result)=>{
+                commit('SET_MEETING_LIST', JSON.parse(result.body));
+                return result;
             })
             .catch(error => {
                 console.log(error);
@@ -33,6 +34,7 @@ export default {
         getUserScoreData(userid)
             .then(result => {
                 commit('SET_USER_SCORE', result);
+                return result;
             })
             .catch(error => {
                 console.log(error);
