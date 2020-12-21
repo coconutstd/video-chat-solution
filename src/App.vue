@@ -33,7 +33,8 @@
 import {onAuthUIStateChange} from '@aws-amplify/ui-components'
 import ToolBar from "./components/ToolBar.vue"
 import Home from "@/views/Home";
-import bus from './utils/bus.js'
+import bus from './utils/bus.js';
+import { createUserInfo } from "./api";
 
 export default {
   name: 'AuthStateApp',
@@ -45,6 +46,7 @@ export default {
     onAuthUIStateChange((authState, authData) => {
       this.authState = authState;
       this.user = authData;
+      createUserInfo();
       this.$store.commit('SET_USERDATA', authData);
     })
     bus.$on('start:spinner', this.startSpinner);

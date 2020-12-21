@@ -1,0 +1,20 @@
+{
+  "name": {"view": "text", "label": "이름"},
+  "education": {
+    "view": "group",
+    "label": "구분"
+  },
+  "education.status": {
+    "view": "radio",
+    "options": [
+      {
+        "text": "학생 입니다",
+        "value": "student"
+      },
+      {
+        "text": "선생님 입니다",
+        "value": "teacher"
+      }
+    ]
+  }
+}

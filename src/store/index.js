@@ -14,6 +14,8 @@ export const store = new Vuex.Store({
         meetingList: [],
         userScoreData: [],
         meetingFaceData: [],
+        studentList: [],
+        checkList: [],
     },
     actions,
     mutations,

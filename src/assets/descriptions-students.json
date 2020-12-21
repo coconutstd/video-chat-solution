@@ -1,0 +1,9 @@
+{
+  "students": {
+    "view": "checkbox",
+    "label": "학생명단",
+    "options": [
+        "hello"
+    ]
+  }
+}

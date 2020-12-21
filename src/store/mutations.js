@@ -17,5 +17,15 @@ export default {
     },
     SET_MEETING_FACE(state, meetingfacedata){
         state.meetingFaceData = meetingfacedata;
-    }
+    },
+    SET_USER_DATA(state, userdata){
+        state.userData = Object.assign({}, state.userData, userdata);
+    },
+    SET_STUDENT_LIST(state, studentlist){
+        state.studentList = studentlist;
+    },
+    SET_CHECK_LIST(state, checklist){
+        state.checkList = checklist;
+}
+
 }

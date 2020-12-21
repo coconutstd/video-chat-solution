@@ -33,5 +33,35 @@ function getUserScoreData(userId){
     return API.get('faceApi', `/score/${userId}`, {});
 }
 
+function getUserData(userId){
+    return API.get('userApi', `/user/${userId}`, {});
+}
 
-export { postFaceData, getFaceData, getMeetingFaceDate, getMeetingList, postScoreData, getUserScoreData }
+function createUserInfo(data){
+    return API.post('userApi', '/user', {
+        body: data
+    });
+}
+
+function updateUserInfo(data){
+    return API.put('userApi', '/user', {
+        body: data
+    })
+}
+
+function getStudentList(){
+    return API.get('userApi', '/student', {});
+}
+
+function createCheckList(data){
+    return API.post('userApi', '/check', {
+       body: data
+    });
+}
+
+function getCheckList(){
+    return API.get('userApi', '/check', {});
+}
+
+
+export { postFaceData, getFaceData, getMeetingFaceDate, getMeetingList, postScoreData, getUserScoreData, createUserInfo, updateUserInfo, getUserData, getStudentList, createCheckList, getCheckList }

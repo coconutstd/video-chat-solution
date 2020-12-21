@@ -6,6 +6,7 @@ import Todo from '../views/Todo'
 import UserView from "../views/UserView";
 import ConcentrationView from "../views/ConcentrationView";
 import MeetingInfoView from "../views/MeetingInfoView";
+import TeacherView from "../views/TeacherView.vue";
 
 Vue.use(VueRouter)
 
@@ -18,7 +19,7 @@ export const router = new VueRouter({
         },
         {
             path: '/home',
-            component: Home
+            component: Home,
         },
         {
             path: '/home/:id',
@@ -39,6 +40,10 @@ export const router = new VueRouter({
         {
             path: '/meeting/:id',
             component: MeetingInfoView
+        },
+        {
+            path: '/teacher',
+            component: TeacherView
         }
     ]
 })

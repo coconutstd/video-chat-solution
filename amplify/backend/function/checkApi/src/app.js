@@ -12,23 +12,22 @@ const AWS = require('aws-sdk')
 var awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 var bodyParser = require('body-parser')
 var express = require('express')
-
 AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-let tableName = "userTable";
+let tableName = "checkTable";
 if(process.env.ENV && process.env.ENV !== "NONE") {
   tableName = tableName + '-' + process.env.ENV;
 }
 
 const userIdPresent = false; // TODO: update in case is required to use that definition
-const partitionKeyName = "userId";
+const partitionKeyName = "id";
 const partitionKeyType = "S";
 const sortKeyName = "";
 const sortKeyType = "";
 const hasSortKey = sortKeyName !== "";
-const path = "/user";
+const path = "/check";
 const UNAUTH = 'UNAUTH';
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
@@ -36,16 +35,6 @@ const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
 var app = express()
 app.use(bodyParser.json())
 app.use(awsServerlessExpressMiddleware.eventContext())
-
-const getUserId = request => {
-  try {
-    const reqContext = request.apiGateway.event.requestContext;
-    const authProvider = reqContext.identity.cognitoAuthenticationProvider;
-    return authProvider ? authProvider.split(":CognitoSignIn:").pop() : "UNAUTH";
-  } catch (error) {
-    return "UNAUTH";
-  }
-}
 
 // Enable CORS for all methods
 app.use(function(req, res, next) {
@@ -64,111 +53,99 @@ const convertUrlType = (param, type) => {
   }
 }
 
+const getUserId = request => {
+  try {
+    const reqContext = request.apiGateway.event.requestContext;
+    const authProvider = reqContext.identity.cognitoAuthenticationProvider;
+    return authProvider ? authProvider.split(":CognitoSignIn:").pop() : "UNAUTH";
+  } catch (error) {
+    return "UNAUTH";
+  }
+}
+
 /********************************
  * HTTP Get method for list objects *
  ********************************/
 
 app.get(path, function(request, response) {
-
-  let queryParams = {
+  let params = {
     TableName: tableName,
+    ScanIndexForward: false
   }
-
-  dynamodb.scan(queryParams, (err, data) => {
-    if (err) {
-      response.statusCode = 500;
-      response.json({error: 'Could not load items: ' + err});
+  dynamodb.scan(params, (error, result) => {
+    if (error) {
+      response.json({ statusCode: 500, error: error.message })
     } else {
-      response.json(data.Items);
+      response.json(result.Items)
     }
-  });
+  })
 });
 
 /*****************************************
  * HTTP Get method for get single object *
  *****************************************/
 
-app.get(path + '/:id', function(request, response) {
+app.get(path + '/:title', function(request, response) {
+
   let params = {
     TableName: tableName,
-    Key: {
-      userId: request.params.id
-    }
-  }
-
-  dynamodb.get(params,(err, data) => {
-    if(err) {
-      response.statusCode = 500;
-      response.json({error: 'Could not load items: ' + err.message});
-    } else {
-      if (data.Item) {
-        response.json(data.Item);
-      } else {
-        response.json(data) ;
-      }
-    }
-  });
-});
-
-
-/************************************
-* HTTP put method for insert object *
-*************************************/
-
-app.put(path, function(request, response) {
-  console.log(request);
-  const params = {
-    TableName: tableName,
-    Key: {
-      userId: getUserId(request)
+    IndexName: "meeting_title-createdAt-index",
+    KeyConditionExpression: "#meeting_title = :meeting_title and #createdAt = :createdAt",
+    ExpressionAttributeNames: {
+      "#meeting_title" : "meeting_title",
+      "#createdAt" : "createdAt"
     },
-    ExpressionAttributeNames: {'#name' : null},
-    ExpressionAttributeValues: {},
-    ReturnValues: 'ALL_NEW'
+    ExpressionAttributeValues: {
+      ":meeting_title" : request.params.title,
+      ":createdAt" : request.query.createdAt
+    }
   }
 
-  params.UpdateExpression = 'SET ';
-
-  if(request.body.isTeacher) {
-    params.ExpressionAttributeValues[':isTeacher'] = request.body.isTeacher;
-    params.UpdateExpression += 'isTeacher = :isTeacher, ';
-  }
-  if(request.body.name) {
-    params.ExpressionAttributeNames['#name'] = 'name';
-    params.ExpressionAttributeValues[':name'] = request.body.name;
-    params.UpdateExpression += '#name = :name, ';
-  }
-  if(request.body.isTeacher || request.body.name) {
-    params.ExpressionAttributeValues[':updatedAt'] = request.body.updatedAt;
-    params.UpdateExpression += 'updatedAt = :updatedAt';
-  }
-
-  console.log(params.ExpressionAttributeValues);
-
-  dynamodb.update(params, (err, data) => {
+  dynamodb.query(params,(err, data) => {
     if(err) {
-      response.statusCode = 500;
-      response.json({error: err, url: request.url, body: request.body});
+      response.json({statusCode: 500, error: err.message});
+    } else {
+      response.json(data.Items);
+    }
+  });
+});
+
+
+/************************************
+ * HTTP put method for insert object *
+ *************************************/
+
+app.put(path, function(req, res) {
+
+  if (userIdPresent) {
+    req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+  }
+
+  let putItemParams = {
+    TableName: tableName,
+    Item: req.body
+  }
+  dynamodb.put(putItemParams, (err, data) => {
+    if(err) {
+      res.statusCode = 500;
+      res.json({error: err, url: req.url, body: req.body});
     } else{
-      response.json({success: 'put call succeed!', url: request.url, data: data})
+      res.json({success: 'put call succeed!', url: req.url, data: data})
     }
   });
 });
 
 /************************************
-* HTTP post method for insert object *
-*************************************/
+ * HTTP post method for insert object *
+ *************************************/
 
 app.post(path, function(request, response) {
 
-  let params = {
+  let putItemParams = {
     TableName: tableName,
-    Item: {
-      userId: getUserId(request),
-    },
-    ConditionExpression: 'attribute_not_exists(userId)'
+    Item: request.body
   }
-  dynamodb.put(params, (err, data) => {
+  dynamodb.put(putItemParams, (err, data) => {
     if(err) {
       response.statusCode = 500;
       response.json({error: err, url: request.url, body: request.body});
@@ -179,8 +156,8 @@ app.post(path, function(request, response) {
 });
 
 /**************************************
-* HTTP remove method to delete object *
-***************************************/
+ * HTTP remove method to delete object *
+ ***************************************/
 
 app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   var params = {};
@@ -188,7 +165,7 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
     params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
   } else {
     params[partitionKeyName] = req.params[partitionKeyName];
-     try {
+    try {
       params[partitionKeyName] = convertUrlType(req.params[partitionKeyName], partitionKeyType);
     } catch(err) {
       res.statusCode = 500;
@@ -218,7 +195,7 @@ app.delete(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
   });
 });
 app.listen(3000, function() {
-    console.log("App started")
+  console.log("App started")
 });
 
 // Export the app object. When executing the application local this does nothing. However,

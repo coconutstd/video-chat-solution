@@ -21,6 +21,48 @@
                 ]
             },
             "policyResourceName": "/user"
+        },
+        {
+            "name": "/student",
+            "lambdaFunction": "studentApi",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            }
+        },
+        {
+            "name": "/check",
+            "lambdaFunction": "checkApi",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            }
         }
     ],
     "resourceName": "userApi",
@@ -28,11 +70,17 @@
     "functionArns": [
         {
             "lambdaFunction": "userApi"
+        },
+        {
+            "lambdaFunction": "studentApi"
+        },
+        {
+            "lambdaFunction": "checkApi"
         }
     ],
     "privacy": {
-        "auth": 2,
-        "unauth": 2,
+        "auth": 3,
+        "unauth": 3,
         "authRoleName": "amplify-videochatsolution-dev-141403-authRole",
         "unAuthRoleName": "amplify-videochatsolution-dev-141403-unauthRole"
     },
@@ -44,7 +92,23 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "studentApi",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "checkApi",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
     ],
-    "uuid": "2c6a7ad9"
+    "uuid": "a13afa40"
 }

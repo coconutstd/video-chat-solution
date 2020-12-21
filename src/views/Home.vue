@@ -2,6 +2,7 @@
   <v-container fluid>
     <h1 style="display:inline;">안녕하세요!</h1>
     <router-link to="/concentration">{{ userData.attributes.email }}</router-link>
+    <v-btn v-if="userData.isTeacher==='teacher'" to="/teacher">선생님</v-btn>
     <v-row>
       <v-col v-for="item in items" cols="12" md="4">
         <MainInfoCard :data="item"></MainInfoCard>
@@ -45,13 +46,17 @@ export default {
       return this.$store.state.meetingList;
     }
   },
-  created() {
+  async created() {
     bus.$emit('start:spinner');
-    this.$store.dispatch('FETCH_MEETING_LIST')
-      .then(() => {
-        setTimeout(() => {
-          bus.$emit('end:spinner');
-        }, 1000);
+    await this.$store.dispatch('FETCH_MEETING_LIST')
+      .then()
+      .catch(error => {
+        console.log(error);
+      })
+    console.log(this.userData);
+    await this.$store.dispatch('FETCH_USER_DATA', this.userData.username)
+      .then(()=> {
+        bus.$emit('end:spinner');
       })
       .catch(error => {
         console.log(error);

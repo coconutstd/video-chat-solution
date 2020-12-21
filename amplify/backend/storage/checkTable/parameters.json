@@ -1,0 +1,7 @@
+{
+    "tableName": "checkTable",
+    "partitionKeyName": "name",
+    "partitionKeyType": "S",
+    "sortKeyName": "createdAt",
+    "sortKeyType": "S"
+}

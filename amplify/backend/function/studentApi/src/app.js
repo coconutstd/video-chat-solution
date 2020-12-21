@@ -28,7 +28,7 @@ const partitionKeyType = "S";
 const sortKeyName = "";
 const sortKeyType = "";
 const hasSortKey = sortKeyName !== "";
-const path = "/user";
+const path = "/student";
 const UNAUTH = 'UNAUTH';
 const hashKeyPath = '/:' + partitionKeyName;
 const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
@@ -36,16 +36,6 @@ const sortKeyPath = hasSortKey ? '/:' + sortKeyName : '';
 var app = express()
 app.use(bodyParser.json())
 app.use(awsServerlessExpressMiddleware.eventContext())
-
-const getUserId = request => {
-  try {
-    const reqContext = request.apiGateway.event.requestContext;
-    const authProvider = reqContext.identity.cognitoAuthenticationProvider;
-    return authProvider ? authProvider.split(":CognitoSignIn:").pop() : "UNAUTH";
-  } catch (error) {
-    return "UNAUTH";
-  }
-}
 
 // Enable CORS for all methods
 app.use(function(req, res, next) {
@@ -70,11 +60,15 @@ const convertUrlType = (param, type) => {
 
 app.get(path, function(request, response) {
 
-  let queryParams = {
+  let params = {
     TableName: tableName,
+    ProjectionExpression: "#name",
+    FilterExpression: "#isTeacher = :isTeacher",
+    ExpressionAttributeNames: { "#isTeacher" : 'isTeacher', '#name' : 'name'},
+    ExpressionAttributeValues: {":isTeacher" : 'student'}
   }
 
-  dynamodb.scan(queryParams, (err, data) => {
+  dynamodb.scan(params, (err, data) => {
     if (err) {
       response.statusCode = 500;
       response.json({error: 'Could not load items: ' + err});
@@ -88,23 +82,42 @@ app.get(path, function(request, response) {
  * HTTP Get method for get single object *
  *****************************************/
 
-app.get(path + '/:id', function(request, response) {
-  let params = {
-    TableName: tableName,
-    Key: {
-      userId: request.params.id
+app.get(path + '/object' + hashKeyPath + sortKeyPath, function(req, res) {
+  var params = {};
+  if (userIdPresent && req.apiGateway) {
+    params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+  } else {
+    params[partitionKeyName] = req.params[partitionKeyName];
+    try {
+      params[partitionKeyName] = convertUrlType(req.params[partitionKeyName], partitionKeyType);
+    } catch(err) {
+      res.statusCode = 500;
+      res.json({error: 'Wrong column type ' + err});
+    }
+  }
+  if (hasSortKey) {
+    try {
+      params[sortKeyName] = convertUrlType(req.params[sortKeyName], sortKeyType);
+    } catch(err) {
+      res.statusCode = 500;
+      res.json({error: 'Wrong column type ' + err});
     }
   }
 
-  dynamodb.get(params,(err, data) => {
+  let getItemParams = {
+    TableName: tableName,
+    Key: params
+  }
+
+  dynamodb.get(getItemParams,(err, data) => {
     if(err) {
-      response.statusCode = 500;
-      response.json({error: 'Could not load items: ' + err.message});
+      res.statusCode = 500;
+      res.json({error: 'Could not load items: ' + err.message});
     } else {
       if (data.Item) {
-        response.json(data.Item);
+        res.json(data.Item);
       } else {
-        response.json(data) ;
+        res.json(data) ;
       }
     }
   });
@@ -115,42 +128,22 @@ app.get(path + '/:id', function(request, response) {
 * HTTP put method for insert object *
 *************************************/
 
-app.put(path, function(request, response) {
-  console.log(request);
-  const params = {
+app.put(path, function(req, res) {
+
+  if (userIdPresent) {
+    req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+  }
+
+  let putItemParams = {
     TableName: tableName,
-    Key: {
-      userId: getUserId(request)
-    },
-    ExpressionAttributeNames: {'#name' : null},
-    ExpressionAttributeValues: {},
-    ReturnValues: 'ALL_NEW'
+    Item: req.body
   }
-
-  params.UpdateExpression = 'SET ';
-
-  if(request.body.isTeacher) {
-    params.ExpressionAttributeValues[':isTeacher'] = request.body.isTeacher;
-    params.UpdateExpression += 'isTeacher = :isTeacher, ';
-  }
-  if(request.body.name) {
-    params.ExpressionAttributeNames['#name'] = 'name';
-    params.ExpressionAttributeValues[':name'] = request.body.name;
-    params.UpdateExpression += '#name = :name, ';
-  }
-  if(request.body.isTeacher || request.body.name) {
-    params.ExpressionAttributeValues[':updatedAt'] = request.body.updatedAt;
-    params.UpdateExpression += 'updatedAt = :updatedAt';
-  }
-
-  console.log(params.ExpressionAttributeValues);
-
-  dynamodb.update(params, (err, data) => {
+  dynamodb.put(putItemParams, (err, data) => {
     if(err) {
-      response.statusCode = 500;
-      response.json({error: err, url: request.url, body: request.body});
+      res.statusCode = 500;
+      res.json({error: err, url: req.url, body: req.body});
     } else{
-      response.json({success: 'put call succeed!', url: request.url, data: data})
+      res.json({success: 'put call succeed!', url: req.url, data: data})
     }
   });
 });
@@ -159,21 +152,22 @@ app.put(path, function(request, response) {
 * HTTP post method for insert object *
 *************************************/
 
-app.post(path, function(request, response) {
+app.post(path, function(req, res) {
 
-  let params = {
-    TableName: tableName,
-    Item: {
-      userId: getUserId(request),
-    },
-    ConditionExpression: 'attribute_not_exists(userId)'
+  if (userIdPresent) {
+    req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
   }
-  dynamodb.put(params, (err, data) => {
+
+  let putItemParams = {
+    TableName: tableName,
+    Item: req.body
+  }
+  dynamodb.put(putItemParams, (err, data) => {
     if(err) {
-      response.statusCode = 500;
-      response.json({error: err, url: request.url, body: request.body});
+      res.statusCode = 500;
+      res.json({error: err, url: req.url, body: req.body});
     } else{
-      response.json({success: 'post call succeed!', url: request.url, data: data})
+      res.json({success: 'post call succeed!', url: req.url, data: data})
     }
   });
 });

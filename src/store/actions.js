@@ -1,4 +1,4 @@
-import {getFaceData, getMeetingList, getMeetingFaceDate, getUserScoreData} from "../api/index.js";
+import {getFaceData, getMeetingList, getMeetingFaceDate, getUserScoreData, getUserData, getStudentList, getCheckList } from "../api/index.js";
 
 export default {
 
@@ -44,6 +44,36 @@ export default {
         getMeetingFaceDate(meetingtitle)
             .then(({body}) => {
                 commit('SET_MEETING_FACE', JSON.parse(body));
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    },
+    FETCH_USER_DATA({commit}, userid) {
+        getUserData(userid)
+            .then(result => {
+                commit('SET_USER_DATA', result);
+                return result;
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    },
+    FETCH_STUDENT_LIST({commit}){
+        getStudentList()
+            .then(result => {
+                commit('SET_STUDENT_LIST', result);
+                return result;
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    },
+    FETCH_CHECK_LIST({commit}) {
+        getCheckList()
+            .then(result => {
+                commit('SET_CHECK_LIST', result);
+                return result;
             })
             .catch(error => {
                 console.log(error);
