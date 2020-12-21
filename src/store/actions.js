@@ -80,7 +80,7 @@ export default {
             })
     },
     FETCH_DAY_CHECK_LIST({commit}, {title, createdAt}) {
-        getDayCheckList(createdAt, title)
+        return getDayCheckList(createdAt, title)
             .then(result => {
                 commit('SET_DAY_CHECK_LIST', result);
                 return result;

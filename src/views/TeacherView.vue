@@ -1,6 +1,7 @@
 <template>
   <v-container fluid>
-    선생님뷰
+    <v-divider></v-divider>
+    출석부 등록
     <v-date-picker
         v-model="date"
         full-width
@@ -26,7 +27,7 @@
           {{ item[0] }} {{ item [1] }} 출석부
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <div v-for="student in dayCheckList[i]">
+          <div v-for="student in item[2]">
             <span>
               {{student.name}}
             </span>
@@ -50,15 +51,21 @@ export default {
   components: {
     ddForm,
   },
+  watch:{
+    descriptions : {
+      handler (nextValue, prevValue){
+
+      },
+      deep: true
+    }
+  },
   data(){
     return {
-      'student': [],
       output: {
         students: {
           "meeting_title": "",
           "students": [],
         },
-        advanced: {},
       },
       descriptions: {
         students: {
@@ -70,7 +77,6 @@ export default {
             "view": "checkbox",
             "label": "학생명단",
             "options": [
-
             ]
           }
         },
@@ -78,7 +84,6 @@ export default {
       picker: new Date().toISOString().substr(0, 10),
       date: null,
       filteredCheckList: [],
-      dialog: false,
     }
   },
   computed:{
@@ -86,10 +91,24 @@ export default {
       return this.$store.state.dayCheckList;
     }
   },
-  async created(){
-    await this.$store.dispatch('FETCH_STUDENT_LIST');
-    this.descriptions.students["students"]["options"] = [...this.$store.state.studentList.map(item => item.name)];
-    await this.$store.dispatch('FETCH_CHECK_LIST');
+  created(){
+    this.$store.dispatch('FETCH_STUDENT_LIST');
+    this.descriptions = {...Object.assign({},
+          {
+            students: {
+              "meeting_title": {
+                "view" : "text",
+                "label" : "회의 제목"
+              },
+              "students":{
+                "view": "checkbox",
+                "label": "학생명단",
+                "options": [...this.$store.state.studentList.map(item => item.name)]
+              }
+            }
+          })}
+
+    this.$store.dispatch('FETCH_CHECK_LIST');
     const checkList = this.$store.state.checkList.reduce((items, item) => {
       if(items[0].includes(item.createdAt) && items[1].includes(item.meeting_title))
         return items;
@@ -99,13 +118,16 @@ export default {
     for(let i = 0; i < checkList[0].length; ++i){
       this.filteredCheckList.push([checkList[0][i], checkList[1][i]]);
     }
-    this.filteredCheckList.sort();
+    this.filteredCheckList = [...this.filteredCheckList.sort()];
 
-    console.log(this.filteredCheckList);
-    this.filteredCheckList.forEach(item => {
-      this.$store.dispatch('FETCH_DAY_CHECK_LIST', {title: item[1], createdAt: item[0]});
+    this.filteredCheckList = this.filteredCheckList.map(item => {
+      let retVal = [...item];
+      this.$store.dispatch('FETCH_DAY_CHECK_LIST', {createdAt: item[0], title:item[1]})
+        .then(result => {
+          retVal.push(result);
+        })
+      return retVal;
     })
-
 
   },
   methods: {
@@ -119,7 +141,8 @@ export default {
           'isChecked': false
         }
       })
-      if(postData.meeting_title === undefined || postData.createdAt === undefined) {
+      console.log(postData);
+      if(postData[0].meeting_title === undefined || postData[0].createdAt === undefined) {
         alert('회의제목, 날짜를 모두 입력해주세요');
         return;
       }

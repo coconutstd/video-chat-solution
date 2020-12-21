@@ -63,8 +63,9 @@ function getCheckList(){
     return API.get('userApi', '/check', {});
 }
 
-function getDayCheckList(createdAt, title){
-    return API.get('userApi', `/check/${title}?createdAt=${createdAt}`, {});
+async function getDayCheckList(createdAt, title){
+    const encode = encodeURI(title);
+    return API.get('userApi', `/check/${encode}?createdAt=${createdAt}`, {});
 }
 
 function updateCheckList(data){

@@ -9,6 +9,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
+
       <v-toolbar-items class="hidden-xs-only">
         <v-btn
           v-for="item in menuItems"
@@ -17,10 +18,6 @@
         ><v-icon>{{item.icon}}</v-icon>
           {{item.title}}</v-btn>
       </v-toolbar-items>
-
-<!--      <v-btn icon @click="signOut">-->
-<!--        <v-icon>mdi-lock-open</v-icon>-->
-<!--      </v-btn>-->
 
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -72,8 +69,14 @@
 
 <script>
 import { Auth } from 'aws-amplify';
+import { mapState } from 'vuex';
 
 export default {
+  computed:{
+    ...mapState({
+      user : 'userData'
+    })
+  },
   methods:{
     async signOut(){
       try {
@@ -113,42 +116,4 @@ export default {
   },
 }
 </script>
-<style scoped>
-/*ul{*/
-/*  padding: 0 0;*/
-/*  margin: 0 0;*/
-/*}*/
-/*li{*/
-/*  list-style: none;*/
-/*}*/
-/*.menu{*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*}*/
 
-/*.menu-item{*/
-/*  width: 25%;*/
-/*  background-color: #eeeeee;*/
-/*}*/
-
-/*.menu-link {*/
-/*  display: block;*/
-/*  padding: 1em;*/
-/*  font-size: 1.2rem;*/
-/*  font-weight: bold;*/
-/*  color: white;*/
-/*  text-decoration: none;*/
-/*  text-align: center;*/
-/*  border: none;*/
-/*}*/
-
-/*.menu-link:hover {*/
-/*  background-color: aquamarine;*/
-/*}*/
-
-.menu-item button {
-  width: 100%;
-}
-
-
-</style>

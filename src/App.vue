@@ -43,12 +43,14 @@ export default {
     Home,
   },
   created() {
+    console.log('hello1')
     onAuthUIStateChange((authState, authData) => {
+      console.log('hello2')
       this.authState = authState;
       this.user = authData;
-      createUserInfo();
       this.$store.commit('SET_USERDATA', authData);
     })
+    console.log('hello3');
     bus.$on('start:spinner', this.startSpinner);
     bus.$on('end:spinner', this.endSpinner);
   },

@@ -62,19 +62,16 @@ export default {
           return [...dailyData, {[date] : perDayData}];
         }, []);
 
-        console.log(dailyData);
-
-        dailyData.forEach((data) => {
-          console.log(data);
-          this.chartDatas.push({
+        this.chartDatas = [...dailyData.map((data) => {
+          return {
             labels: data[Object.keys(data)[0]].map(item => item[0].split(' ')[1]),
             datasets: [{
               label: Object.keys(data)[0],
               backgroundColor: '#f87979',
               data: data[Object.keys(data)[0]].map(item => item[1]),
             }]
-          });
-        })
+          }
+        })]
         this.chartLoading = false;
       }, 1000);
     }

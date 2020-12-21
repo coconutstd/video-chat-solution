@@ -1,7 +1,6 @@
 <template>
   <v-container fluid>
     <h1 style="display:inline;">안녕하세요!</h1>
-    <router-link to="/concentration">{{ userData.attributes.email }}</router-link>
     <v-btn v-if="userData.isTeacher==='teacher'" to="/teacher">선생님</v-btn>
     <v-row>
       <v-col v-for="item in items" cols="12" md="4">
@@ -20,6 +19,7 @@
 import MeetingCard from "../components/MeetingCard.vue";
 import MainInfoCard from "../components/MainInfoCard.vue";
 import bus from "../utils/bus.js";
+import {createUserInfo} from "@/api";
 
 export default {
   data() {
@@ -46,21 +46,23 @@ export default {
       return this.$store.state.meetingList;
     }
   },
-  async created() {
+  created() {
     bus.$emit('start:spinner');
-    await this.$store.dispatch('FETCH_MEETING_LIST')
-      .then()
-      .catch(error => {
-        console.log(error);
-      })
-    console.log(this.userData);
-    await this.$store.dispatch('FETCH_USER_DATA', this.userData.username)
-      .then(()=> {
-        bus.$emit('end:spinner');
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    Promise.all([
+      createUserInfo(),
+      this.$store.dispatch('FETCH_MEETING_LIST')
+          .then()
+          .catch(error => {
+            console.log(error);
+          }),
+      this.$store.dispatch('FETCH_USER_DATA', this.userData.username)
+          .then(()=> {
+          })
+          .catch(error => {
+            console.log(error);
+          })
+    ])
+    bus.$emit('end:spinner');
   }
 }
 </script>
