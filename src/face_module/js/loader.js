@@ -4,6 +4,7 @@ import { postFaceData, postScoreData } from "../../api/index.js";
 import { getOpenness } from './bundle'
 import { Time } from './time.js';
 import { Timer } from 'easytimer.js';
+import { updateCheckList } from "../../api/index.js";
 
 const S3_URL = 'https://amplify-videochatsolution-dev-141403-deployment.s3.ap-northeast-2.amazonaws.com/'
 export let collectedData = new Map()
@@ -89,6 +90,8 @@ export async function videoCallback(video, FaceMatcher) {
     let logCountTimerCount = 0;
     let logCountArr = [];
     let isSecondsTimer = false;
+    let faceCount = new Map();
+    let isChecked = false;
 
     totalTimer.start();
     logCountTimer.start();
@@ -127,7 +130,9 @@ export async function videoCallback(video, FaceMatcher) {
             // })
             // console.log(detections.toString())
 
-            // console.log(results.toString())
+
+            faceCount.set(results.label, (faceCount.get(results.label) + 1) || 0);
+            console.log(faceCount.get(results.label));
             canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
             const minConfidence = 0.05
 
@@ -157,6 +162,22 @@ export async function videoCallback(video, FaceMatcher) {
             // console.log(postData)
             postFaceData(postData);
             // console.log(time.yyyymmdd() + ' ' + time.hhmmssms());
+        }
+        if(totalTimer.getTimeValues().minutes >= 1 && !isChecked){
+            isChecked = true;
+            let max_val = 0;
+            const name = Array.from(faceCount).reduce((item, cur) => {
+                if(max_val < cur[1]){
+                    max_val = cur[1]
+                    return cur[0];
+                }
+                return item
+            }, '');
+            if(name === 'unknown') return;
+            const createdAt = new Time();
+            await updateCheckList(Object.assign({}, getMeetingTitle(), {createdAt: createdAt.yyyymmdd()}, getUpdatedTime() , {name:name}, {isChecked: true}));
+
+
         }
         if(logCountTimer.getTimeValues().seconds >= 10){
             logCountArr.push(detectedCount);
@@ -226,6 +247,12 @@ function getCreatedTime(){
     let time = new Time();
     const createdAt = { 'createdAt' : time.yyyymmdd() + ' ' + time.hhmmssms()};
     return {...createdAt};
+}
+
+function getUpdatedTime(){
+    let time = new Time();
+    const updatedAt = { 'updatedAt' : time.yyyymmdd() + ' ' + time.hhmmssms()};
+    return {...updatedAt};
 }
 
 function getScore(data) {

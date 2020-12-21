@@ -63,5 +63,15 @@ function getCheckList(){
     return API.get('userApi', '/check', {});
 }
 
+function getDayCheckList(createdAt, title){
+    return API.get('userApi', `/check/${title}?createdAt=${createdAt}`, {});
+}
 
-export { postFaceData, getFaceData, getMeetingFaceDate, getMeetingList, postScoreData, getUserScoreData, createUserInfo, updateUserInfo, getUserData, getStudentList, createCheckList, getCheckList }
+function updateCheckList(data){
+    return API.put('userApi', '/check', {
+        body: data
+    });
+}
+
+
+export { postFaceData, getFaceData, getMeetingFaceDate, getMeetingList, postScoreData, getUserScoreData, createUserInfo, updateUserInfo, getUserData, getStudentList, createCheckList, getCheckList, getDayCheckList, updateCheckList }

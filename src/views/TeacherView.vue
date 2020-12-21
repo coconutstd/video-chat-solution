@@ -17,45 +17,27 @@
     <v-divider></v-divider>
     출석부 목록
 
-      <v-dialog
-          v-model="dialog"
-          width="500"
-          v-for="item in this.$store.state.checkList"
+    <v-expansion-panels multiple hover>
+      <v-expansion-panel
+          v-for="(item,i) in filteredCheckList"
+          :key="i"
       >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-              color="red lighten-2"
-              dark
-              v-bind="attrs"
-              v-on="on"
-          >
-            {{ item.createdAt }}  {{ item.meeting_title }}
-          </v-btn>
-        </template>
-
-        <v-card>
-          <v-card-title class="headline grey lighten-2">
-            Privacy Policy
-          </v-card-title>
-
-          <v-card-text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </v-card-text>
-
-          <v-divider></v-divider>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-                color="primary"
-                text
-                @click="dialog = false"
-            >
-              I accept
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+        <v-expansion-panel-header>
+          {{ item[0] }} {{ item [1] }} 출석부
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <div v-for="student in dayCheckList[i]">
+            <span>
+              {{student.name}}
+            </span>
+            <span v-if="student.isChecked">출석완료 </span>
+            <span v-else>미출석</span>
+            <v-icon v-if="student.isChecked" color="green">mdi-check</v-icon>
+            <v-icon v-else>mdi-account-off</v-icon>
+          </div>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </v-container>
 </template>
 
@@ -66,7 +48,7 @@ import { Time } from '../face_module/js/time';
 
 export default {
   components: {
-    ddForm
+    ddForm,
   },
   data(){
     return {
@@ -88,23 +70,47 @@ export default {
             "view": "checkbox",
             "label": "학생명단",
             "options": [
+
             ]
           }
         },
       },
       picker: new Date().toISOString().substr(0, 10),
       date: null,
+      filteredCheckList: [],
+      dialog: false,
+    }
+  },
+  computed:{
+    dayCheckList(){
+      return this.$store.state.dayCheckList;
     }
   },
   async created(){
     await this.$store.dispatch('FETCH_STUDENT_LIST');
-    this.descriptions.students["students"]["options"] = [...Array.from(this.$store.state.studentList.values()).map(item => item.name)];
+    this.descriptions.students["students"]["options"] = [...this.$store.state.studentList.map(item => item.name)];
     await this.$store.dispatch('FETCH_CHECK_LIST');
+    const checkList = this.$store.state.checkList.reduce((items, item) => {
+      if(items[0].includes(item.createdAt) && items[1].includes(item.meeting_title))
+        return items;
+      else
+        return [[...items[0], item.createdAt], [...items[1], item.meeting_title]]
+    }, [[],[]])
+    for(let i = 0; i < checkList[0].length; ++i){
+      this.filteredCheckList.push([checkList[0][i], checkList[1][i]]);
+    }
+    this.filteredCheckList.sort();
+
+    console.log(this.filteredCheckList);
+    this.filteredCheckList.forEach(item => {
+      this.$store.dispatch('FETCH_DAY_CHECK_LIST', {title: item[1], createdAt: item[0]});
+    })
+
+
   },
   methods: {
     registerChecklist(){
       const createdAt = new Time();
-      console.log(this.output.students.students);
       const postData = this.output.students.students.map(item =>  {
         return {
           'name' : item,
@@ -113,13 +119,18 @@ export default {
           'isChecked': false
         }
       })
-      console.log(this.date);
-      console.log(postData);
+      if(postData.meeting_title === undefined || postData.createdAt === undefined) {
+        alert('회의제목, 날짜를 모두 입력해주세요');
+        return;
+      }
       postData.forEach(item => {
         createCheckList(item);
       })
       alert('등록완료');
     }
+  },
+  beforeDestroy() {
+    this.$store.commit('UNSET_DAY_CHECK_LIST');
   }
 }
 </script>

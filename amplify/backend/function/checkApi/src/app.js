@@ -115,24 +115,41 @@ app.get(path + '/:title', function(request, response) {
  * HTTP put method for insert object *
  *************************************/
 
-app.put(path, function(req, res) {
+app.put(path, function(request, response) {
 
-  if (userIdPresent) {
-    req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
-  }
-
-  let putItemParams = {
+  let params = {
     TableName: tableName,
-    Item: req.body
+    Key:{
+      name: request.body.name,
+      createdAt: request.body.createdAt
+    },
+    ConditionExpression: "#meeting_title = :meeting_title",
+    ExpressionAttributeNames: {
+      "#meeting_title" : "meeting_title"
+    },
+    ExpressionAttributeValues: {
+      ":meeting_title" : request.body.meeting_title
+    },
+    UpdateExpression : 'SET ',
+    ReturnValues: "ALL_NEW"
   }
-  dynamodb.put(putItemParams, (err, data) => {
+
+  if(request.body.isChecked){
+    params.ExpressionAttributeValues[':isChecked'] = request.body.isChecked;
+    params.UpdateExpression += 'isChecked = :isChecked, ';
+    params.ExpressionAttributeValues[':updatedAt'] = request.body.updatedAt;
+    params.UpdateExpression += 'updatedAt = :updatedAt';
+  }
+
+  dynamodb.update(params, (err, data) => {
     if(err) {
-      res.statusCode = 500;
-      res.json({error: err, url: req.url, body: req.body});
-    } else{
-      res.json({success: 'put call succeed!', url: req.url, data: data})
+      response.statusCode = 500;
+      response.json({error: err, url: request.url, body: request.body});
+    } else {
+      response.json({success: 'put call succeed!', url: request.url, data: data});
     }
-  });
+  })
+
 });
 
 /************************************

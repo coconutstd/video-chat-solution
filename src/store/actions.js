@@ -1,4 +1,4 @@
-import {getFaceData, getMeetingList, getMeetingFaceDate, getUserScoreData, getUserData, getStudentList, getCheckList } from "../api/index.js";
+import {getFaceData, getMeetingList, getMeetingFaceDate, getUserScoreData, getUserData, getStudentList, getCheckList, getDayCheckList } from "../api/index.js";
 
 export default {
 
@@ -73,6 +73,16 @@ export default {
         getCheckList()
             .then(result => {
                 commit('SET_CHECK_LIST', result);
+                return result;
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    },
+    FETCH_DAY_CHECK_LIST({commit}, {title, createdAt}) {
+        getDayCheckList(createdAt, title)
+            .then(result => {
+                commit('SET_DAY_CHECK_LIST', result);
                 return result;
             })
             .catch(error => {

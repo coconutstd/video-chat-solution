@@ -117,7 +117,7 @@ app.get(path + '/:id', function(request, response) {
 
 app.put(path, function(request, response) {
   console.log(request);
-  const params = {
+  let params = {
     TableName: tableName,
     Key: {
       userId: getUserId(request)

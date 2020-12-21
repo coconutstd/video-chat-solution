@@ -26,6 +26,12 @@ export default {
     },
     SET_CHECK_LIST(state, checklist){
         state.checkList = checklist;
-}
+    },
+    SET_DAY_CHECK_LIST(state, checklist){
+        state.dayCheckList = [...state.dayCheckList, checklist];
+    },
+    UNSET_DAY_CHECK_LIST(state){
+        state.dayCheckList = [];
+    }
 
 }
