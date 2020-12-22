@@ -54,12 +54,6 @@ export default {
           .then()
           .catch(error => {
             console.log(error);
-          }),
-      this.$store.dispatch('FETCH_USER_DATA', this.userData.username)
-          .then(()=> {
-          })
-          .catch(error => {
-            console.log(error);
           })
     ])
     bus.$emit('end:spinner');

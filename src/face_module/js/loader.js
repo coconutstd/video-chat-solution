@@ -34,6 +34,7 @@ export async function loadLabeledImages() {
     // const labels = ['Black Widow', 'Captain America', 'Captain Marvel', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark']
     // const labels = [store.state.userData.name];
     const labels = ["이준의", "유재현", "김유철"];
+    // const labels = ["이준의"];
     return Promise.all(
         labels.map(async label => {
             const descriptions = []
