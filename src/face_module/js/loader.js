@@ -158,11 +158,13 @@ export async function videoCallback(video, FaceMatcher) {
             let labeledEyeData = null
 
             const eyeData = getOpenness()
+            console.log('eyeData------>' + eyeData);
             if (eyeData == null) {
                 labeledEyeData = {'left_eye_blink' : 1, 'right_eye_blink' : 1 }
             } else {
                 labeledEyeData = {'left_eye_blink' : eyeData.left, 'right_eye_blink' : eyeData.right }
             }
+
             // console.log(labeledEyeData);
             const postData = Object.assign({}, detections.expressions, labeledEyeData, getMeetingTitle(), getCreatedTime(), {'total_time': totalTimer.getTimeValues().toString()});
             detectedData.Items.push(postData);
@@ -222,7 +224,7 @@ export async function videoCallback(video, FaceMatcher) {
             postScoreData(postData);
             detectedData.Items = [];
         }
-    }, 200)
+    }, 500)
 }
 
 export function destroyInterval() {
@@ -267,11 +269,11 @@ function getUpdatedTime(){
 }
 
 function getScore(data) {
-    var idealLogCount = userLogCount;
-    // var idealLogCount = 1 * 5 * 10              // 1초 * 5개 * 10초 = 50개 (1분: 300개, 5분: 1500개)
-    var blinkOffSet = 0.02;                     // 두눈이 0.02 이하일 경우 감은 것
-    var neutralOffSet = 0.8;                     // neutral 이 0.9 이상이면 잘 집중함
-    var othersOffSet = 0.7;                     // neutral 이 0.7 이상이면 잘 집중함
+    // var idealLogCount = userLogCount;
+    var idealLogCount = 1 * 2 * 10              // 1초 * 5개 * 10초 = 50개 (1분: 300개, 5분: 1500개)
+    var blinkOffSet = 0.1;                     // 두눈이 0.02 이하일 경우 감은 것
+    var neutralOffSet = 0.9;                     // neutral 이 0.9 이상이면 잘 집중함
+    var othersOffSet = 0.8;                     // neutral 이 0.7 이상이면 잘 집중함
     var blinkBaseOffSet = idealLogCount * 0.5   // 예상했던 로그수의 반이상이 잡힐 때만, 졸림을 감지
 
     var logArray = data.Items                   // 대상 로그 배열
@@ -291,7 +293,7 @@ function getScore(data) {
             // console.log(logArray[i].left_eye_blink, logArray[i].right_eye_blink)
             blinkCount += 1;
         }
-        if (parseFloat(logArray[i].left_eye_blink) != 1  ) {           // 눈이 잡힌 수
+        if (parseFloat(logArray[i].left_eye_blink) == 1  ) {           // 눈이 안 잡힌 수
             catBlinkCount += 1;
         }
         if (parseFloat(logArray[i].neutral) >= neutralOffSet) {       // neutral이 0.9이상인 경우 OK
@@ -307,19 +309,21 @@ function getScore(data) {
         }
     }
 
-    if (logCount >= blinkBaseOffSet && blinkCount >= (blinkBaseOffSet * 0.8)) {    // 졸음 감점 시 화면집중과 안면집중 점수는 적용되지 않음 (1분 졸면 -12 급경히 감소)
+    if (logCount >= blinkBaseOffSet && blinkCount >= (blinkBaseOffSet * 0.8)) {    // 졸음 감점 시 화면집중과 안면집중 점수는 적용되지 않음 (5분에 50점감소 급경히 감소)
         returnScore =- 2;
-    } else {               
-            if (idealLogCount == 0 ) {          // Detection점수는 비중으로 2x -1 (-1 ~ +1)
-                tmpDetectScore = 0
-            } else {
-                tmpDetectScore = (logCount / idealLogCount) * 2 - 1
-            }
-            if (logCount == 0 ) {               // 집중점수 비중으로 2x -1 (-1 ~ +1)
-                tmpDistractScore = 0
-            } else {
-                tmpDistractScore = ((neutralCount + catBlinkCount) / (logCount * 2)) * 2 - 1
-            }
+    } else if (logCount == 0){                                                     // 화면에서 사라짐 시 화면집중과 안면집중 점수는 적용되지 않음 (5분에 50점감소 급경히 감소)
+        returnScore =- 2;
+    } else {                                                                       // 졸지도 않고 화면에 있으면 detection, 안면, 눈감지 수로 +2 ~ -2점의 점수를 줌
+
+        tmpDetectScore = (logCount / idealLogCount) * 2 - 1         // Detection점수는 비중으로 2x -1 (-1 ~ +1)
+
+        tmpDistractScore = (                                        // 집중점수 비중으로 2x -1 (-1 ~ +1)
+            // (neutralCount / logCount) * 0.8 +
+            // (catBlinkCount / logCount) * 0.2
+            ((neutralCount - catBlinkCount) / logCount)
+        
+        ) * 2 - 1
+
         returnScore =  tmpDetectScore + tmpDistractScore;
     }
 
@@ -329,9 +333,10 @@ function getScore(data) {
     console.log("neutralCount -> " + neutralCount);
     console.log("catBlinkCount -> " + catBlinkCount);
 
-    console.log("blinkScore -> " + (logCount >= blinkBaseOffSet && blinkCount >= blinkBaseOffSet * 0.8));
+    console.log("sleepScore -> " + (logCount >= blinkBaseOffSet && blinkCount >= blinkBaseOffSet * 0.8));
+    console.log("emptyScore -> " + (logCount == 0));
     console.log("detectScore -> " + tmpDetectScore);
-    console.log("distract -> " + tmpDistractScore);
+    console.log("distractScore -> " + tmpDistractScore);
     console.log("returnScore -> " + returnScore);
 
     return returnScore
