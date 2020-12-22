@@ -60,20 +60,18 @@ export default {
             })
     },
     FETCH_STUDENT_LIST({commit}){
-        getStudentList()
+        return getStudentList()
             .then(result => {
                 commit('SET_STUDENT_LIST', result);
-                return result;
             })
             .catch(error => {
                 console.log(error);
             })
     },
     FETCH_CHECK_LIST({commit}) {
-        getCheckList()
+        return getCheckList()
             .then(result => {
                 commit('SET_CHECK_LIST', result);
-                return result;
             })
             .catch(error => {
                 console.log(error);

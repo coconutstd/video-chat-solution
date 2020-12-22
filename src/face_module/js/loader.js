@@ -5,6 +5,7 @@ import { getOpenness } from './bundle'
 import { Time } from './time.js';
 import { Timer } from 'easytimer.js';
 import { updateCheckList } from "../../api/index.js";
+import { store } from '../../store/index.js';
 
 const S3_URL = 'https://amplify-videochatsolution-dev-141403-deployment.s3.ap-northeast-2.amazonaws.com/'
 export let collectedData = new Map()
@@ -28,8 +29,9 @@ export async function loadModels() {
 
 
 export async function loadLabeledImages() {
+    console.log(`${store.state.userData.name}의 사진을 다운로드 합니다`);
     // const labels = ['Black Widow', 'Captain America', 'Captain Marvel', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark']
-    const labels = ['이준의', '김유철']
+    const labels = [store.state.userData.name];
     return Promise.all(
         labels.map(async label => {
             const descriptions = []
