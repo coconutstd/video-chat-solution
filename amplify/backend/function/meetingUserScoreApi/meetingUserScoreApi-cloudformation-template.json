@@ -10,13 +10,13 @@
     "env": {
       "Type": "String"
     },
-    "storagefaceTableName": {
+    "storagescoreTableName": {
       "Type": "String",
-      "Default": "storagefaceTableName"
+      "Default": "storagescoreTableName"
     },
-    "storagefaceTableArn": {
+    "storagescoreTableArn": {
       "Type": "String",
-      "Default": "storagefaceTableArn"
+      "Default": "storagescoreTableArn"
     }
   },
   "Conditions": {
@@ -41,12 +41,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "meetingApi",
+            "meetingUserScoreApi",
             {
               "Fn::Join": [
                 "",
                 [
-                  "meetingApi",
+                  "meetingUserScoreApi",
                   "-",
                   {
                     "Ref": "env"
@@ -77,7 +77,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-videochatsolution-dev-141403-deployment",
-          "S3Key": "amplify-builds/meetingApi-7057342b3557596e3562-build.zip"
+          "S3Key": "amplify-builds/meetingUserScoreApi-41527a57643245714a35-build.zip"
         }
       }
     },
@@ -87,12 +87,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "videochatsolutionLambdaRole84de4029",
+            "videochatsolutionLambdaRole5a08d4f8",
             {
               "Fn::Join": [
                 "",
                 [
-                  "videochatsolutionLambdaRole84de4029",
+                  "videochatsolutionLambdaRole5a08d4f8",
                   "-",
                   {
                     "Ref": "env"
@@ -172,14 +172,14 @@
               ],
               "Resource": [
                 {
-                  "Ref": "storagefaceTableArn"
+                  "Ref": "storagescoreTableArn"
                 },
                 {
                   "Fn::Join": [
                     "/",
                     [
                       {
-                        "Ref": "storagefaceTableArn"
+                        "Ref": "storagescoreTableArn"
                       },
                       "index/*"
                     ]

@@ -31,6 +31,12 @@ export default {
     },
     UNSET_DAY_CHECK_LIST(state){
         state.dayCheckList = [];
+    },
+    SET_MEETING_INFO(state, meetingInfo){
+        state.meetingInfo = meetingInfo;
+    },
+    UNSET_MEETING_INFO(state){
+        state.meetingInfo = {};
     }
 
 }

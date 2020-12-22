@@ -29,6 +29,10 @@ const awsmobile = {
         {
             "tableName": "checkTable-dev",
             "region": "ap-northeast-2"
+        },
+        {
+            "tableName": "meetingInfoTable-dev",
+            "region": "ap-northeast-2"
         }
     ],
     "aws_user_files_s3_bucket": "labeledimage-omni141652-dev",

@@ -1,0 +1,5 @@
+{
+    "tableName": "meetingInfoTable",
+    "partitionKeyName": "meetingId",
+    "partitionKeyType": "S"
+}

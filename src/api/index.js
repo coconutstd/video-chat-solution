@@ -74,5 +74,33 @@ function updateCheckList(data){
     });
 }
 
+function createMeetingInfo(data){
+    return API.post('meetingApi', '/meeting-info', {
+        body: data
+    });
+}
 
-export { postFaceData, getFaceData, getMeetingFaceDate, getMeetingList, postScoreData, getUserScoreData, createUserInfo, updateUserInfo, getUserData, getStudentList, createCheckList, getCheckList, getDayCheckList, updateCheckList }
+function updateMeetingInfo(data){
+    return API.put('meetingApi', '/meeting-info', {
+        body: data
+    });
+}
+
+function deleteMeeting(data){
+    return API.del('meetingApi', '/meeting', {
+        body: data
+    });
+}
+
+function getMeetingScore(data){
+    return API.get('meetingApi', `/meeting-user-score/${data.userId}`, {
+    });
+}
+
+function getMeetingInfo(meetingId){
+    return API.get('meetingApi', `/meeting-info/${meetingId}`, {
+
+    });
+}
+
+export { postFaceData, getFaceData, getMeetingFaceDate, getMeetingList, postScoreData, getUserScoreData, createUserInfo, updateUserInfo, getUserData, getStudentList, createCheckList, getCheckList, getDayCheckList, updateCheckList, createMeetingInfo, updateMeetingInfo, deleteMeeting, getMeetingScore, getMeetingInfo }

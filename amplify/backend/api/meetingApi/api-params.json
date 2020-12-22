@@ -21,6 +21,48 @@
                 ]
             },
             "policyResourceName": "/meeting"
+        },
+        {
+            "name": "/meeting-info",
+            "lambdaFunction": "meetingInfoApi",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            }
+        },
+        {
+            "name": "/meeting-user-score",
+            "lambdaFunction": "meetingUserScoreApi",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            }
         }
     ],
     "resourceName": "meetingApi",
@@ -28,11 +70,17 @@
     "functionArns": [
         {
             "lambdaFunction": "meetingApi"
+        },
+        {
+            "lambdaFunction": "meetingInfoApi"
+        },
+        {
+            "lambdaFunction": "meetingUserScoreApi"
         }
     ],
     "privacy": {
-        "auth": 1,
-        "unauth": 1,
+        "auth": 3,
+        "unauth": 3,
         "authRoleName": "amplify-videochatsolution-dev-141403-authRole",
         "unAuthRoleName": "amplify-videochatsolution-dev-141403-unauthRole"
     },
@@ -44,6 +92,23 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "meetingInfoApi",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "meetingUserScoreApi",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
-    ]
+    ],
+    "uuid": "d6b3fe9e"
 }

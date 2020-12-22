@@ -10,13 +10,13 @@
     "env": {
       "Type": "String"
     },
-    "storagefaceTableName": {
+    "storagemeetingInfoTableName": {
       "Type": "String",
-      "Default": "storagefaceTableName"
+      "Default": "storagemeetingInfoTableName"
     },
-    "storagefaceTableArn": {
+    "storagemeetingInfoTableArn": {
       "Type": "String",
-      "Default": "storagefaceTableArn"
+      "Default": "storagemeetingInfoTableArn"
     }
   },
   "Conditions": {
@@ -41,12 +41,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "meetingApi",
+            "meetingInfoApi",
             {
               "Fn::Join": [
                 "",
                 [
-                  "meetingApi",
+                  "meetingInfoApi",
                   "-",
                   {
                     "Ref": "env"
@@ -77,7 +77,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-videochatsolution-dev-141403-deployment",
-          "S3Key": "amplify-builds/meetingApi-7057342b3557596e3562-build.zip"
+          "S3Key": "amplify-builds/meetingInfoApi-642f5142687a42795872-build.zip"
         }
       }
     },
@@ -87,12 +87,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "videochatsolutionLambdaRole84de4029",
+            "videochatsolutionLambdaRole9d464b7f",
             {
               "Fn::Join": [
                 "",
                 [
-                  "videochatsolutionLambdaRole84de4029",
+                  "videochatsolutionLambdaRole9d464b7f",
                   "-",
                   {
                     "Ref": "env"
@@ -172,14 +172,14 @@
               ],
               "Resource": [
                 {
-                  "Ref": "storagefaceTableArn"
+                  "Ref": "storagemeetingInfoTableArn"
                 },
                 {
                   "Fn::Join": [
                     "/",
                     [
                       {
-                        "Ref": "storagefaceTableArn"
+                        "Ref": "storagemeetingInfoTableArn"
                       },
                       "index/*"
                     ]

@@ -45,6 +45,13 @@
                     "/DELETE"
                 ]
             }
+        },
+        {
+            "name": "/recent-score",
+            "lambdaFunction": "recentScoreApi",
+            "privacy": {
+                "open": true
+            }
         }
     ],
     "resourceName": "faceApi",
@@ -58,11 +65,14 @@
         },
         {
             "lambdaFunction": "scoreApi"
+        },
+        {
+            "lambdaFunction": "recentScoreApi"
         }
     ],
     "privacy": {
-        "auth": 2,
-        "unauth": 2,
+        "auth": 3,
+        "unauth": 3,
         "authRoleName": "amplify-videochatsolution-dev-141403-authRole",
         "unAuthRoleName": "amplify-videochatsolution-dev-141403-unauthRole"
     },
@@ -90,7 +100,15 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "recentScoreApi",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
     ],
-    "uuid": "63f40f74"
+    "uuid": "83f6f152"
 }

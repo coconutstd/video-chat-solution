@@ -366,6 +366,7 @@
               <!--              ${require('../node_modules/open-iconic/svg/power-standby.svg').default}-->
               Chart
             </button>
+            <v-btn v-if="this.$store.state.userData.isTeacher === 'teacher'" @click.prevent="onClickMonitor"><v-icon>mdi-camera</v-icon></v-btn>
 
           </div>
         </div>
@@ -387,6 +388,13 @@
           <div id="tile-container" class="col-12 col-sm-6 col-md-7 col-lg-8 my-4 my-sm-0 h-100"
                style="overflow-y: scroll">
             <div id="tile-area" class="v-grid">
+<!--              <div :id="`tile-${i}`" class="video-tile" v-for="(item, i) in dummy" :key="i">-->
+<!--                <video :id="`video-${i}`" class="video-tile-video"></video>-->
+<!--                <div :id="`attendeeid-${i}`" class="video-tile-attendeeid"></div>-->
+<!--                <div :id="`nameplate-${i}`" class="video-tile-nameplate"></div>-->
+<!--                <button :id="`video-pause-${i}`" class="video-tile-pause"></button>-->
+<!--              </div>-->
+
               <div id="tile-0" class="video-tile">
                 <video id="video-0" class="video-tile-video"></video>
                 <div id="attendeeid-0" class="video-tile-attendeeid"></div>
@@ -534,6 +542,7 @@ import {DemoMeetingApp} from '../demomeeting'
 import {collectedData} from "@/face_module/js/loader"
 import PieChart from "@/plugins/PieChart";
 import LineChart from "@/plugins/LineChart";
+import {getMeetingInfo, getMeetingScore} from "../api";
 
 export default Vue.extend({
   name: "VideoChat",
@@ -546,6 +555,9 @@ export default Vue.extend({
       isToggle: false,
       isChartToggle: false,
       pieChartData: null,
+      dummy: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+      interval: null,
+      isMonitorToggled: false,
     }
   },
   methods: {
@@ -576,6 +588,45 @@ export default Vue.extend({
       //   this.isChartToggle = true;
       // }
       this.fillData()
+    },
+    onClickMonitor(){
+      if(!this.isMonitorToggled){
+        this.isMonitorToggled = true;
+        this.interval = setInterval(async () => {
+          if(this.$store.state.userData.isTeacher === 'teacher'){
+            let studentList = [];
+            await getMeetingInfo(this.$store.state.meetingInfo.meetingId)
+              .then(result => {
+                studentList = result.attendee_list.filter(item =>
+                  // student 로 바꿔야
+                  item.isTeacher === 'teacher'
+                )
+              })
+              .catch(error => {
+                console.log(error);
+              })
+            console.log(studentList);
+            let scoreList = [];
+            await studentList.forEach(async item =>{
+              await getMeetingScore({'meeting_title': this.$store.state.meetingInfo.meeting_title, 'userId': item.userId})
+                .then(result => {
+                  console.log(result);
+                  scoreList = [...scoreList, result[0]];
+                })
+                .catch(error => {
+                  console.log(error);
+                })
+            })
+            console.log(scoreList);
+          } else  {
+
+          }
+        } , 2000);
+      } else {
+       this.isMonitorToggled = false;
+       clearInterval(this.interval);
+      }
+
     },
     fillData(){
       this.pieChartData = {

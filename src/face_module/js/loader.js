@@ -256,13 +256,13 @@ function getMeetingTitle(){
     return {...meetingTitle};
 }
 
-function getCreatedTime(){
+export function getCreatedTime(){
     let time = new Time();
     const createdAt = { 'createdAt' : time.yyyymmdd() + ' ' + time.hhmmssms()};
     return {...createdAt};
 }
 
-function getUpdatedTime(){
+export function getUpdatedTime(){
     let time = new Time();
     const updatedAt = { 'updatedAt' : time.yyyymmdd() + ' ' + time.hhmmssms()};
     return {...updatedAt};
@@ -280,10 +280,10 @@ function getScore(data) {
     var logCount = logArray.length              // 추출된 로그수
     var blinkCount = 0;                         // 두눈이 모두 감은 경우
     var neutralCount = 0;                        // neutral 이 0.9 이상인 로그수
-    var catBlinkCount = 0;                        // 눈이 잡힌 수    
+    var catBlinkCount = 0;                        // 눈이 잡힌 수
     var returnScore = 0;                        // 최종 가감 스코어
 
-    
+
     var tmpDetectScore = 0;
     var tmpDistractScore = 0;
     for (let i = 0; i < logCount; i++) {            // 로그 개수 만큼돌면서 변수 계산
@@ -321,7 +321,7 @@ function getScore(data) {
             // (neutralCount / logCount) * 0.8 +
             // (catBlinkCount / logCount) * 0.2
             ((neutralCount - catBlinkCount) / logCount)
-        
+
         ) * 2 - 1
 
         returnScore =  tmpDetectScore + tmpDistractScore;

@@ -19,6 +19,12 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+
+import { createMeetingInfo, updateMeetingInfo, deleteMeeting } from "./api/index.js";
+import { getUpdatedTime, getCreatedTime} from "./face_module/js/loader";
+import {store} from '../src/store/index';
+
+
 var exports = {};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DemoMeetingApp = exports.ContentShareType = void 0;
@@ -547,6 +553,23 @@ export class DemoMeetingApp {
         });
         const buttonMeetingEnd = document.getElementById('button-meeting-end');
         buttonMeetingEnd.addEventListener('click', _e => {
+            const postData = Object.assign({},{'meetingId' : this.meetingSession.configuration.meetingId,'isEnded' : true}, getUpdatedTime());
+            updateMeetingInfo(postData)
+                .then(() => {
+                    console.log('회의종료');
+                })
+                .catch(error => {
+                    console.log('회의종료 실패');
+                })
+            const deleteData = {'meeting_title' : this.meeting};
+            deleteMeeting(deleteData)
+                .then(() => {
+                    console.log('회의삭제');
+                })
+                .catch(() => {
+                    console.log('회의삭제 실패');
+                })
+            store.commit('UNSET_MEETING_INFO');
             const confirmEnd = (new URL(window.location.href).searchParams.get('confirm-end')) === 'true';
             const prompt = 'Are you sure you want to end the meeting for everyone? The meeting cannot be used after ending it.';
             if (confirmEnd && !window.confirm(prompt)) {
@@ -561,6 +584,7 @@ export class DemoMeetingApp {
         });
         const buttonMeetingLeave = document.getElementById('button-meeting-leave');
         buttonMeetingLeave.addEventListener('click', _e => {
+            store.commit('UNSET_MEETING_INFO');
             new index_1.AsyncScheduler().start(() => __awaiter(this, void 0, void 0, function* () {
                 buttonMeetingLeave.disabled = true;
                 this.leave();
@@ -859,6 +883,33 @@ export class DemoMeetingApp {
         });
     }
     join() {
+        const meetingData = {
+            'meetingId' : this.meetingSession.configuration.meetingId,
+            'meeting_title' : this.meeting
+        }
+        const postData = Object.assign({}, getCreatedTime(), getUpdatedTime(), {'isEnded': false}, meetingData, {'attendee': {'userId': store.state.userData.username, 'isTeacher' : store.state.userData.isTeacher}});
+        createMeetingInfo(postData)
+            .then(() => {
+                console.log('미팅정보 생성');
+            })
+            .catch(error => {
+                console.log(error);
+                updateMeetingInfo(postData)
+                    .then(() => {
+                        console.log('미팅정보 업데이트');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            })
+        store.commit('SET_MEETING_INFO', {'meetingId': this.meetingSession.configuration.meetingId});
+        console.log('hello join');
+        // 회의이름
+        console.log('hello'+this.meeting);
+        // 참가자 이름
+        console.log('hello'+this.name);
+        // 미팅 ID
+        console.log('hello'+this.meetingSession.configuration.meetingId);
         return __awaiter(this, void 0, void 0, function* () {
             window.addEventListener('unhandledrejection', (event) => {
                 this.log(event.reason);
