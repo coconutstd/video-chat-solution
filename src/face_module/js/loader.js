@@ -30,9 +30,10 @@ export async function loadModels() {
 
 
 export async function loadLabeledImages() {
-    console.log(`${store.state.userData.name}의 사진을 다운로드 합니다`);
+    // console.log(`${store.state.userData.name}의 사진을 다운로드 합니다`);
     // const labels = ['Black Widow', 'Captain America', 'Captain Marvel', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark']
-    const labels = [store.state.userData.name];
+    // const labels = [store.state.userData.name];
+    const labels = ["이준의", "유재현", "김유철"];
     return Promise.all(
         labels.map(async label => {
             const descriptions = []
@@ -280,10 +281,10 @@ function getScore(data) {
     var logCount = logArray.length              // 추출된 로그수
     var blinkCount = 0;                         // 두눈이 모두 감은 경우
     var neutralCount = 0;                        // neutral 이 0.9 이상인 로그수
-    var catBlinkCount = 0;                        // 눈이 잡힌 수    
+    var catBlinkCount = 0;                        // 눈이 잡힌 수
     var returnScore = 0;                        // 최종 가감 스코어
 
-    
+
     var tmpDetectScore = 0;
     var tmpDistractScore = 0;
     for (let i = 0; i < logCount; i++) {            // 로그 개수 만큼돌면서 변수 계산
@@ -311,7 +312,7 @@ function getScore(data) {
 
     if (logCount >= blinkBaseOffSet && blinkCount >= (blinkBaseOffSet * 0.8)) {    // 졸음 감점 시 화면집중과 안면집중 점수는 적용되지 않음 (1분 졸면 -12 급경히 감소)
         returnScore =- 2;
-    } else {               
+    } else {
             if (idealLogCount == 0 ) {          // Detection점수는 비중으로 2x -1 (-1 ~ +1)
                 tmpDetectScore = 0
             } else {
