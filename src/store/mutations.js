@@ -12,7 +12,6 @@ export default {
         state.meetingList = meetinglist;
     },
     SET_USER_SCORE(state, userscoredata){
-        console.log('2');
         state.userScoreData = userscoredata;
     },
     SET_MEETING_FACE(state, meetingfacedata){

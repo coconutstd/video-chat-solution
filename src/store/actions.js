@@ -21,20 +21,18 @@ export default {
     //         })
     // },
     FETCH_MEETING_LIST({commit}){
-        getMeetingList()
+        return getMeetingList()
             .then((result)=>{
                 commit('SET_MEETING_LIST', JSON.parse(result.body));
-                return result;
             })
             .catch(error => {
                 console.log(error);
             })
     },
     FETCH_USER_SCORE({commit}, userid){
-        getUserScoreData(userid)
+        return getUserScoreData(userid)
             .then(result => {
                 commit('SET_USER_SCORE', result);
-                return result;
             })
             .catch(error => {
                 console.log(error);
@@ -50,30 +48,27 @@ export default {
             })
     },
     FETCH_USER_DATA({commit}, userid) {
-        getUserData(userid)
+        return getUserData(userid)
             .then(result => {
                 commit('SET_USER_DATA', result);
-                return result;
             })
             .catch(error => {
                 console.log(error);
             })
     },
     FETCH_STUDENT_LIST({commit}){
-        getStudentList()
+        return getStudentList()
             .then(result => {
                 commit('SET_STUDENT_LIST', result);
-                return result;
             })
             .catch(error => {
                 console.log(error);
             })
     },
     FETCH_CHECK_LIST({commit}) {
-        getCheckList()
+        return getCheckList()
             .then(result => {
                 commit('SET_CHECK_LIST', result);
-                return result;
             })
             .catch(error => {
                 console.log(error);
