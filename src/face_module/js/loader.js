@@ -15,6 +15,7 @@ export let logCountTimer = new Timer();
 let userLogCount = 0;
 let detectedData = {"Items": []};
 let totalScore = 0;
+let tmpScore = 100
 
 export async function loadModels() {
     return Promise.all([
@@ -92,6 +93,7 @@ export async function videoCallback(video, FaceMatcher) {
     let isSecondsTimer = false;
     let faceCount = new Map();
     let isChecked = false;
+
 
     totalTimer.start();
     logCountTimer.start();
@@ -212,7 +214,10 @@ export async function videoCallback(video, FaceMatcher) {
             secondsTimer.reset();
             let score = getScore(detectedData);
             totalScore += score
-            console.log(`가감스코어==========${score}=====종합스코어=============${totalScore}`);
+            console.log(`=가감스코어==========${score}`);
+            console.log(`=종합스코어=============${totalScore}`);
+            tmpScore += score
+            console.log(`=보기스코어=============${tmpScore}`);
             const postData = Object.assign({}, getMeetingTitle(), getCreatedTime(), {'score_per_second' : score}, {'applied_score': totalScore}, {'total_time': totalTimer.getTimeValues().toString()});
             postScoreData(postData);
             detectedData.Items = [];
@@ -266,7 +271,7 @@ function getScore(data) {
     // var idealLogCount = 1 * 5 * 10              // 1초 * 5개 * 10초 = 50개 (1분: 300개, 5분: 1500개)
     var blinkOffSet = 0.02;                     // 두눈이 0.02 이하일 경우 감은 것
     var neutralOffSet = 0.8;                     // neutral 이 0.9 이상이면 잘 집중함
-    var othersOffSet = 0.6;                     // neutral 이 0.7 이상이면 잘 집중함
+    var othersOffSet = 0.7;                     // neutral 이 0.7 이상이면 잘 집중함
     var blinkBaseOffSet = idealLogCount * 0.5   // 예상했던 로그수의 반이상이 잡힐 때만, 졸림을 감지
 
     var logArray = data.Items                   // 대상 로그 배열
