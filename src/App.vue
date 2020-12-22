@@ -43,11 +43,11 @@ export default {
     Home,
   },
   created() {
-    onAuthUIStateChange((authState, authData) => {
+    onAuthUIStateChange(async (authState, authData) => {
       this.authState = authState;
       this.user = authData;
       this.$store.commit('SET_USERDATA', authData);
-      this.$store.dispatch('FETCH_USER_DATA', this.$store.state.userData.username);
+      await this.$store.dispatch('FETCH_USER_DATA', this.$store.state.userData.username);
     })
     bus.$on('start:spinner', this.startSpinner);
     bus.$on('end:spinner', this.endSpinner);

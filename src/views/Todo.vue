@@ -11,6 +11,7 @@ import bus from '../utils/bus.js';
 export default {
   created () {
     bus.$emit('start:spinner');
+    bus.$emit('end:spinner');
   }
 }
 </script>

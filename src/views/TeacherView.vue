@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid v-if="!loading">
     <v-divider></v-divider>
     출석부 등록
     <v-date-picker
@@ -46,18 +46,11 @@
 import ddForm from 'vue-dd-form';
 import { createCheckList } from "../api/index";
 import { Time } from '../face_module/js/time';
+import bus from '../utils/bus.js';
 
 export default {
   components: {
     ddForm,
-  },
-  watch:{
-    descriptions : {
-      handler (nextValue, prevValue){
-
-      },
-      deep: true
-    }
   },
   data(){
     return {
@@ -84,6 +77,7 @@ export default {
       picker: new Date().toISOString().substr(0, 10),
       date: null,
       filteredCheckList: [],
+      loading: true,
     }
   },
   computed:{
@@ -91,46 +85,50 @@ export default {
       return this.$store.state.dayCheckList;
     }
   },
-  created(){
-    this.$store.dispatch('FETCH_STUDENT_LIST');
-    this.descriptions = {...Object.assign({},
-          {
-            students: {
-              "meeting_title": {
-                "view" : "text",
-                "label" : "회의 제목"
-              },
-              "students":{
-                "view": "checkbox",
-                "label": "학생명단",
-                "options": [...this.$store.state.studentList.map(item => item.name)]
-              }
-            }
-          })}
-
-    this.$store.dispatch('FETCH_CHECK_LIST');
-    const checkList = this.$store.state.checkList.reduce((items, item) => {
-      if(items[0].includes(item.createdAt) && items[1].includes(item.meeting_title))
-        return items;
-      else
-        return [[...items[0], item.createdAt], [...items[1], item.meeting_title]]
-    }, [[],[]])
-    for(let i = 0; i < checkList[0].length; ++i){
-      this.filteredCheckList.push([checkList[0][i], checkList[1][i]]);
-    }
-    this.filteredCheckList = [...this.filteredCheckList.sort()];
-
-    this.filteredCheckList = this.filteredCheckList.map(item => {
-      let retVal = [...item];
-      this.$store.dispatch('FETCH_DAY_CHECK_LIST', {createdAt: item[0], title:item[1]})
-        .then(result => {
-          retVal.push(result);
-        })
-      return retVal;
-    })
-
+  async created(){
+    bus.$emit('start:spinner');
+    await this.fetchData();
+    bus.$emit('end:spinner');
+    this.loading = false;
   },
   methods: {
+    async fetchData(){
+      await this.$store.dispatch('FETCH_STUDENT_LIST');
+      this.descriptions = {...Object.assign({},
+            {
+              students: {
+                "meeting_title": {
+                  "view" : "text",
+                  "label" : "회의 제목"
+                },
+                "students":{
+                  "view": "checkbox",
+                  "label": "학생명단",
+                  "options": [...this.$store.state.studentList.map(item => item.name)]
+                }
+              }
+            })}
+      await this.$store.dispatch('FETCH_CHECK_LIST');
+      const checkList = this.$store.state.checkList.reduce((items, item) => {
+        if(items[0].includes(item.createdAt) && items[1].includes(item.meeting_title))
+          return items;
+        else
+          return [[...items[0], item.createdAt], [...items[1], item.meeting_title]]
+      }, [[],[]])
+      for(let i = 0; i < checkList[0].length; ++i){
+        this.filteredCheckList.push([checkList[0][i], checkList[1][i]]);
+      }
+      this.filteredCheckList = [...this.filteredCheckList.sort()];
+
+      this.filteredCheckList = this.filteredCheckList.map(item => {
+        let retVal = [...item];
+        this.$store.dispatch('FETCH_DAY_CHECK_LIST', {createdAt: item[0], title:item[1]})
+            .then(result => {
+              retVal.push(result);
+            })
+        return retVal;
+      })
+    },
     registerChecklist(){
       const createdAt = new Time();
       const postData = this.output.students.students.map(item =>  {

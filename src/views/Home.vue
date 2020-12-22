@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid v-if="!loading">
     <h1 style="display:inline;">안녕하세요!</h1>
     <v-btn v-if="userData.isTeacher==='teacher'" to="/teacher">선생님</v-btn>
     <v-row>
@@ -28,7 +28,8 @@ export default {
           {'title' : 'one', 'userId' : '이준의', "bgcolor" : "#F44336"},
           {'title' : 'two', 'userId' : '김유철', "bgcolor" : "#E91E63"},
           {'title' : 'three', 'userId' : '정해창', "bgcolor" : "#9C27B0"},
-        ]
+        ],
+        loading: true
     }
   },
   components:{
@@ -46,17 +47,12 @@ export default {
       return this.$store.state.meetingList;
     }
   },
-  created() {
+  async created() {
     bus.$emit('start:spinner');
-    Promise.all([
-      createUserInfo(),
-      this.$store.dispatch('FETCH_MEETING_LIST')
-          .then()
-          .catch(error => {
-            console.log(error);
-          })
-    ])
+    await createUserInfo().catch(error => console.log('이미 유저 정보가 있습니다'));
+    await this.$store.dispatch('FETCH_MEETING_LIST')
     bus.$emit('end:spinner');
+    this.loading = false;
   }
 }
 </script>
