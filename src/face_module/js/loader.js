@@ -308,13 +308,16 @@ function getScore(data) {
             neutralCount += 1;
         }
     }
+    var obj = document.getElementById("tile-16");
 
     if (logCount >= blinkBaseOffSet && blinkCount >= (blinkBaseOffSet * 0.8)) {    // 졸음 감점 시 화면집중과 안면집중 점수는 적용되지 않음 (5분에 50점감소 급경히 감소)
         returnScore =- 2;
+        obj.style.border = "thick solid #FF0000";
     } else if (logCount == 0){                                                     // 화면에서 사라짐 시 화면집중과 안면집중 점수는 적용되지 않음 (5분에 50점감소 급경히 감소)
         returnScore =- 2;
+        obj.style.border = "thick solid #FF0000";
     } else {                                                                       // 졸지도 않고 화면에 있으면 detection, 안면, 눈감지 수로 +2 ~ -2점의 점수를 줌
-
+        obj.style.border = "#FFFFFF";
         tmpDetectScore = (logCount / idealLogCount) * 2 - 1         // Detection점수는 비중으로 2x -1 (-1 ~ +1)
 
         tmpDistractScore = (                                        // 집중점수 비중으로 2x -1 (-1 ~ +1)
