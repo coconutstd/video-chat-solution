@@ -630,7 +630,7 @@ export default Vue.extend({
               let list = document.getElementsByClassName('video-tile-attendeeid');
               for(let i = 0; i < list.length; ++i){
                 if(list[i].innerText === scoreList[i].attendeeId){
-                  list[i].nextSibling.innerText = scoreList[i].applied_score;
+                  list[i].nextSibling.innerText = scoreList[i].applied_score.toFixed(1);
                   let obj = document.getElementById(`tile-${i}`);
                   if (scoreList[i].applied_score >= 70) {
                     obj.style.border = "thick solid #00ff00";
