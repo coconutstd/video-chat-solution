@@ -35,8 +35,6 @@ const awsmobile = {
             "region": "ap-northeast-2"
         }
     ],
-    "aws_user_files_s3_bucket": "labeledimage-omni141652-dev",
-    "aws_user_files_s3_bucket_region": "ap-northeast-2",
     "aws_cloud_logic_custom": [
         {
             "name": "faceApi",

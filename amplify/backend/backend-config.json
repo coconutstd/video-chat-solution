@@ -24,12 +24,6 @@
       "service": "DynamoDB",
       "providerPlugin": "awscloudformation"
     },
-    "videochatsolutionc12f6b04": {
-      "service": "S3",
-      "serviceType": "imported",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": []
-    },
     "checkTable": {
       "service": "DynamoDB",
       "providerPlugin": "awscloudformation"
