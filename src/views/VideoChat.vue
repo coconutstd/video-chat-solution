@@ -628,9 +628,17 @@ export default Vue.extend({
             console.log(scoreList);
             for(let i = 0; i < scoreList.length; ++i){
               let list = document.getElementsByClassName('video-tile-attendeeid');
-              for(let item of list){
-                if(item.innerText === scoreList[i].attendeeId){
-                  item.nextSibling.innerText = scoreList[i].applied_score;
+              for(let i = 0; i < list.length; ++i){
+                if(list[i].innerText === scoreList[i].attendeeId){
+                  list[i].nextSibling.innerText = scoreList[i].applied_score;
+                  let obj = document.getElementById(`tile-${i}`);
+                  if (scoreList[i].applied_score >= 70) {
+                    obj.style.border = "thick solid #00ff00";
+                  } else if (scoreList[i].applied_score < 70 && scoreList[i].applied_score >= 50){
+                    obj.style.border = "thick solid #0000ff";
+                  } else if (scoreList[i].applied_score < 50){
+                    obj.style.border = "thick solid #FF0000";
+                  }
                 }
               }
             }
