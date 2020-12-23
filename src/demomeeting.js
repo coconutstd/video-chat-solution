@@ -887,7 +887,7 @@ export class DemoMeetingApp {
             'meetingId' : this.meetingSession.configuration.meetingId,
             'meeting_title' : this.meeting
         }
-        const postData = Object.assign({}, getCreatedTime(), getUpdatedTime(), {'isEnded': false}, meetingData, {'attendee': {'userId': store.state.userData.username, 'isTeacher' : store.state.userData.isTeacher}});
+        const postData = Object.assign({}, getCreatedTime(), getUpdatedTime(), {'isEnded': false}, meetingData, {'attendee': {'userId': store.state.userData.username, 'isTeacher' : store.state.userData.isTeacher, 'attendeeId': this.meetingSession.configuration.credentials.attendeeId }});
         createMeetingInfo(postData)
             .then(() => {
                 console.log('미팅정보 생성');

@@ -599,25 +599,41 @@ export default Vue.extend({
               .then(result => {
                 studentList = result.attendee_list.filter(item =>
                   // student 로 바꿔야
-                  item.isTeacher === 'teacher'
+                  item.isTeacher === 'student'
                 )
               })
               .catch(error => {
                 console.log(error);
               })
+            console.log('학생들 리스트');
             console.log(studentList);
             let scoreList = [];
-            await studentList.forEach(async item =>{
-              await getMeetingScore({'meeting_title': this.$store.state.meetingInfo.meeting_title, 'userId': item.userId})
-                .then(result => {
-                  console.log(result);
-                  scoreList = [...scoreList, result[0]];
-                })
-                .catch(error => {
-                  console.log(error);
-                })
-            })
+            // await studentList.forEach(async item =>{
+            //   await getMeetingScore({'meeting_title': this.$store.state.meetingInfo.meeting_title, 'userId': item.userId})
+            //     .then(result => {
+            //       console.log(result);
+            //       scoreList = [...scoreList, result[0]];
+            //     })
+            //     .catch(error => {
+            //       console.log(error);
+            //     })
+            // })
+
+            for(let i = 0; i < studentList.length; ++i){
+              const result = await getMeetingScore({'userId': studentList[i].userId});
+              console.log(studentList[i].userId + '아이디로 현재 점수 조회');
+              console.log(result[0].applied_score);
+              scoreList.push(Object.assign({}, {'applied_score': result[0].applied_score },{'attendeeId': studentList[i].attendeeId}));
+            }
             console.log(scoreList);
+            for(let i = 0; i < scoreList.length; ++i){
+              let list = document.getElementsByClassName('video-tile-attendeeid');
+              for(let item of list){
+                if(item.innerText === scoreList[i].attendeeId){
+                  item.nextSibling.innerText = scoreList[i].applied_score;
+                }
+              }
+            }
           } else  {
 
           }

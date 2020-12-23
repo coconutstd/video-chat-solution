@@ -220,7 +220,7 @@ export async function videoCallback(video, FaceMatcher) {
             console.log(`=종합스코어=============${totalScore}`);
             tmpScore += score
             console.log(`=보기스코어=============${tmpScore}`);
-            const postData = Object.assign({}, getMeetingTitle(), getCreatedTime(), {'score_per_second' : score}, {'applied_score': totalScore}, {'total_time': totalTimer.getTimeValues().toString()});
+            const postData = Object.assign({}, getMeetingTitle(), getCreatedTime(), {'score_per_second' : score}, {'applied_score': tmpScore}, {'total_time': totalTimer.getTimeValues().toString()});
             postScoreData(postData);
             detectedData.Items = [];
         }
