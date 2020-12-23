@@ -91,6 +91,7 @@ app.get(path + '/:id', function(request, response) {
       ":userId": request.params.id,
       // ":meeting_title": request.body.meeting_title,
     },
+
     Limit: 1,
     ScanIndexForward: false
   }

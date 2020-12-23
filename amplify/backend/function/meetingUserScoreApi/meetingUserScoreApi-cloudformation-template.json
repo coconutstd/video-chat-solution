@@ -77,7 +77,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-videochatsolution-dev-141403-deployment",
-          "S3Key": "amplify-builds/meetingUserScoreApi-41527a57643245714a35-build.zip"
+          "S3Key": "amplify-builds/meetingUserScoreApi-4f7754502b4344754136-build.zip"
         }
       }
     },
