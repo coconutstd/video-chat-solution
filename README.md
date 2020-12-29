@@ -1,12 +1,11 @@
-<center><h1>
-  옴니프로젝트
-  </h1></center>
-
-
+<h1 align="center"> 옴니프로젝트 </h1>
 
 ![omni](https://user-images.githubusercontent.com/25981278/103296428-6ac7c380-4a39-11eb-966c-dbc715510099.jpg)
 
+<p align="center">
 <center><a href="https://omnichat.site" style="color:black; text-decoration:none;">omnichat.site</a></center> 
+</p>
+
 
 ## 프로젝트 제안 배경
 
@@ -29,17 +28,29 @@ omnichat.site의 주요 기능은 다음과 같습니다.
 
 ------
 
-😃메인화면 ![7](https://user-images.githubusercontent.com/25981278/103296278-250afb00-4a39-11eb-9f27-39acec25d467.PNG)
+😃 메인화면 ![7](https://user-images.githubusercontent.com/25981278/103296278-250afb00-4a39-11eb-9f27-39acec25d467.PNG)
 
 ------
 
 😆 자동출석기능
 
-출석부 생성 -> 수업 진행 -> 출석부 확인
+스토리라인 : 출석부 생성 -> 수업 진행 -> 출석부 확인
 
-![13](https://j.gifs.com/xnRmD9.gif)
+1. 출석부 생성![13](https://j.gifs.com/xnRmD9.gif)
+2. 수업 진행 후.....
+3. 출석부 확인![12](https://user-images.githubusercontent.com/25981278/103296293-2b00dc00-4a39-11eb-95bf-78c63e2c73fa.gif)
 
-![2](https://user-images.githubusercontent.com/25981278/103293769-d9098780-4a33-11eb-911a-3197c27cb16f.gif)
+------
 
-![12](https://user-images.githubusercontent.com/25981278/103296293-2b00dc00-4a39-11eb-95bf-78c63e2c73fa.gif)
+😎 학습자 모니터링
+
+3단계 피드백 시스템
+
+집중도 점수 100 ~ 70 점: 
+
+
+
+
+
+
 
