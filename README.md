@@ -1,9 +1,10 @@
-<h1 align="center"> 옴니프로젝트 </h1>
-
-![omni](https://user-images.githubusercontent.com/25981278/103296428-6ac7c380-4a39-11eb-966c-dbc715510099.jpg)
+<h1 align="center"> 옴니프로젝트 </h1> <br>
+<p align="center">
+    <img alt="omniproject" title="omni" src="https://user-images.githubusercontent.com/25981278/103296428-6ac7c380-4a39-11eb-966c-dbc715510099.jpg" width="450">
+</p>
 
 <p align="center">
-<center><a href="https://omnichat.site" style="color:black; text-decoration:none;">omnichat.site</a></center> 
+<a href="https://omnichat.site" style="color:black; text-decoration:none;">omnichat.site</a> 
 </p>
 
 
