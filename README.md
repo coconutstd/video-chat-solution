@@ -38,20 +38,31 @@ omnichat.site의 주요 기능은 다음과 같습니다.
 스토리라인 : 출석부 생성 -> 수업 진행 -> 출석부 확인
 
 1. 출석부 생성![13](https://j.gifs.com/xnRmD9.gif)
-2. 수업 진행 후.....
+
+2. 수업 진행 후.....![4](https://user-images.githubusercontent.com/25981278/103294745-cb550180-4a35-11eb-9dbb-f9bdd3b5ff17.gif)
+
+   
+
 3. 출석부 확인![12](https://user-images.githubusercontent.com/25981278/103296293-2b00dc00-4a39-11eb-95bf-78c63e2c73fa.gif)
 
 ------
 
-😎 학습자 모니터링
+😎 ## 학습자 모니터링
 
-3단계 피드백 시스템
-
-집중도 점수 100 ~ 70 점: 
+## 학습자 모니터링
 
 
 
+집중도 점수에 따른 강의자 화면(3단계 피드백)
 
+70 점 이상: <span style="color:green;">녹색</span> <= 집중을 잘하고 있음. 터치할 필요 x
 
+70 ~ 50 점: <span style="color: blue;">파란색</span> <= 가끔 딴 짓을 하거나, 산만할 수 있지만 양호
 
+50점 이하: <span style="color: red;">빨간색</span> <= 졸거나, 매우 산만하거나 화면에 나타나지 않는 경우. 케어가 필요함
 
+![1](https://user-images.githubusercontent.com/25981278/103293334-073a9780-4a33-11eb-99f7-b91ce46db870.gif)
+
+------
+
+🧐 인공지능 기술을 통한 얼굴 감정분석, 눈 깜빡임 [분석](#학습자 모니터링)
