@@ -106,7 +106,7 @@ omnichat.site의 주요 기능은 다음과 같습니다.
 | 구분       | 사용기술                                                     |
 | ---------- | ------------------------------------------------------------ |
 | 프론트엔드 | Vue, Vuetify, Vuex, VueRouter, Javascript, HTML, CSS         |
-| 백엔드     | AWS Chime SDK, AWS API Gateway, AWS Lambda, AWS DynamoDB, AWS Amplify |
+| 백엔드     | AWS Chime SDK, AWS API Gateway, AWS Lambda, AWS DynamoDB, AWS Amplify, Node.js, Express, AWS SDK |
 | 오픈소스   | Face-api, Eyeblink, Easytimer                                |
 | 협업 도구  | Slack, Google Drive, Trello, TeamGantt                       |
 
@@ -141,9 +141,9 @@ omnichat.site의 주요 기능은 다음과 같습니다.
 
 소프트웨어 설계의 중요성입니다. 
 
-AWS Amplify, AWS DynamoDB, AWS Chime SDK 같은 경우는 새롭게 사용해보는 기술이라 일단 동작하는 소프트웨어를 만들고 개선해나가자는 마인드로 프로젝트를 수행했습니다. 하지만, 예상보다 AWS Chime SDK의 WebRTC 기반 기술은 러닝커브가 매우 높았고, AWS Amplify는 익숙해지는데 일주일 이상이 걸렸으며, AWS DynamoDB는 단순히 MongoDB와 비슷해서 쿼리도 금방 할 수 있겠지란 생각이었지만 마찬가지로 익숙해지는데 5일 이상이 걸렸습니다. 
+AWS Amplify, AWS DynamoDB, AWS Chime SDK 같은 경우는 새롭게 사용해보는 기술이라 일단 동작하는 소프트웨어를 만들고 개선하는 방식으로 프로젝트를 수행했습니다. 하지만, 예상보다 AWS Chime SDK의 WebRTC 기반 기술은 러닝커브가 매우 높았고, AWS Amplify는 예상치 못한 오류로 인해 적응하는데 일주일 이상이 걸렸으며, AWS DynamoDB는 단순히 MongoDB와 비슷해서 쿼리도 금방 할 수 있겠지란 생각이었지만 마찬가지로 익숙해지는데 5일 이상이 걸렸습니다. 
 
-위와 같은 사실들을 알아차렸을 때는 이미 프로젝트를 처음으로 되돌리기 힘든 상황이었고 어떻게든 빠르게 배워서 완성해야했습니다. 다음부터는 내가 사용하려는 기술의 일반적인 특징(NoSQL)보다는 세부적인 사용(Query 코드) 예 등을 고려하여 프로젝트 기간 산정을 보다 정확히 산출하는데 노력해야겠다고 느꼈습니다.
+위와 같은 사실들을 겪었을때는 이미 프로젝트를 처음으로 되돌리기 힘든 상황이었고 어떻게든 빠르게 배워서 완성해야했습니다. 다음부터는 내가 사용하려는 기술의 일반적인 특징(NoSQL)보다는 세부적인 사용(Query 코드) 예 등을 고려하여 프로젝트 기간 산정을 보다 정확히 산출하는데 노력해야겠다고 느꼈습니다.
 
 그리고, 프로그램을 디버깅하는데 있어서 웹 서버를 돌리고 console.log로 브라우저 에서 확인하는 과정이 개발을 지연시키는 또 하나의 요인이었습니다. 이를 개선하기 위해 TDD를 공부하여 자동 테스트를 구현하고 보다 빠른 디버깅과 완전한 CI/CD를 구현하고 싶습니다.
 
