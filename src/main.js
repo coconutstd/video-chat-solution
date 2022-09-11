@@ -1,13 +1,20 @@
 import Vue from "vue";
 import App from "./App.vue";
-import "@aws-amplify/ui-vue";
-import Amplify from "aws-amplify";
+import { applyPolyfills, defineCustomElements } from '@aws-amplify/ui-components/loader'
+import { Amplify } from 'aws-amplify'
 import awsconfig from "./aws-exports";
 import { store } from './store/index.js';
 import { router } from './router/index.js';
 import vuetify from './plugins/vuetify';
 
 Amplify.configure(awsconfig);
+
+applyPolyfills().then(() => {
+  defineCustomElements(window)
+})
+
+Vue.config.ignoredElements = [/amplify-\w*/];
+
 
 new Vue({
   router,

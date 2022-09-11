@@ -15,7 +15,7 @@ Conditions:
   ShouldUseEventBridge: !Equals [true, !Ref UseEventBridge]
 Globals:
   Function:
-    Runtime: nodejs10.x
+    Runtime: nodejs16.x
     Timeout: 30
     MemorySize: 128
     Environment:
@@ -112,7 +112,7 @@ Resources:
     Type: 'AWS::Serverless::Function'
     Properties:
       Handler: handlers.index
-      Runtime: nodejs10.x
+      Runtime: nodejs16.x
       CodeUri: src/
       Events:
         Api1:

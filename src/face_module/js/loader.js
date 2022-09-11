@@ -7,7 +7,7 @@ import { Timer } from 'easytimer.js';
 import { updateCheckList } from "../../api/index.js";
 import { store } from '../../store/index.js';
 
-const S3_URL = 'https://amplify-videochatsolution-dev-141403-deployment.s3.ap-northeast-2.amazonaws.com/'
+const S3_URL = 'https://amplify-videochatsolution-guide-143716-deployment.s3.ap-northeast-2.amazonaws.com/'
 export let collectedData = new Map()
 let interval = 0
 export let totalTimer = new Timer();
@@ -32,7 +32,7 @@ export async function loadModels() {
 export async function loadLabeledImages() {
     // const labels = ['Black Widow', 'Captain America', 'Captain Marvel', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark']
     // const labels = ['이준의', '김유철']
-    const labels = [store.state.userData.name];
+    const labels = ['이준의'];
     return Promise.all(
         labels.map(async label => {
             const descriptions = []
